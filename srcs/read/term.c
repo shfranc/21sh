@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/06/28 18:29:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/06/29 19:04:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,63 @@
 
 void	ft_init_term(void)
 {
-	const char 	*term_type;
-	int		ret;
+	const char		*term_type;
+	int				ret;
+	struct termios	sauv;
+	struct termios	term;
 
 	term_type = getenv("TERM");
-	ft_putendl(term_type);
 
 	if (term_type == NULL)
 		ft_exit("No TERM in the environement.", 1);
-	
+
 	ret = tgetent(NULL, term_type);
 	if (ret < 0)
 		ft_exit("No access to the termcap database.", 1);
 	if (ret == 0)
 		ft_exit("Terminal type is not defined.", 1);
 
-	char *term_buff;
-	char *temp;
-	char PC;
-	int	height;
-	int width;
-	char *cl;
-	char *cm;
+	if (tcgetattr(0, &term) == -1)
+		ft_exit("Unable to fetch termios struct", 1);
 
-	term_buff = ft_memalloc(2048);
+	ft_memmove(&sauv, &term, sizeof(term));
+//	write(0, &sauv, sizeof(sauv));
+//	write(0, &term, sizeof(term));
 
-	height = tgetnum("li");
-	width = tgetnum("co");
-	ft_putnbr_endl(height);
-	ft_putnbr_endl(width);
-	cl = tgetstr("cl", &term_buff);
-	ft_putendl(cl);
-	cm = tgetstr("cm", &term_buff);
-	ft_putendl(cm);
+	term.c_lflag &= ~ (ICANON);
+	term.c_lflag &= ~ (ECHO);
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
 
-	temp = tgetstr("pc", &term_buff);
-	PC = temp ? *temp : 0;
-	write(1, &PC, 1);
-	BC
+	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+		ft_exit("Unable to unset canonic mode", 1);
+
+}
+
+/*static	int		ft_termput(int c)
+{
+	write(1, &c, 1);
+	return (0);
+}*/
+
+void	ft_interpret(char *buff)
+{
+//	char	*arrow;
+	char	*cm;
+//	char	*ic;
+
+	cm = tgetstr("cm", NULL);
+//	ic = tgetstr("ic", NULL);
+
+//	arrow = tgetstr("kl", NULL);
+//	ft_putendl(arrow);
+	write(0, buff, ft_strlen(buff));
+//	tputs(buff, 1, &ft_termput);
+
+//	if (buff[0] == 27)
+	if (ft_strequ(buff + 1, "[D" ) )
+		;
+//		write(1, "c'est une fleche !\n", 19);
+	else if (buff[0] == 4)
+		ft_exit("exit", 1);
 }

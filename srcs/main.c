@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/06/28 18:29:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/06/29 19:04:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 int		main(void)
 {
+	char buff[3];
 
 //	intercepter les signaux avant les termcaps
 	ft_init_term();
-	write(1, "MAIN\n", 5);
+	while (1)
+	{
+		ft_bzero(buff, 3);
+		read(0, buff, 3);
+		ft_interpret(buff);
+	}
 	return (0);
 }
