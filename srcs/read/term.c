@@ -6,71 +6,96 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/06/29 19:04:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/06/30 19:19:42 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include <stdio.h>
 
-void	ft_init_term(void)
+void	ft_raw_term(void)
 {
 	const char		*term_type;
 	int				ret;
-	struct termios	sauv;
+//	struct termios	sauv;
 	struct termios	term;
 
 	term_type = getenv("TERM");
-
 	if (term_type == NULL)
 		ft_exit("No TERM in the environement.", 1);
-
 	ret = tgetent(NULL, term_type);
 	if (ret < 0)
 		ft_exit("No access to the termcap database.", 1);
 	if (ret == 0)
 		ft_exit("Terminal type is not defined.", 1);
-
 	if (tcgetattr(0, &term) == -1)
 		ft_exit("Unable to fetch termios struct", 1);
-
-	ft_memmove(&sauv, &term, sizeof(term));
-//	write(0, &sauv, sizeof(sauv));
-//	write(0, &term, sizeof(term));
-
+//	ft_memmove(&sauv, &term, sizeof(term));
 	term.c_lflag &= ~ (ICANON);
 	term.c_lflag &= ~ (ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
-		ft_exit("Unable to unset canonic mode", 1);
+		ft_exit("Unable to set raw mode", 1);
+}
+
+void	ft_canonic_term(void)
+{
+	struct	termios	term;
+
+	if (tcgetattr(0, &term) == -1)
+		ft_exit("Unable to fetch termios struct", 1);
+	term.c_lflag |=  ICANON;
+	term.c_lflag |=  ECHO;
+	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+		ft_exit("Unable to set canonic mode", 1);
 
 }
 
-/*static	int		ft_termput(int c)
+static	int		ft_intputchar(int c)
 {
 	write(1, &c, 1);
 	return (0);
-}*/
+}
 
-void	ft_interpret(char *buff)
+int		ft_interpret(char *buff, t_input *input)
 {
-//	char	*arrow;
-	char	*cm;
-//	char	*ic;
+	char	*cap;
+	int		i;
 
-	cm = tgetstr("cm", NULL);
-//	ic = tgetstr("ic", NULL);
-
-//	arrow = tgetstr("kl", NULL);
-//	ft_putendl(arrow);
-	write(0, buff, ft_strlen(buff));
-//	tputs(buff, 1, &ft_termput);
-
-//	if (buff[0] == 27)
-	if (ft_strequ(buff + 1, "[D" ) )
-		;
-//		write(1, "c'est une fleche !\n", 19);
+	if (buff[0] == 27)
+		write(1, "c'est une fleche !", 18);
 	else if (buff[0] == 4)
 		ft_exit("exit", 1);
+	else if (buff[0] == '\n')
+		return (1);
+	else
+	{
+		input->x += 1;
+		if (input->x == input->width + 1)
+		{
+			input->y += 1;
+			input->x = 1;
+		}
+		ft_strcat(input->line, buff);
+	}
+
+	// se deplacer en colonne 1
+	cap = tgetstr("le", NULL);
+	i = input->x;
+	while (i--)
+		tputs(cap, 1, &ft_intputchar);
+
+	// se deplacer en ligne 1
+	cap = tgetstr("up", NULL);
+	i = input->y;
+	while (--i)
+		tputs(cap, 1, &ft_intputchar);
+
+	cap = tgetstr("cd", NULL);
+	tputs(cap, 1, &ft_intputchar);	
+	
+	printf("x:%d y:%d\n", input->x, input->y);
+	ft_putstr(input->line);
+	return (0);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   line_editing.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/06/30 15:19:53 by sfranc           ###   ########.fr       */
+/*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
+/*   Updated: 2017/06/30 19:19:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#ifndef LINE_EDITING_H
+# define LINE_EDITING_H
 
-# include <sys/types.h>
-# include <pwd.h>
-# include <uuid/uuid.h>
+#include <term.h>
+#include <sys/ioctl.h>
 
-# include "libft.h"
-# include "line_editing.h"
+typedef struct	s_input
+{
+	char	*line;
+	int		width;
+	int		x;
+	int		y;
+}				t_input;
+
+/*
+** TERM
+*/
+void	ft_raw_term(void);
+void	ft_canonic_term(void);
+int		ft_interpret(char *buff, t_input *input);
 
 #endif
