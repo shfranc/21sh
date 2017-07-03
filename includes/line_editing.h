@@ -20,6 +20,7 @@ typedef struct	s_input
 {
 	char	*line;
 	int		width;
+	int		len;
 	int		x;
 	int		y;
 }				t_input;
