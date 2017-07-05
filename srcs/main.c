@@ -54,17 +54,14 @@ int		main(void)
 
 
 	ft_bzero(&input, sizeof(t_input));
-	input.line = ft_memalloc(2048);
-	
+	input.line = ft_memalloc(INPUTSIZE);
+
 	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
 		ft_exit("Unable to get winsize struct", 1);
 	input.width = win.ws_col;
-//	ft_putnbr_endl(input.width);
-	input.x = 0;
-	input.y = 0;
-	
+	//	ft_putnbr_endl(input.width);
+
 	//	intercepter les signaux avant les termcaps
-	ft_putstr("\033[H\033[2J");
 	while (1)
 	{
 		ft_raw_term();

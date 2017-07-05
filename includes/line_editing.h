@@ -13,8 +13,10 @@
 #ifndef LINE_EDITING_H
 # define LINE_EDITING_H
 
-#include <term.h>
-#include <sys/ioctl.h>
+# include <term.h>
+# include <sys/ioctl.h>
+
+# define INPUTSIZE 2048
 
 typedef struct	s_input
 {
