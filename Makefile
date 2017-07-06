@@ -14,7 +14,10 @@ NAME = 21sh
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
-		read/term.c)
+		read/term.c \
+		read/prompt.c \
+		read/cursor_moves.c \
+		read/buffer.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a

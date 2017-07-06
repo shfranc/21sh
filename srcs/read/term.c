@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "shell21.h"
-#include <stdio.h>
 
 void	ft_raw_term(void)
 {
@@ -49,100 +48,63 @@ void	ft_canonic_term(void)
 	term.c_lflag |=  ECHO;
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 		ft_exit("Unable to set canonic mode", 1);
-
 }
 
-static	int		ft_intputchar(int c)
+int		ft_intputchar(int c)
 {
 	write(1, &c, 1);
 	return (0);
 }
 
-void	ft_insertchar(char *buff, t_input *input)
+void	ft_clearndisplay(t_input *input)
 {
-	char	*begin;
-	char	*end;
+//	int i;
 
-	begin = ft_strsub(input->line, 0, input->x);
-	end = ft_strsub(input->line, input->x, ft_strlen(input->line) - ft_strlen(begin));
-	ft_bzero(input->line, INPUTSIZE);
-	input->line = ft_strcpy(input->line, begin);
-	input->line = ft_strcat(input->line, buff);
-	input->line = ft_strcat(input->line, end);
-	input->len++;
-	input->x = ft_strlen(input->line);
-	free(begin);
-	free(end);
-}
 
-void	ft_deletechar(t_input *input)
-{
-	char	*begin;
-	char	*end;
-
-	if (input->x > 0)
-	{
-		begin = ft_strsub(input->line, 0, input->x - 1);
-		end = ft_strsub(input->line, input->x, ft_strlen(input->line) - ft_strlen(begin));
-		ft_bzero(input->line, INPUTSIZE);
-		input->line = ft_strcpy(input->line, begin);
-		input->line = ft_strcat(input->line, end);
-		input->len--;
-		input->x = ft_strlen(input->line);
-		free(begin);
-		free(end);
-	}
-	else
-		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
-}
-
-void	ft_move_right(t_input *input)
-{
-	if (input->x < input->len)
-	{
-		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
-		input->x++;
-	}
-	else
-		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
-}
-
-void	ft_move_left(t_input *input)
-{
-	if (input->x > 0)
-	{
-		tputs(tgetstr("le", NULL), 1, &ft_intputchar);
-		input->x--;
-	}
-	else
-		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
+//	if (input->height == 1)
+//	{
+//		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+//		i = input->prompt;
+//		while (i--)
+//			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+//		tputs(tgetstr("ce", NULL), 1, &ft_intputchar);
+		ft_putendl(input->line);
+//	}
 }
 
 int		ft_interpret(char *buff, t_input *input)
 {
-
 	if (buff[0] == 27 && ft_strequ(&buff[1], "[C"))
 		ft_move_right(input);
 
 	if (buff[0] == 27 && ft_strequ(&buff[1], "[D"))
 		ft_move_left(input);
 
-	if (ft_isprint(buff[0]) || buff[0] == '\n')
+	if (buff[0] == '\n')
+	{
+		input->line = ft_strcat(input->line, buff);
+		ft_clearndisplay(input);
+		return (1);
+	}
+
+	if (ft_isprint(buff[0]))
 	{
 		ft_insertchar(buff, input);
-		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);	
-		tputs(tgetstr("cd", NULL), 1, &ft_intputchar);	
-		ft_putstr(input->line);
-		if (buff[0] == '\n')
-			return (1);
+		if (input->y == 0)
+			input->x = input->prompt + input->len;
+		else
+			input->x = (input->prompt + input->len) % input->width;
+		ft_clearndisplay(input);
 	}
 
 	if (buff[0] == 127)
 	{
-		ft_deletechar(input);
-		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);	
-		tputs(tgetstr("cd", NULL), 1, &ft_intputchar);	
-		ft_putstr(input->line);
+		ft_deletechar(input);	
+		if (input->y == 0)
+			input->x = input->prompt + input->len;
+		else
+			input->x = (input->prompt + input->len) % input->width;
+		ft_clearndisplay(input);
 	}
 
 	if (buff[0] == 4 && !*input->line)
