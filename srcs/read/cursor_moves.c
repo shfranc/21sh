@@ -52,7 +52,7 @@ void	ft_move_left(t_input *input)
 		while (i--)
 			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
 		tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-		input->x = input->width;
+		input->x = input->width - 1;
 		input->y--;
 	}
 	else

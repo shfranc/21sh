@@ -58,18 +58,37 @@ int		ft_intputchar(int c)
 
 void	ft_clearndisplay(t_input *input)
 {
-//	int i;
+	int	line;
+	int i;
 
+	line = input->height;
 
-//	if (input->height == 1)
-//	{
-//		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
-//		i = input->prompt;
-//		while (i--)
-//			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
-//		tputs(tgetstr("ce", NULL), 1, &ft_intputchar);
-		ft_putendl(input->line);
-//	}
+	if (line > 1)
+	{
+		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+		if (input->y == 0)
+			tputs(tgetstr("do", NULL), 1, &ft_intputchar);
+		else if (input->y > 1)
+		{
+			i = input->y;
+			while (i > 1)
+				tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+		}
+		tputs(tgetstr("cd", NULL), 1, &ft_intputchar);
+//		tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+		line = 1;
+	}
+
+	if (line == 1)
+	{
+		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+		i = input->prompt;
+		while (i--)
+			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+		tputs(tgetstr("cd", NULL), 1, &ft_intputchar);
+	}
+	
+	ft_putstr(input->line);
 }
 
 int		ft_interpret(char *buff, t_input *input)
@@ -87,26 +106,32 @@ int		ft_interpret(char *buff, t_input *input)
 		return (1);
 	}
 
+	char *test;
+	if (buff[0] == 49)
+	{
+		test = ft_strdup("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		input->len = ft_strlen(test);
+		ft_putstr(test);
+		input->y = 1;
+		input->x = (input->prompt + input->len) % input->width;
+	}
+
 	if (ft_isprint(buff[0]))
 	{
 		ft_insertchar(buff, input);
-		if (input->y == 0)
-			input->x = input->prompt + input->len;
-		else
-			input->x = (input->prompt + input->len) % input->width;
 		ft_clearndisplay(input);
 	}
 
-	if (buff[0] == 127)
-	{
+	/*	if (buff[0] == 127)
+		{
 		ft_deletechar(input);	
 		if (input->y == 0)
-			input->x = input->prompt + input->len;
+		input->x = input->prompt + input->len;
 		else
-			input->x = (input->prompt + input->len) % input->width;
+		input->x = (input->prompt + input->len) % input->width;
 		ft_clearndisplay(input);
-	}
-
+		}
+		*/
 	if (buff[0] == 4 && !*input->line)
 		ft_exit("exit", 1);
 

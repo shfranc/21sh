@@ -34,6 +34,7 @@ void	ft_insertchar(char *buff, t_input *input)
 		{
 			input->y++;
 			input->height++;
+			input->x = (input->prompt + ft_strlen(input->line)) % input->width;
 		}
 		free(begin);
 		free(end);
