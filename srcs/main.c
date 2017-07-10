@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/06/30 19:19:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/10 18:33:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int		main(void)
 
 	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
 		ft_exit("Unable to get winsize struct", 1);
-	input.width = win.ws_col;
-	input.height = 1;
+	input.width = win.ws_col - 1;
 
 	input.prompt = ft_display_prompt();
 	input.x = input.prompt;
+	//ft_putnbr_endl(input.width);
 
 	while (1)
 	{

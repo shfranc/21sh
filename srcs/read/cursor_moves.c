@@ -6,21 +6,38 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 15:53:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/03 15:57:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/10 18:52:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include <stdio.h>
+
+void	ft_increase_cursorpos(t_input *input)
+{
+	if (input->x < input->width)
+		input->x++;
+	else
+	{
+		input->x = 0;
+		input->y++;
+	}
+}
+
+void	ft_decrease_cursorpos(t_input *input)
+{
+	(void)input;	
+}
 
 void	ft_move_right(t_input *input)
 {
 	int index;
 
-	index = input->y * input->width + input->x;
+	index = input->y * (input->width + 1) + input->x;
 
 	if (index < (input->prompt + input->len))
 	{
-		if (input->x < input->width - 1)
+		if (input->x < input->width)
 		{
 			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
 			input->x++;
@@ -48,11 +65,11 @@ void	ft_move_left(t_input *input)
 	}
 	else if (input->y > 0 && input->x == 0)
 	{
-		i = input->width - 1;
+		i = input->width;
 		while (i--)
 			tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
 		tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-		input->x = input->width - 1;
+		input->x = input->width;
 		input->y--;
 	}
 	else
