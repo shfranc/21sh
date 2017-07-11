@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 15:53:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/11 15:33:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/11 17:50:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,14 @@ void	ft_increase_cursorpos(t_input *input)
 
 void	ft_decrease_cursorpos(t_input *input)
 {
-	(void)input;	
+	if ((input->y == 0 && input->x > input->prompt) || (input->y > 0 && input->x > 0))
+		input->x--;
+	else if (input->y > 0 && input->x == 0)
+	{
+		input->x = input->width;
+		input->y--;
+	}
+
 }
 
 void	ft_move_right(t_input *input)

@@ -6,11 +6,26 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/10 18:33:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/11 17:14:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include <signal.h>
+#include <stdio.h>
+
+/*void test(int sig)
+{
+	printf("signal:n*%d\n", sig);
+}
+
+int catch_signals()
+{
+	int i = 0;
+	while (++i < 32)
+		signal(i, &test);
+	return (1);
+}*/
 
 int		main(void)
 {
@@ -18,6 +33,7 @@ int		main(void)
 	t_input	input;
 	struct winsize	win;
 
+//	catch_signals();
 
 	ft_bzero(&input, sizeof(t_input));
 	input.line = ft_memalloc(INPUTSIZE);

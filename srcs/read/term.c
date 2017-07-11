@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/11 15:18:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/11 17:33:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,56 +58,56 @@ int		ft_intputchar(int c)
 }
 
 /*
-void	ft_goto_begin(t_input *input)
-{
-	int i;
+   void	ft_goto_begin(t_input *input)
+   {
+   int i;
 
-	if (input->y != 0)
-	{
-		i = input->y;
-		while (i--)
-			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-	}
+   if (input->y != 0)
+   {
+   i = input->y;
+   while (i--)
+   tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+   }
 
-	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
-}
+   tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+   }
 
-void	ft_goto_prompt(t_input *input)
-{
-	int i;
+   void	ft_goto_prompt(t_input *input)
+   {
+   int i;
 
-	if (input->y != 0)
-	{
-		i = input->y;
-		while (i--)
-			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-	}
+   if (input->y != 0)
+   {
+   i = input->y;
+   while (i--)
+   tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+   }
 
-	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+   tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
 
-	ft_goto_begin(input);
-	i = input->prompt;
-	while (i--)
-		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
-}
-*/
+   ft_goto_begin(input);
+   i = input->prompt;
+   while (i--)
+   tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+   }
+   */
 void	ft_clear(t_input *input)
 {
 	/*
-	int i;
+	   int i;
 
-	if (input->y != 0)
-	{
-		i = input->y;
-		while (i--)
-			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-	}
+	   if (input->y != 0)
+	   {
+	   i = input->y;
+	   while (i--)
+	   tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+	   }
 
-	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
-	i = input->prompt;
-	while (i--)
-		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
-	*/
+	   tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+	   i = input->prompt;
+	   while (i--)
+	   tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+	   */
 	ft_goto_prompt(input);
 	tputs(tgetstr("cd", NULL), 1, &ft_intputchar);
 }
@@ -144,30 +144,25 @@ int		ft_interpret(char *buff, t_input *input)
 
 	else if (ft_isprint(buff[0]))
 	{
-	/*	ft_clear(input);
-		input->line = ft_strcat(input->line, buff);
-		ft_putstr(input->line);
-//		write(1, &buff[0], 1);
+		/*	ft_clear(input);
+			input->line = ft_strcat(input->line, buff);
+			ft_putstr(input->line);
+		//		write(1, &buff[0], 1);
 		input->len++;
 		ft_increase_cursorpos(input);
 		if (input->x == 0)
 		{
-			tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
-			tputs(tgetstr("do", NULL), 1, &ft_intputchar);
+		tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+		tputs(tgetstr("do", NULL), 1, &ft_intputchar);
 		}*/
 		ft_insertchar(buff, input);
 	}
 
-	/*	if (buff[0] == 127)
-		{
+	if (buff[0] == 127)
+	{
 		ft_deletechar(input);	
-		if (input->y == 0)
-		input->x = input->prompt + input->len;
-		else
-		input->x = (input->prompt + input->len) % input->width;
-		ft_clearndisplay(input);
-		}
-		*/
+	}
+
 	if (buff[0] == 4 && !*input->line)
 		ft_exit("exit", 1);
 
