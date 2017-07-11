@@ -6,11 +6,12 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/10 18:53:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/11 15:18:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+#include <stdio.h>
 
 void	ft_raw_term(void)
 {
@@ -56,8 +57,43 @@ int		ft_intputchar(int c)
 	return (0);
 }
 
+/*
+void	ft_goto_begin(t_input *input)
+{
+	int i;
+
+	if (input->y != 0)
+	{
+		i = input->y;
+		while (i--)
+			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+	}
+
+	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+}
+
+void	ft_goto_prompt(t_input *input)
+{
+	int i;
+
+	if (input->y != 0)
+	{
+		i = input->y;
+		while (i--)
+			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+	}
+
+	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+
+	ft_goto_begin(input);
+	i = input->prompt;
+	while (i--)
+		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+}
+*/
 void	ft_clear(t_input *input)
 {
+	/*
 	int i;
 
 	if (input->y != 0)
@@ -71,8 +107,9 @@ void	ft_clear(t_input *input)
 	i = input->prompt;
 	while (i--)
 		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+	*/
+	ft_goto_prompt(input);
 	tputs(tgetstr("cd", NULL), 1, &ft_intputchar);
-
 }
 
 int		ft_interpret(char *buff, t_input *input)
@@ -85,11 +122,27 @@ int		ft_interpret(char *buff, t_input *input)
 
 	if (buff[0] == '\n')
 	{
-		write(1, &buff[0], 1);
+		ft_clear(input);
+		input->line = ft_strcat(input->line, "\n");
+		ft_putstr(input->line);
 		return (1);
 	}
 
-	if (ft_isprint(buff[0]))
+	else if (buff[0] == 48)
+	{
+		printf("\nwidth:%d x:%d y:%d\n", input->width, input->x, input->y);
+	}
+
+	else if (buff[0] == 'c')
+	{
+		ft_clear(input);
+		ft_bzero(input->line, INPUTSIZE);
+		input->x = input->prompt;
+		input->y = 0;
+		input->len = 0;
+	}
+
+	else if (ft_isprint(buff[0]))
 	{
 	/*	ft_clear(input);
 		input->line = ft_strcat(input->line, buff);
@@ -103,15 +156,6 @@ int		ft_interpret(char *buff, t_input *input)
 			tputs(tgetstr("do", NULL), 1, &ft_intputchar);
 		}*/
 		ft_insertchar(buff, input);
-	}
-
-	if (buff[0] == 'c')
-	{
-		ft_clear(input);
-		ft_bzero(input->line, INPUTSIZE);
-		input->x = input->prompt;
-		input->y = 0;
-		input->len = 0;
 	}
 
 	/*	if (buff[0] == 127)

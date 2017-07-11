@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/10 18:33:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/11 16:23:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	ft_increase_cursorpos(t_input *input);
 void	ft_decrease_cursorpos(t_input *input);
 void	ft_move_left(t_input *input);
 void	ft_move_right(t_input *input);
-
+void	ft_goto_begin(t_input *input);
+void	ft_goto_prompt(t_input *input);
+void	ft_goto_newpos(t_input *input, int cur_y);
 /*
 ** BUFFER
 */

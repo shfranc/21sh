@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/06/28 13:01:32 by sfranc           ###   ########.fr        #
+#    Updated: 2017/07/11 15:15:31 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		read/term.c \
 		read/prompt.c \
 		read/cursor_moves.c \
+		read/goto.c \
 		read/buffer.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
