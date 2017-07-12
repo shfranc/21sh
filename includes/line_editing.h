@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/11 18:15:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/12 16:09:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <term.h>
 # include <sys/ioctl.h>
 
-# define INPUTSIZE 2048
+# define	INPUTSIZE 2048
 
 typedef struct	s_input
 {
