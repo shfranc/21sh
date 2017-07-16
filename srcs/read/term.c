@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/12 16:27:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/16 19:18:17 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,28 +85,30 @@ void	ft_end_of_line(t_input *input)
 		ft_move_right(input);
 }
 
-
 int		ft_interpret(char *buff, t_input *input)
 {
 		(void)input;
-		printf("\nkey: %d %d %d %d %d %d\n", buff[0], buff[1], buff[2], buff[3], buff[4], buff[5]);
-//		printf("%d\n", MOVERIGHT);
+//		printf("\nkey: %d %d %d %d %d %d\n", buff[0], buff[1], buff[2], buff[3], buff[4], buff[5]);
 		//	printf("\nwidth:%d x:%d y:%d\n", input->width, input->x, input->y);
 
-		/*
+		
 	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
 		ft_move_right(input);
 
 	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
 		ft_move_left(input);
 
+	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 53 && buff[3] == 126)
+		ft_move_up(input);
+
+	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 54 && buff[3] == 126)
+		ft_move_down(input);
+
 	if (buff[0] == 1 || (buff[0] == 27 && buff[1] == 91 && buff[2] == 72))
 		ft_beginning_of_line(input);
 	
 	if (buff[0] == 5 || (buff[0] == 27 && buff[1] == 91 && buff[2] == 70))
 		ft_end_of_line(input);
-
-	if (buff)
 
 	if (buff[0] == '\n')
 	{
@@ -119,18 +121,18 @@ int		ft_interpret(char *buff, t_input *input)
 	if (buff[0] == 12)
 		ft_clear_screen(input);
 
-	if (ft_isprint(buff[0]))
+	if (ft_isprint(buff[0])) // buff entier est isprint
 		ft_insertchar(buff, input);
 
 	if (buff[0] == 127)
-		ft_deletechar(input);	
+		ft_back_deletechar(input);	
 
 	if (buff[0] == 4 && *input->line)
-		;
+		ft_deletechar(input);
 
 	if (buff[0] == 4 && !*input->line)
 		ft_exit("exit", 1);
-*/
+
 	return (0);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/12 16:09:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/16 19:07:15 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <term.h>
 # include <sys/ioctl.h>
 
-# define	INPUTSIZE 2048
+# define	INPUTSIZE 4096
 
 typedef struct	s_input
 {
@@ -43,14 +43,22 @@ void	ft_increase_cursorpos(t_input *input);
 void	ft_decrease_cursorpos(t_input *input);
 void	ft_move_left(t_input *input);
 void	ft_move_right(t_input *input);
+void	ft_move_up(t_input *input);
+void	ft_move_down(t_input *input);
+
+void	ft_beginning_of_line(t_input *input);
+void	ft_end_of_line(t_input *input);
+
 void	ft_goto_begin(t_input *input);
 void	ft_goto_prompt(t_input *input);
 void	ft_goto_newpos(t_input *input, int cur_y);
+
 /*
 ** BUFFER
 */
 void	ft_clear(t_input *input);
 void	ft_insertchar(char *buff, t_input *input);
+void	ft_back_deletechar(t_input *input);
 void	ft_deletechar(t_input *input);
 
 /*
