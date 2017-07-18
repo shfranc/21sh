@@ -6,12 +6,42 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 16:56:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/16 18:28:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/17 17:22:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 #include <stdio.h>
+
+/*
+** 2 functions to change cursos coordinate, without moves.
+*/
+
+void	ft_increase_cursorpos(t_input *input)
+{
+	if (input->x < input->width)
+		input->x++;
+	else
+	{
+		input->x = 0;
+		input->y++;
+	}
+}
+
+void	ft_decrease_cursorpos(t_input *input)
+{
+	if ((input->y == 0 && input->x > input->prompt) || (input->y > 0 && input->x > 0))
+		input->x--;
+	else if (input->y > 0 && input->x == 0)
+	{
+		input->x = input->width;
+		input->y--;
+	}
+}
+
+/*
+** Insert an char or a string into the current line.
+*/
 
 void	ft_insertchar(char *buff, t_input *input)
 {
@@ -47,6 +77,10 @@ void	ft_insertchar(char *buff, t_input *input)
 		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
 }
 
+/*
+** Delete the char right on the left, with "delete" key.
+*/
+
 void	ft_back_deletechar(t_input *input)
 {
 	char	*begin;
@@ -74,6 +108,10 @@ void	ft_back_deletechar(t_input *input)
 	else
 		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
 }
+
+/*
+** Delete the char right below the cursor with ctrl + D.
+*/
 
 void	ft_deletechar(t_input *input)
 {

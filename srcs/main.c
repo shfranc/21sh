@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/16 16:42:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/17 15:40:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,11 @@ int		main(void)
 {
 	char	buff[6];
 	t_input	input;
-	struct winsize	win;
+	//struct winsize	win;
 
 //	catch_signals();
 
-	ft_bzero(&input, sizeof(t_input));
-	input.line = ft_memalloc(INPUTSIZE);
-
-	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
-		ft_exit("Unable to get winsize struct", 1);
-	input.width = win.ws_col - 1;
-
-	input.prompt = ft_display_prompt();
-	input.x = input.prompt;
-	//ft_putnbr_endl(input.width);
+	ft_init_input_struct(&input);
 
 	while (1)
 	{

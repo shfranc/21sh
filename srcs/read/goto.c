@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 15:13:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/16 19:25:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/17 17:20:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	ft_goto_newpos(t_input *input, int cur_y)
 	int x;
 	int	y;
 	int	i;
-	
+
+
 	if (cur_y != 0)
 	{
 		i = cur_y;

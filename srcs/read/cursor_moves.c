@@ -6,35 +6,18 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 15:53:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/16 19:25:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/17 18:39:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 #include <stdio.h>
 
-void	ft_increase_cursorpos(t_input *input)
-{
-	if (input->x < input->width)
-		input->x++;
-	else
-	{
-		input->x = 0;
-		input->y++;
-	}
-}
-
-void	ft_decrease_cursorpos(t_input *input)
-{
-	if ((input->y == 0 && input->x > input->prompt) || (input->y > 0 && input->x > 0))
-		input->x--;
-	else if (input->y > 0 && input->x == 0)
-	{
-		input->x = input->width;
-		input->y--;
-	}
-
-}
+/*
+** Basic cursor moves :
+** Same as bash = right (key: ->) and left (key: <-)
+** Bonus = up (key: page up) and down (key: page down)
+*/
 
 void	ft_move_right(t_input *input)
 {

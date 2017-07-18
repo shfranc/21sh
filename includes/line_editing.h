@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/16 19:07:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/17 18:46:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,40 +26,58 @@ typedef struct	s_input
 	int		x;
 	int		y;
 	int		prompt;
+	char	*right;
+	char	*left;
+	char	*up;
+	char	*down;
+	char	*cr;
 }				t_input;
 
 /*
 ** TERM
 */
+void	ft_init_input_struct(t_input *input);
 void	ft_raw_term(void);
 void	ft_canonic_term(void);
 int		ft_interpret(char *buff, t_input *input);
 int		ft_intputchar(int c);
 
 /*
-** CURSOR
+** CURSOR MOVES
 */
-void	ft_increase_cursorpos(t_input *input);
-void	ft_decrease_cursorpos(t_input *input);
 void	ft_move_left(t_input *input);
 void	ft_move_right(t_input *input);
 void	ft_move_up(t_input *input);
 void	ft_move_down(t_input *input);
 
+/*
+** MOVE COMMANDS
+*/
 void	ft_beginning_of_line(t_input *input);
 void	ft_end_of_line(t_input *input);
+void	ft_jumpword_forward(t_input *input);
+void	ft_jumpword_backward(t_input *input);
 
+/*
+** MOVES NOT LINKED TO USER COMMANDS
+*/
 void	ft_goto_begin(t_input *input);
 void	ft_goto_prompt(t_input *input);
 void	ft_goto_newpos(t_input *input, int cur_y);
 
 /*
-** BUFFER
+** BUFFER 
 */
-void	ft_clear(t_input *input);
 void	ft_insertchar(char *buff, t_input *input);
 void	ft_back_deletechar(t_input *input);
 void	ft_deletechar(t_input *input);
+void	ft_accept_line(t_input *input);
+
+/*
+** SCREEN
+*/
+void	ft_clear(t_input *input);
+void	ft_clear_screen(t_input *input);
 
 /*
 ** PROMPT
