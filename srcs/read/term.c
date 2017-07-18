@@ -6,12 +6,11 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 18:56:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 10:50:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-#include <stdio.h>
 
 void	ft_init_input_struct(t_input *input)
 {
@@ -19,6 +18,7 @@ void	ft_init_input_struct(t_input *input)
 
 	ft_bzero(input, sizeof(t_input));
 	input->line = ft_memalloc(INPUTSIZE);
+	input->tmp = ft_memalloc(INPUTSIZE);
 	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
 		ft_exit("ioctl: Unable to get winsize struct", 1);
 	input->width = win.ws_col - 1;

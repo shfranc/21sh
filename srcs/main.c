@@ -6,34 +6,31 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 15:40:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 12:58:15 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-#include <signal.h>
-#include <stdio.h>
-
-/*void test(int sig)
+/*
+void	ft_signals_handler(int sig)
 {
 	printf("signal:n*%d\n", sig);
 }
 
-int catch_signals()
+int		ft_catch_signals()
 {
 	int i = 0;
 	while (++i < 32)
-		signal(i, &test);
+		signal(i, &ft_signals_handler);
 	return (1);
-}*/
-
+}
+*/
 int		main(void)
 {
 	char	buff[6];
 	t_input	input;
-	//struct winsize	win;
 
-//	catch_signals();
+//	ft_catch_signals();
 
 	ft_init_input_struct(&input);
 

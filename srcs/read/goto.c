@@ -6,15 +6,15 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 15:13:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 17:20:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 16:52:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
 /*
-** Bring the cursor to the beginning of the input, BEFORE the prompt.
-*/
+ ** Bring the cursor to the beginning of the input, BEFORE the prompt.
+ */
 
 void	ft_goto_begin(t_input *input)
 {
@@ -30,13 +30,13 @@ void	ft_goto_begin(t_input *input)
 }
 
 /*
-** Bring the cursor right after the prompt.
-*/
+ ** Bring the cursor right after the prompt.
+ */
 
 void	ft_goto_prompt(t_input *input)
 {
 	int i;
-	
+
 	ft_goto_begin(input);
 	i = input->prompt;
 	while (i--)
@@ -44,31 +44,44 @@ void	ft_goto_prompt(t_input *input)
 }
 
 /*
-** After "write", the cursor is moved at the end of the string printed,
-** bring the cursor next to the last inserted char.
-*/
+ ** After "write", the cursor is moved at the end of the string printed,
+ ** bring the cursor to its last position before write.
+ */
 
 void	ft_goto_newpos(t_input *input, int cur_y)
 {
-	int x;
+	int i;
+
+	while (cur_y-- > 0)
+			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
+	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+	i = 0;
+	while (i++ < input->y)
+		tputs(tgetstr("sf", NULL), 1, &ft_intputchar);
+	i = 0;
+	while (i++ < input->x)
+		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
+}
+
+void	ft_goto_lastpos(t_input *input)
+{
 	int	y;
 	int	i;
 
-
-	if (cur_y != 0)
-	{
-		i = cur_y;
-		while (i--)
-			tputs(tgetstr("up", NULL), 1, &ft_intputchar);
-	}
+	y = (input->len + input->prompt) / (input->width + 1);
+	if (( (input->len + input->prompt) % (input->width + 1)) == 0)
+		y--;
+	
+	while (y--)
+		tputs(tgetstr("up", NULL), 1, &ft_intputchar);
 	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
 	
-	y = 0;
-	while (y++ < input->y)
-		tputs(tgetstr("do", NULL), 1, &ft_intputchar);
-	
-	x = 0;
-	while (x++ < input->x)
+	i = 0;
+	while (i++ < input->y)
+		tputs(tgetstr("sf", NULL), 1, &ft_intputchar);
+
+	i = 0;
+	while (i++ < input->x)
 		tputs(tgetstr("nd", NULL), 1, &ft_intputchar);
 
 }

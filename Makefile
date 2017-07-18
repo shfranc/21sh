@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/07/17 18:55:35 by sfranc           ###   ########.fr        #
+#    Updated: 2017/07/18 16:43:20 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		read/move_commands.c \
 		read/goto.c \
 		read/buffer.c \
+		read/copy_cut.c \
 		read/interpret.c \
 		read/accept.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)

@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 16:56:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 17:22:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 17:33:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** 2 functions to change cursos coordinate, without moves.
 */
 
-void	ft_increase_cursorpos(t_input *input)
+/*void	ft_increase_cursorpos(t_input *input)
 {
 	if (input->x < input->width)
 		input->x++;
@@ -37,7 +37,7 @@ void	ft_decrease_cursorpos(t_input *input)
 		input->x = input->width;
 		input->y--;
 	}
-}
+}*/
 
 /*
 ** Insert an char or a string into the current line.
@@ -48,8 +48,10 @@ void	ft_insertchar(char *buff, t_input *input)
 	char	*begin;
 	char	*end;
 	int		start;
-	int		cur_y;
 	int		buff_size;
+
+	if (!*buff)
+		return ;
 
 	buff_size = ft_strlen(buff);
 	if (input->len < INPUTSIZE - buff_size - 2)
@@ -63,13 +65,10 @@ void	ft_insertchar(char *buff, t_input *input)
 		input->line = ft_strcat(input->line, buff);
 		input->line = ft_strcat(input->line, end);
 		ft_putstr(input->line);
-		while (buff_size--)
-		{
-			ft_increase_cursorpos(input);
-			input->len++;
-			cur_y = (input->len + input->prompt - 1) / (input->width + 1);
-			ft_goto_newpos(input, cur_y);
-		}
+		input->len += buff_size;
+		ft_goto_lastpos(input);
+		while (buff_size-- > 0)
+			ft_move_right(input);
 		free(begin);
 		free(end);
 	}
@@ -86,7 +85,6 @@ void	ft_back_deletechar(t_input *input)
 	char	*begin;
 	char	*end;
 	int		start;
-	int		cur_y;
 
 	if ((input->y == 0 && input->x > input->prompt) || input->y > 0)
 	{
@@ -98,10 +96,9 @@ void	ft_back_deletechar(t_input *input)
 		input->line = ft_strcpy(input->line, begin);
 		input->line = ft_strcat(input->line, end);
 		ft_putstr(input->line);
-		ft_decrease_cursorpos(input);
 		input->len--;
-		cur_y = (input->len + input->prompt - 1) / (input->width + 1);
-		ft_goto_newpos(input, cur_y);
+		ft_goto_lastpos(input);
+		ft_move_left(input);
 		free(begin);
 		free(end);
 	}
@@ -118,7 +115,6 @@ void	ft_deletechar(t_input *input)
 	char	*begin;
 	char	*end;
 	int 	start;
-	int		cur_y;
 
 	start = input->y * (input->width + 1) + input->x - input->prompt;
 	if (start >= 0 && start < input->len)
@@ -131,8 +127,7 @@ void	ft_deletechar(t_input *input)
 		input->line = ft_strcat(input->line, end);
 		ft_putstr(input->line);
 		input->len--;
-		cur_y = (input->len + input->prompt - 1) / (input->width + 1);
-		ft_goto_newpos(input, cur_y);
+		ft_goto_lastpos(input);
 		free(begin);
 		free(end);
 	}

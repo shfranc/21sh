@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 15:53:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 18:39:11 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 14:35:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_move_right(t_input *input)
 		else
 		{
 			tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
-			tputs(tgetstr("do", NULL), 1, &ft_intputchar);
+			tputs(tgetstr("sf", NULL), 1, &ft_intputchar);
 			input->x = 0;
 			input->y++;
 		}

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/17 18:46:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/18 17:12:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 
 # include <term.h>
 # include <sys/ioctl.h>
+# include <sys/types.h>
+# include <pwd.h>
+# include <uuid/uuid.h>
 
 # define	INPUTSIZE 4096
 
 typedef struct	s_input
 {
 	char	*line;
+	char	*tmp;
 	int		width;
 	int		len;
 	int		x;
@@ -64,6 +68,7 @@ void	ft_jumpword_backward(t_input *input);
 void	ft_goto_begin(t_input *input);
 void	ft_goto_prompt(t_input *input);
 void	ft_goto_newpos(t_input *input, int cur_y);
+void	ft_goto_lastpos(t_input *input);
 
 /*
 ** BUFFER 
@@ -72,6 +77,12 @@ void	ft_insertchar(char *buff, t_input *input);
 void	ft_back_deletechar(t_input *input);
 void	ft_deletechar(t_input *input);
 void	ft_accept_line(t_input *input);
+
+/*
+** COPY N CUT
+*/
+void	ft_copy(t_input *input);
+void	ft_cut(t_input *input);
 
 /*
 ** SCREEN
