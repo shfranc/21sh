@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/07/18 16:43:20 by sfranc           ###   ########.fr        #
+#    Updated: 2017/07/19 15:13:56 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		read/term.c \
+		read/read_line.c \
 		read/prompt.c \
 		read/clear.c \
 		read/cursor_moves.c \

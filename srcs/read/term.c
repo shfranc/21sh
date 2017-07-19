@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/18 18:31:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:29:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_init_input_struct(t_input *input)
+void	ft_init_input_struct(t_input *input, int len_prompt)
 {
 	struct winsize	win;
 
@@ -22,15 +22,15 @@ void	ft_init_input_struct(t_input *input)
 	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
 		ft_exit("ioctl: Unable to get winsize struct", 1);
 	input->width = win.ws_col - 1;
-	input->prompt = ft_display_prompt();
+	input->prompt = len_prompt;
 	input->x = input->prompt;
-	
+	/*
 	input->right = tgetstr("nd", NULL);
 	input->left = tgetstr("le", NULL);
 	input->up = tgetstr("up", NULL);
 	input->down = tgetstr("sf", NULL);
 	input->cr = tgetstr("cr", NULL);
-	
+	*/
 //	if (!input->right || !input->left || !input->up || !input->down || !input->cr || !input->bl)
 //		ft_exit("Unable to reach termcaps", 1);
 }
@@ -57,7 +57,7 @@ void	ft_raw_term(void)
 	term.c_lflag &= ~ (ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
-	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+	if (tcsetattr(0, TCSANOW, &term) == -1)
 		ft_exit("tcsetattr: Unable to set raw mode", 1);
 }
 
@@ -69,6 +69,6 @@ void	ft_canonic_term(void)
 		ft_exit("tcgetattr: Unable to fetch termios struct", 1);
 	term.c_lflag |=  ICANON;
 	term.c_lflag |=  ECHO;
-	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+	if (tcsetattr(0, TCSANOW, &term) == -1)
 		ft_exit("tcgetattr: Unable to set canonic mode", 1);
 }

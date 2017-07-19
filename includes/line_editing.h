@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/18 17:33:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/19 15:13:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ typedef struct	s_input
 }				t_input;
 
 /*
+** READLINE
+*/
+void	ft_read_line(char **line, int len_prompt);
+
+/*
 ** TERM
 */
-void	ft_init_input_struct(t_input *input);
+void	ft_init_input_struct(t_input *input, int len_prompt);
 void	ft_raw_term(void);
 void	ft_canonic_term(void);
 int		ft_interpret(char *buff, t_input *input);
