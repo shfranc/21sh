@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/19 18:43:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/21 10:30:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		main(void)
 {
 	char	*line;
 	int		len_prompt;
+//	t_lexer	*lexer;
 
 //	ft_catch_signals();
 
@@ -39,9 +40,9 @@ int		main(void)
 		len_prompt = ft_display_prompt();
 		ft_read_line(&line, len_prompt);
 		ft_putstr(line);
-
-
-
+		ft_strdel(&line);
+//		lexer = ft_tokenize(line);
+//		ft_dellexer(lexer);
 	}
 	return (0);
 }

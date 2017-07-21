@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/20 17:22:30 by sfranc           ###   ########.fr       */
+/*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
+/*   Updated: 2017/07/20 19:06:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
+t_lexer	*ft_tokenize(char *line)
+{
+	t_lexer	*lexer;
+	t_token	*token;
 
-# include <signal.h>
-
-# include "libft.h"
-# include "line_editing.h"
-# include "lexer.h"
-
-#endif
+	lexer = ft_memalloc(sizeof(t_lexer));
+	while (*line)
+	{
+		token = ft_newtoken(line, "TEST");
+		ft_addtoken(lexer, token);
+		line++;
+	}
+	ft_printlexer(lexer);
+	return (lexer);
+}
