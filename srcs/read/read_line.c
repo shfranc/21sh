@@ -6,11 +6,18 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 10:32:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/21 11:22:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
+void	ft_accept_line(t_input *input)
+{
+	ft_clear(input);
+	input->line = ft_strcat(input->line, "\n");
+	ft_putstr(input->line);
+}
 
 void	ft_read_line(char **line, int len_prompt)
 {

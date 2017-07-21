@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kill_yank.c                                        :+:      :+:    :+:   */
+/*   copy_cut.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/18 10:43:00 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/18 17:33:52 by sfranc           ###   ########.fr       */
+/*   Created: 2017/07/21 11:01:46 by sfranc            #+#    #+#             */
+/*   Updated: 2017/07/21 11:03:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,25 @@
 /*
 ** Copy : ctrl + K
 ** Cut : ctrl + X
-** Paste : ctrl + V (same function as ft_insertchar)
+** Paste : ctrl + I (same function as ft_insertchar)
 */
 
 void	ft_copy(t_input *input)
 {
 	int		i;
-	
+
 	i = input->y * (input->width + 1) + input->x - input->prompt;
 	ft_bzero(input->tmp, INPUTSIZE);
-	input->tmp	= ft_strncpy(input->tmp, input->line + i, input->len - i);
+	input->tmp = ft_strncpy(input->tmp, input->line + i, input->len - i);
 }
 
 void	ft_cut(t_input *input)
 {
 	int		i;
-	
+
 	i = input->y * (input->width + 1) + input->x - input->prompt;
 	ft_bzero(input->tmp, INPUTSIZE);
-	input->tmp	= ft_strncpy(input->tmp, input->line + i, input->len - i);
-	
+	input->tmp = ft_strncpy(input->tmp, input->line + i, input->len - i);
 	ft_bzero(input->line + i, INPUTSIZE - i);
 	input->len = ft_strlen(input->line);
 	ft_clear(input);
