@@ -6,42 +6,27 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 16:57:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/24 15:34:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_createtoken(t_lexer *lexer, char *tmp, char *type)
+int		ft_part_operator(char c)
 {
-	t_token	*token;
-
-	if (tmp && *tmp)
-	{
-		token = ft_newtoken(tmp, type);
-		ft_addtoken(lexer, token);
-		ft_strdel(&tmp);
-	}
+	return (c == ';' || c == '|' || c == '&' || c == '<' || c == '>'? 1 : 0);
 }
 
-int		ft_part_operator(char *tmp, char c)
+int		ft_match_operator(char tmp, char c)
 {
-	if (!tmp)
-		return (c == ';' || c == '|' || c == '&' || c == '<' || c == '>'? 1 : 0);
-	else if (*tmp == c)
-		return (2);
-	else if (*tmp == '<' && (c == '&' || c == '>'))
-		return (2);
-	else if (*tmp == '>' && (c == '&' || c == '|'))
-		return (2);
-	//else if (ft_strequ(tmp, "<<") && c == '-')
-	//	return (2);
-	return (0);
+	if (tmp == c)
+		return (1);
+	else if (tmp ==  '<' && (c == '<' || c == '>' || c == '&')
 }
 
 int		ft_part_word(char c)
 {
-	if (ft_isprinpt(c) && !ft_isspace(c)\
+	if (ft_isprint(c) && !ft_isspace(c)\
 			&& c != ';' && c != '|' && c != '&' && c != '<' && c != '>')
 		return (1);
 	return (0);
@@ -49,46 +34,40 @@ int		ft_part_word(char c)
 
 t_lexer	*ft_tokenize(char *line)
 {
-	t_lexer	*lexer;
-	char	*tmp;
+	t_lexer		*lexer;
+	t_token		*token;
+	char		*tmp;
+	char		*type;
 
 	lexer = ft_memalloc(sizeof(t_lexer));
 	tmp = NULL;
 	while (*line)
 	{
-		/*//test split spaces
-		while (*line && *line != ' ' && *line != '\n')
+		//test split spaces
+		/*while (*line && *line != ' ' && *line != '\n')
 		{
 			tmp = ft_charappend(tmp, *line);
 			line++;
 		}*/
-		if (!*(line + 1))
+		if (*(line + 1) && ft_isamatch(*line, *(line + 1)))	
+			tmp = ft_charappend(tmp, *line);
+		else if (*(line + 1) && !ft_isamatch(*line, *(line + 1)))
 		{
-			ft_createtoken(lexer, tmp, "UNDEFINED");
-			ft_charappend(tmp, *line);
+			delim token
+				append new token
 		}
-		if (ft_part_operator(tmp, *line) == 2)
-			ft_charappend(tmp, *line);
-		if (*(line - 1) && ft_part_operator(tmp*(line - 1)) && !ft_part_operator(*line))
+		else if (!*(line + 1))
 		{
-			ft_createtoken(lexer, tmp, "OPERATOR");
-			ft_charappend(tmp, *line);
+			delim token
+			END_OF_INPUT
 		}
-		if (*(line - 1) && !ft_part_operator(*(line - 1)) && ft_part_operator(*line))
-		{
-			ft_createtoken(lexer, tmp, "UNDEFINED");
-			ft_charappend(tmp, *line);
-		}
-		if (*line == "\n")
-		{
-			ft_createtoken(lexer, tmp, "UNDEFINED");
-			ft_charappend(tmp, *line);
-		}
-		if (*line == ' ')
-			ft_createtoken(lexer, tmp, "UNDEFINED");
-		if (ft_part_word(*line))
-			ft_charappend(tmp, *line);
 
+		if (tmp)
+		{
+			token = ft_newtoken(tmp, "TOKEN");
+			ft_addtoken(lexer, token);
+			ft_strdel(&tmp);
+		}
 		line++;
 	}
 	ft_printlexer(lexer);
