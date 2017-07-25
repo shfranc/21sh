@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/20 19:05:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/25 17:16:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	ft_addtoken(t_lexer *lexer, t_token *token)
 
 	lexer->nbr_token++;
 	if (lexer->first == NULL)
+	{
 		lexer->first = token;
+		lexer->last = token;
+	}
 	else
 	{
 		temp = lexer->first;
@@ -39,6 +42,18 @@ void	ft_addtoken(t_lexer *lexer, t_token *token)
 		temp->next = token;
 		token->prev = temp;
 		lexer->last = token;
+	}
+}
+
+void	ft_reverseprint(t_lexer *lexer)
+{
+	t_token	*temp;
+
+	temp = lexer->last;
+	while(temp)
+	{
+		ft_putendl(temp->str);
+		temp = temp->prev;
 	}
 }
 
@@ -54,8 +69,14 @@ void	ft_printlexer(t_lexer *lexer)
 	while (temp)
 	{
 		ft_putstr(temp->token);
-		ft_putstr("\t\t");
-		ft_putendl(temp->str);
+		if (ft_strlen(temp->token) >= 8)
+			ft_putstr("\t");
+		else
+			ft_putstr("\t\t");
+		ft_putstr(temp->str);
+		if (temp->flags)
+			ft_putstr("\t// DQUOTE non fermée");
+		ft_putchar('\n');
 		temp = temp->next;
 	}
 }

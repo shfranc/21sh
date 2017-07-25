@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/24 11:57:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/25 15:40:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,22 @@ int		ft_catch_signals()
 	return (1);
 }*/
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	char	*line;
 	int		len_prompt;
 	t_lexer	*lexer;
 
+	(void)argc;
 //	ft_catch_signals();
 
 	while (1)
 	{
 		len_prompt = ft_display_prompt();
 		ft_read_line(&line, len_prompt);
-		ft_putstr(line);
 		lexer = ft_tokenize(line);
+		if (ft_strequ(argv[1], "--lexer"))
+			ft_printlexer(lexer);
 		ft_dellexer(lexer);
 		ft_strdel(&line);
 	}
