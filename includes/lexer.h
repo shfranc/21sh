@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/24 12:24:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/25 11:50:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,10 @@ typedef struct	s_lexer
 	int		nbr_token;
 }				t_lexer;
 
-typedef enum e_tokentype
+enum e_token
 {
-	WORD,
-	OPERATOR,
-	REDIRECT,
-	IO_NUMBER,
-	NEW_LINE,
-}			t_tokentype;
+	WORDS, OPERATOR, REDIR, IO_NUMBER, NEWLINE
+};
 
 t_lexer	*ft_tokenize(char *line);
 
