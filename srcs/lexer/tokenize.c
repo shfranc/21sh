@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/25 18:32:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/26 13:12:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,42 @@ void	ft_get_io_number(t_lexer *lexer, char *line)
 	}
 }
 
+int		ft_aggreg_fetch_dash(t_lexer *lexer, char *line)
+{
+	(void)lexer;
+	ft_putstr(line);
+	return (0);
+}
+
+void	ft_init_operator(char operator[15][5])
+{
+	if (operator[14][0] == '>')
+		return ;
+	ft_memmove(operator[0], ";;", 3);
+	ft_memmove(operator[1], ";", 2);
+	ft_memmove(operator[2], "&&", 3);
+	ft_memmove(operator[3], "&", 2);
+	ft_memmove(operator[4], "||", 3);
+	ft_memmove(operator[5], "|", 2);
+	ft_memmove(operator[6], "<<-", 4);
+	ft_memmove(operator[7], "<<", 3);
+	ft_memmove(operator[8], "<&", 3);
+	ft_memmove(operator[9], "<>", 3);
+	ft_memmove(operator[10], "<", 2);
+	ft_memmove(operator[11], ">>", 3);
+	ft_memmove(operator[12], ">&", 3);
+	ft_memmove(operator[13], ">|", 3);
+	ft_memmove(operator[14], ">", 2);
+}
+
 int		ft_get_operator(t_lexer *lexer, char *line)
 {
-	static char	*operator[] = {";;", ";", "&&", "&", "||", "|",\
-		"<<-", "<<", "<&", "<>", "<", ">>", ">&", ">|", ">"};
-	int			i;
+	static char	operator[15][5];
 	t_token		*token;
+	int			len;
+	int			i;
 
+	ft_init_operator(operator);
 	i = 0;
 	while (operator[i])
 	{
@@ -50,9 +79,12 @@ int		ft_get_operator(t_lexer *lexer, char *line)
 				ft_get_io_number(lexer, line);
 				token = ft_newtoken(operator[i], "REDIRECT");
 				ft_addtoken(lexer, token);
+				if (ft_strequ(operator[i], ">&") || ft_strequ(operator[i], "<&"))
+				{
+					if ((len = ft_aggreg_fetch_dash(lexer, line + ft_strlen(operator[i]))))
+						return(len + ft_strlen(operator[i]));	// dans le cas de >& ou <& --> aller chercher le - si coller au prochain mot.
+				}
 			}
-			if (ft_strequ(operator[i], ">&") || ft_strequ(operator[i], "<&"))
-				;	// dans le cas de >& ou <& --> aller chercher le - si coller au prochain mot.
 			return (ft_strlen(operator[i]));
 		}
 		++i;
@@ -60,14 +92,14 @@ int		ft_get_operator(t_lexer *lexer, char *line)
 	return (0);
 }
 
-int		ft_goto_next_dquote(char *line)
+int		ft_goto_next_quote(char *line, char quote)
 {
 	int	len;
 
 	len = 1;
-	while (*(line + len) && *(line + len) != '"')
+	while (*(line + len) && *(line + len) != quote)
 		len++;
-	if (*(line + len))
+	if (*(line + len) == quote)
 		len++;
 	return (len);
 }
@@ -88,14 +120,21 @@ int		ft_get_word(t_lexer *lexer, char *line)
 
 	quotes = 0;
 	len = 0;
-	while (*(line + len) && !ft_part_operator(*(line + len)) && *(line + len) != ' ' && *(line + len) != '\n')
+	while (*(line + len) && !ft_part_operator(*(line + len)) && !ft_isspace(*(line + len)))
 	{
 		if (*(line + len) == '"')
 		{
-			quotes = DQUOTES;
-			len += ft_goto_next_dquote(line + len);
+			quotes |= DQUOTES;
+			len += ft_goto_next_quote(line + len, *(line + len));
 			if (*(line + len - 1) == '"')
-				quotes = 0;
+				quotes ^= DQUOTES;
+		}
+		else if (*(line + len) == '\'')
+		{
+			quotes |= SQUOTES;
+			len += ft_goto_next_quote(line + len, *(line + len));
+			if (*(line + len - 1) == '\'')
+				quotes ^= SQUOTES;
 		}
 		else
 			len++;

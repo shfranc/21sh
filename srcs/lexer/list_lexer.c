@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/25 17:16:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/26 13:12:43 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ void	ft_printlexer(t_lexer *lexer)
 		else
 			ft_putstr("\t\t");
 		ft_putstr(temp->str);
-		if (temp->flags)
+		if (temp->flags & DQUOTES)
 			ft_putstr("\t// DQUOTE non fermée");
+		if (temp->flags & SQUOTES)
+			ft_putstr("\t// SQUOTE non fermée");
 		ft_putchar('\n');
 		temp = temp->next;
 	}

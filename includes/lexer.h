@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/25 17:18:04 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/26 11:47:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEXER_H
 
 #define	DQUOTES 1
+#define	SQUOTES 1 << 1
 
 typedef struct	s_token
 {
