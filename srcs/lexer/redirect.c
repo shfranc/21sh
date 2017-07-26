@@ -1,0 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/07/26 18:02:56 by sfranc            #+#    #+#             */
+/*   Updated: 2017/07/26 18:03:32 by sfranc           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "shell21.h"
+
+void	ft_get_io_number(t_lexer *lexer, char *line)
+{
+	if (lexer->last && ft_isnumber(lexer->last->str) &&\
+			ft_strncmp(line - ft_strlen(lexer->last->str),\
+				lexer->last->str, ft_strlen(lexer->last->str)) == 0)
+	{
+		free(lexer->last->token);
+		lexer->last->token = ft_strdup("IO_NUMBER");
+	}
+}
+
+int		ft_aggreg_fetch_dash(t_lexer *lexer, char *line)
+{
+	t_token	*token;
+	char	*dash;
+
+	if (!(dash = ft_strchr(line, '-')))
+		return (0);
+	if (!ft_isspace(*(dash + 1)))
+	{
+		token = ft_newtoken("-", "WORD");
+		ft_addtoken(lexer, token);
+		return (dash - line + 1);
+	}
+	return (0);
+}
