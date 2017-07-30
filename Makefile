@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/07/26 18:05:19 by sfranc           ###   ########.fr        #
+#    Updated: 2017/07/30 18:31:05 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		lexer/get_word.c \
 		lexer/get_operator.c \
 		lexer/redirect.c \
-		lexer/quotes.c)
+		lexer/quotes.c \
+		parser/parse_command.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
@@ -55,6 +56,7 @@ $(LIB):
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
 	@mkdir -p $(OBJS_PATH)/read
 	@mkdir -p $(OBJS_PATH)/lexer
+	@mkdir -p $(OBJS_PATH)/parser
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "$@ : $(YELLOW)OK$(RESET)"
 

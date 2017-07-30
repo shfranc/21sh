@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/26 18:02:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/30 19:46:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct	s_token
 {
 	char			*str;
 	char			*token;
-	int				flags;
+	int				token_type;
+	int				flags; 		// inhibiteur
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
@@ -33,6 +34,26 @@ typedef struct	s_lexer
 	int		nbr_token;
 	int		flags;
 }				t_lexer;
+
+enum			e_tokenlst
+{
+	NONE,
+	DSEMI,
+	SEMI,
+	AND_IF,
+	AND,
+	OR_IF,
+	PIPE,
+	DLESS_DASH,
+	DLESS,
+	LESS_AND,
+	LESS_GREAT,
+	LESS,
+	DGREAT,
+	GREAT_AND,
+	CLOBBER,
+	GREAT
+};
 
 t_lexer	*ft_tokenize(char *line);
 

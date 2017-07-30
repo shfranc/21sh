@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/26 18:08:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/27 15:34:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_lexer	*ft_tokenize(char *line)
 	tmp = NULL;
 	while (*line)
 	{
-		//	ft_putstr(line);
 		if (ft_part_operator(*line))
 			line = line + ft_get_operator(lexer, line);
 		else if (ft_part_word(*line))

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/26 16:59:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/30 19:34:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	ft_reverseprint(t_lexer *lexer)
 
 void	ft_printlexer(t_lexer *lexer)
 {
+	static char	*token_list[] = { "", "DSEMI", "SEMI", "AND_IF", "AND", "OR_IF", "PIPE", "DLESS_DASH", "DLESS", "LESS_AND", "LESS_GREAT", "LESS", "DGREAT", "GREAT_AND", "CLOBBER", "GREAT"};
 	t_token	*temp;
 
 	temp = lexer->first;
@@ -69,7 +70,9 @@ void	ft_printlexer(t_lexer *lexer)
 	while (temp)
 	{
 		ft_putstr(temp->token);
-		if (ft_strlen(temp->token) >= 8)
+		ft_putstr(" ");
+		ft_putstr(token_list[temp->token_type]);
+		if (ft_strlen(temp->token) + 1 >= 8)
 			ft_putstr("\t");
 		else
 			ft_putstr("\t\t");
