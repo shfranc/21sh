@@ -6,23 +6,23 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/30 19:46:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 18:28:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#define	DQUOTES 1
-#define	SQUOTES 1 << 1
-#define	ESCAPE 1 << 2
+# define	DQUOTES 1
+# define	SQUOTES 1 << 1
+# define	ESCAPE 1 << 2
 
 typedef struct	s_token
 {
 	char			*str;
-	char			*token;
 	int				token_type;
-	int				flags; 		// inhibiteur
+	int				operator_type;
+	int				quoting; 		// inhibiteurs
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;
@@ -35,7 +35,16 @@ typedef struct	s_lexer
 	int		flags;
 }				t_lexer;
 
-enum			e_tokenlst
+enum			e_tokentype
+{
+	WORD,
+	OPERATOR,
+	REDIRECT,
+	IO_NUMBER,
+	NEWLINE
+};
+
+enum			e_operatorlst
 {
 	NONE,
 	DSEMI,
@@ -55,7 +64,7 @@ enum			e_tokenlst
 	GREAT
 };
 
-t_lexer	*ft_tokenize(char *line);
+void	ft_tokenize(t_lexer **lexer, char *line);
 
 /*
 ** GET WORD
@@ -76,10 +85,10 @@ int		ft_aggreg_fetch_dash(t_lexer *lexer, char *line);
 /*
 ** LIST LEXER
 */
-t_token	*ft_newtoken(char *str, char *token);
+t_token	*ft_newtoken(char *str, int token_type, int operator_type);
 void	ft_addtoken(t_lexer *lexer, t_token *token);
-void	ft_dellexer(t_lexer *lexer);
-
+void	ft_del_lasttoken(t_lexer *lexer);
+void	ft_dellexer(t_lexer **lexer);
 void	ft_printlexer(t_lexer *lexer);
 void	ft_reverseprint(t_lexer *lexer);
 

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 17:50:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/30 19:34:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 12:02:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ int			ft_get_operator(t_lexer *lexer, char *line)
 		{
 			if (i < 6)
 			{
-				token = ft_newtoken(operator[i], "OPERATOR");
-				token->token_type = i + 1;
+				token = ft_newtoken(operator[i], OPERATOR, i + 1);
+				//token->operator_type = i + 1;
 				ft_addtoken(lexer, token);
 			}
 			else
 			{
 				ft_get_io_number(lexer, line);
-				token = ft_newtoken(operator[i], "REDIRECT");
-				token->token_type = i + 1;
+				token = ft_newtoken(operator[i], REDIRECT, i + 1);
+				//token->operator_type = i + 1;
 				ft_addtoken(lexer, token);
 				if (ft_strequ(operator[i], ">&") || ft_strequ(operator[i], "<&"))
 				{

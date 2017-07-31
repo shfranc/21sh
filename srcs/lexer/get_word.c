@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 17:51:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/26 17:56:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 18:28:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,48 +24,49 @@ int		ft_get_word(t_lexer *lexer, char *line)
 	t_token	*token;
 	char	*tmp;
 	int		len;
-	int		flags;
+	int		quoting;
 
-	flags = 0;
+	quoting = 0;
 	len = 0;
-	while (*(line + len) && !ft_part_operator(*(line + len)) && !ft_isspace(*(line + len)))
+	while (*(line + len) && !ft_part_operator(*(line + len))\
+			&& !ft_isspace(*(line + len)))
 	{
 		if (*(line + len) == '\\')
 		{
 			len++;
-			flags |= ESCAPE;
+			quoting |= ESCAPE;
 		}
-//		printbit(flags);
-		if (!flags && *(line + len) == '"')
+//		printbit(quoting);
+		if (!quoting && *(line + len) == '"')
 		{
-			flags |= DQUOTES;
+			quoting |= DQUOTES;
 			len += ft_goto_next_quote_withescape(line + len, *(line + len));
 			if (*(line + len) == '"')
 			{
-				flags ^= DQUOTES;
+				quoting ^= DQUOTES;
 				len++;
 			}
 		}
-		else if (!flags && *(line + len) == '\'')
+		else if (!quoting && *(line + len) == '\'')
 		{
-			flags |= SQUOTES;
+			quoting |= SQUOTES;
 			len += ft_goto_next_quote(line + len, *(line + len));
 			if (*(line + len) == '\'')
 			{
-				flags ^= SQUOTES;
+				quoting ^= SQUOTES;
 				len++;
 			}
 		}
 		else
 		{
 			if (*(line + len) != '\n')
-				flags = (flags & ESCAPE) ? flags ^ ESCAPE: 0;
+				quoting = (quoting & ESCAPE) ? quoting ^ ESCAPE: 0;
 			len++;
 		}
 	}
 	tmp = ft_strsub(line, 0, len);
-	token = ft_newtoken(tmp, "WORD");
-	token->flags = flags;
+	token = ft_newtoken(tmp, WORD, NONE);
+	token->quoting = quoting;
 	ft_addtoken(lexer, token);
 	free(tmp);
 	return (len);

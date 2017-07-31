@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/27 15:34:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 18:28:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,27 @@ int		ft_get_newline(t_lexer *lexer)
 {
 	t_token	*token;
 
-	token = ft_newtoken("<newline>", "NEWLINE");
+	token = ft_newtoken("<newline>", NEWLINE, NONE);
 	ft_addtoken(lexer, token);
 	return (1);
 }
 
-t_lexer	*ft_tokenize(char *line)
+void	ft_tokenize(t_lexer **lexer, char *line)
 {
-	t_lexer		*lexer;
 	char		*tmp;
 
-	lexer = ft_memalloc(sizeof(t_lexer));
+	if (!*lexer)
+		*lexer = ft_memalloc(sizeof(t_lexer));
 	tmp = NULL;
 	while (*line)
 	{
 		if (ft_part_operator(*line))
-			line = line + ft_get_operator(lexer, line);
+			line = line + ft_get_operator(*lexer, line);
 		else if (ft_part_word(*line))
-			line = line + ft_get_word(lexer, line);
+			line = line + ft_get_word(*lexer, line);
 		else if (*line == '\n' && !*(line + 1))
-			line = line + ft_get_newline(lexer);
+			line = line + ft_get_newline(*lexer);
 		else
 			line++;
 	}
-	return (lexer);
 }

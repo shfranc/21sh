@@ -6,48 +6,42 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:52:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/30 19:46:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 18:28:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_put_syntax_error(char *token)
+int		ft_incomplete_list(t_lexer *lexer)
 {
-	ft_putstr_fd(SHELL, 2);
-	ft_putstr_fd(SYNTAX_ERR, 2);
-	ft_putstr_fd(token, 2);
-	ft_putendl_fd(END_ERR, 2);
-}
-
-int		ft_token_not_handled(t_lexer *lexer)
-{
-	if (tmp->token_type == DSEMI || tmp->token_type == AND\
-			|| tmp->token_type == CLOBBER || tmp->token_type == LESS_GREAT\
-			|| tmp->token_type == DLESS_DASH)
+	if (lexer->last->token_type == NEWLINE && lexer->nbr_token > 1\
+			&& lexer->last->prev->operator_type == PIPE)
 	{
-		ft_put_syntax_error(tmp->str);
-		return (1);
+		return (PIPE);
 	}
-	return (0);
-}
-
-int		ft_syntax_error(t_lexer *lexer)
-{
-	t_token *tmp;
-
-	tmp = lexer->first;
-	while (tmp)
+	if (lexer->last->token_type == NEWLINE && lexer->nbr_token > 1\
+			&& lexer->last->prev->operator_type == AND_IF)
 	{
-		tmp = tmp->next;
+		return (AND_IF);
+	}
+	if (lexer->last->token_type == NEWLINE && lexer->nbr_token > 1\
+			&& lexer->last->prev->operator_type == OR_IF)
+	{
+		return (OR_IF);
 	}
 	return (0);
 }
 
 void	ft_parser(t_lexer *lexer)
 {
-	if (ft_token_not_handled(lexer))
+	int	list_type;
+
+	if (ft_syntax_error(lexer))
 		return ;
-	if (ft_or_and_list(lexer))
-		return ;
+
+	if ((list_type = ft_incomplete_list(lexer)))
+		ft_read_again_list(lexer, list_type);
+		
+	if (lexer->last->quoting)
+		ft_read_again_quoting(lexer);
 }

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 18:02:56 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/26 18:03:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 12:13:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ void	ft_get_io_number(t_lexer *lexer, char *line)
 			ft_strncmp(line - ft_strlen(lexer->last->str),\
 				lexer->last->str, ft_strlen(lexer->last->str)) == 0)
 	{
-		free(lexer->last->token);
-		lexer->last->token = ft_strdup("IO_NUMBER");
+		lexer->last->token_type = IO_NUMBER;
 	}
 }
 
@@ -32,7 +31,7 @@ int		ft_aggreg_fetch_dash(t_lexer *lexer, char *line)
 		return (0);
 	if (!ft_isspace(*(dash + 1)))
 	{
-		token = ft_newtoken("-", "WORD");
+		token = ft_newtoken("-", WORD, NONE);
 		ft_addtoken(lexer, token);
 		return (dash - line + 1);
 	}
