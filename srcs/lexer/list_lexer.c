@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 18:28:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/07/31 19:16:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,5 @@ void	ft_printlexer(t_lexer *lexer)
 		ft_putchar('\n');
 		temp = temp->next;
 	}
+	ft_putstr(BBLUE"-----------------"RESET"\n");
 }
