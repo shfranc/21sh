@@ -12,6 +12,26 @@
 
 #include "shell21.h"
 
+void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
+{
+	static char	*hdoc_buff;
+	char		*line;
+
+	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)));
+	(void)lexer;
+	(void)dless;
+	if (ft_strequ(dless->next->str, ft_strsub(line, 0, ft_strlen(line -1))))
+	{
+		dless->heredoc = hdoc_buff;
+		ft_strdel(&hdoc_buff);
+	}
+	else
+	{
+		hdoc_buff = ft_strjoin(hdoc_buff, line);
+	}
+	ft_parser(lexer);
+}
+
 void	ft_read_again_list(t_lexer *lexer, int list_type)
 {
 	char *line;

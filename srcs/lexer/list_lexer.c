@@ -117,6 +117,11 @@ void	ft_printlexer(t_lexer *lexer)
 		ft_putstr(token[temp->token_type]);
 		ft_putstr(" ");
 		ft_putstr(operator[temp->operator_type]);
+		if (temp->heredoc)
+		{
+			ft_putstr("\t");
+			ft_putstr(temp->heredoc);
+		}
 		if (ft_strlen(token[temp->token_type]) + 1 >= 8)
 			ft_putstr("\t");
 		else

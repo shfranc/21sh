@@ -22,7 +22,8 @@ typedef struct	s_token
 	char			*str;
 	int				token_type;
 	int				operator_type;
-	int				quoting; 		// inhibiteurs
+	int				quoting;
+	char			*heredoc;
 	struct s_token	*next;
 	struct s_token	*prev;
 }				t_token;

@@ -60,7 +60,7 @@ int		ft_interpret(char *buff, t_input *input)
 		return (1);
 	}
 	else if (buff[0] == 4 && !*input->line)
-		ft_exit("exit", 1);
+		ft_exit("exit", 1); // faire une fonction free du shell qui retabli les termcaps...
 	return (0);
 }
 

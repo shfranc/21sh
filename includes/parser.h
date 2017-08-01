@@ -22,8 +22,10 @@
 # define PIPE_PROMPT "pipe> "
 # define AND_IF_PROMPT "and_if> "
 # define OR_IF_PROMPT "or_if> "
+# define HEREDOC_PROMPT "heredoc> "
 
 void	ft_parser(t_lexer *lexer);
+void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless);
 void	ft_read_again_quoting(t_lexer *lexer);
 void	ft_read_again_list(t_lexer *lexer, int list_type);
 
