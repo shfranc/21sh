@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 18:28:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/02 19:37:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,12 @@ void	ft_read_again_list(t_lexer *lexer, int list_type);
 /*
 ** SYNTAX ERROR
 */
-
 int		ft_syntax_error(t_lexer *lexer);
+
+/*
+** QUOTES
+*/
+char	*ft_remove_quotes(char *str);
+void	ft_strmerge(char **origin, char *add);
 
 #endif

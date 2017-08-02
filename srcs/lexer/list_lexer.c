@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 19:16:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/02 11:36:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,16 +117,19 @@ void	ft_printlexer(t_lexer *lexer)
 		ft_putstr(token[temp->token_type]);
 		ft_putstr(" ");
 		ft_putstr(operator[temp->operator_type]);
-		if (temp->heredoc)
-		{
-			ft_putstr("\t");
-			ft_putstr(temp->heredoc);
-		}
 		if (ft_strlen(token[temp->token_type]) + 1 >= 8)
 			ft_putstr("\t");
 		else
 			ft_putstr("\t\t");
 		ft_putstr(temp->str);
+		
+		if (temp->heredoc)
+		{
+			ft_putstr("\theredoc: ");
+			ft_putstr(temp->heredoc);
+		}
+
+
 		if (temp->quoting & DQUOTES)
 			ft_putstr("\t// DQUOTE non fermée");
 		if (temp->quoting & SQUOTES)

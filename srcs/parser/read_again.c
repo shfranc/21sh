@@ -6,29 +6,60 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 18:28:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/02 19:37:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
+void	ft_create_delimiter(t_token *dless, char **delimiter)
 {
-	static char	*hdoc_buff;
-	char		*line;
-
-	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)));
-	(void)lexer;
-	(void)dless;
-	if (ft_strequ(dless->next->str, ft_strsub(line, 0, ft_strlen(line -1))))
+	if (*delimiter)
 	{
-		dless->heredoc = hdoc_buff;
-		ft_strdel(&hdoc_buff);
+		ft_putendl("** delim existe");
+		return ;
+	}
+
+	if  (ft_strchr(dless->next->str, '"') || ft_strchr(dless->next->str, '\'')\
+			|| ft_strchr(dless->next->str, '\\'))
+	{
+		ft_putendl("** quotes a a enlever");
+		*delimiter = ft_remove_quotes(dless->next->str);
+		*delimiter = ft_charappend(*delimiter, '\n');
 	}
 	else
 	{
-		hdoc_buff = ft_strjoin(hdoc_buff, line);
+		ft_putendl("** pas de quotes");
+		*delimiter = ft_strjoin(dless->next->str, "\n");
 	}
+}
+
+void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
+{
+	static char	*hdoc_buff;
+	static char	*delimiter;
+	char		*line;
+
+	ft_create_delimiter(dless, &delimiter);
+	ft_putstr("** delim = ");
+	ft_putstr(delimiter);
+
+	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)));
+	
+	if (ft_strequ(line, delimiter))
+	{
+		if (!hdoc_buff)
+			hdoc_buff = ft_strdup("");
+		dless->heredoc = ft_strdup(hdoc_buff);
+		ft_strdel(&hdoc_buff);
+		ft_strdel(&delimiter);
+	}
+	else
+	{
+		ft_strmerge(&hdoc_buff, line);
+		ft_putendl(hdoc_buff);
+	}
+	free (line);
 	ft_parser(lexer);
 }
 
@@ -47,8 +78,9 @@ void	ft_read_again_list(t_lexer *lexer, int list_type)
 
 	ft_del_lasttoken(lexer);
 	ft_tokenize(&lexer, line);
-	ft_parser(lexer);
 	free(line);
+//	if (!ft_syntax_error(lexer))
+		ft_parser(lexer);
 }
 
 void	ft_read_again_quoting(t_lexer *lexer)
@@ -68,9 +100,11 @@ void	ft_read_again_quoting(t_lexer *lexer)
 	ft_del_lasttoken(lexer);
 
 	ft_tokenize(&lexer, line);
-	ft_parser(lexer);
-	
-	free(tmp);
 	free(line);
+	free(tmp);
+	
+	//if (!ft_syntax_error(lexer))
+		ft_parser(lexer);
+	
 }
 
