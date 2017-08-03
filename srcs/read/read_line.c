@@ -19,7 +19,7 @@ void	ft_accept_line(t_input *input)
 	ft_putstr(input->line);
 }
 
-void	ft_read_line(char **line, int len_prompt)
+void	ft_read_line(char **line, int len_prompt, int mode)
 {
 	char	buff[6];
 	t_input	input;
@@ -30,7 +30,7 @@ void	ft_read_line(char **line, int len_prompt)
 		ft_raw_term();
 		ft_bzero(buff, 6);
 		read(0, buff, 5);
-		if (ft_interpret(buff, &input))
+		if (ft_interpret(buff, &input, mode))
 		{
 			*line = ft_strdup(input.line);
 			break ;
