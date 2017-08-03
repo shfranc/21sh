@@ -39,7 +39,7 @@ static	int		ft_check_operator(t_token *token)
 			(token->token_type == OPERATOR && token->prev->token_type != WORD))
 	{
 		ft_put_syntax_error(token->str);
-		return(1);
+		return (1);
 	}
 	if ((token->token_type == REDIRECT && token->next->token_type != WORD))
 	{

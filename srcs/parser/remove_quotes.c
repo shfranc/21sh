@@ -12,111 +12,77 @@
 
 #include "shell21.h"
 
-/*void	ft_strmerge(char **origin, char *add)
+static char	*ft_remove_escape_withindquotes(char *str)
 {
-	char *temp;
-
-	if (!*origin)
-		*origin = ft_strdup(add);
-	else
+	if (*str == '\\')
 	{
-		temp = *origin;
-		*origin = ft_strjoin(*origin, add);
-		free(temp);
+		if (*(str + 1) && (*(str + 1) == '"' || *(str + 1) == '$'\
+					|| *(str + 1) == '\\'))
+			str++;
+		if (*str == '\n')
+			str++;
 	}
-}*/
+	return (str);
+}
 
-char	*ft_remove_quotes(char *str)
+static int	ft_remove_escape(char **str)
+{
+	int escape;
+
+	escape = 0;
+	if (**str == '\\')
+	{
+		(*str)++;
+		if (**str == '\n')
+			(*str)++;
+		else
+			escape |= ESCAPE;
+	}
+	return (escape);
+}
+
+static char	*ft_remove_squotes(char *new, char **str)
+{
+	int	len;
+
+	len = ft_goto_next_quote(*str, **str);
+	ft_strmerge(&new, ft_strsub(*str, 1, len - 1));
+	*str += len;
+	return (new);
+}
+
+static char	*ft_remove_dquotes(char *new, char **str)
+{
+	(*str)++;
+	while (**str && **str != '"')
+	{
+		*str = ft_remove_escape_withindquotes(*str);
+		new = ft_charappend(new, **str);
+		(*str)++;
+	}
+	(*str)++;
+	return (new);
+}
+
+char		*ft_remove_quotes(char *str)
 {
 	char	*new;
 	int		escape;
-	int		len;
-	
+
 	new = NULL;
-	escape = 0;
-	ft_putendl(str);
 	while (*str)
 	{
-		ft_putendl("1");
-		if (*str == '\\')
-		{
-			str++;
-			escape |= ESCAPE;
-		}
+		escape = ft_remove_escape(&str);
 		if (!escape && *str == '"')
-		{
-			len = ft_goto_next_quote_withescape(str, *str);
-			ft_strmerge(&new, ft_strsub(str, 1, len - 1));
-		//	if (!new)
-		//		new = ft_strsub(str, 1, len - 1);
-		//	else
-		//		new = ft_strjoin(new, ft_strsub(str, 1, len - 1));
-			str += len;
-		}
-	//	else if (!escape && *str == '\'')
-	//		;
+			new = ft_remove_dquotes(new, &str);
+		else if (!escape && *str == '\'')
+			new = ft_remove_squotes(new, &str);
 		else
 		{
 			new = ft_charappend(new, *str);
 			str++;
-			escape = (escape & ESCAPE) ? escape ^ ESCAPE: 0;
+			escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
 		}
-
 	}
-	ft_putendl(new);
 	return (new);
 }
-
-/*
-int		ft_get_word(t_lexer *lexer, char *line)
-{
-	t_token	*token;
-	char	*tmp;
-	int		len;
-	int		quoting;
-
-	quoting = 0;
-	len = 0;
-	while (*(line + len) && !ft_part_operator(*(line + len))\
-			&& !ft_isspace(*(line + len)))
-	{
-		if (*(line + len) == '\\')
-		{
-			len++;
-			quoting |= ESCAPE;
-		}
-//		printbit(quoting);
-		if (!quoting && *(line + len) == '"')
-		{
-			quoting |= DQUOTES;
-			len += ft_goto_next_quote_withescape(line + len, *(line + len));
-			if (*(line + len) == '"')
-			{
-				quoting ^= DQUOTES;
-				len++;
-			}
-		}
-		else if (!quoting && *(line + len) == '\'')
-		{
-			quoting |= SQUOTES;
-			len += ft_goto_next_quote(line + len, *(line + len));
-			if (*(line + len) == '\'')
-			{
-				quoting ^= SQUOTES;
-				len++;
-			}
-		}
-		else
-		{
-			if (*(line + len) != '\n')
-				quoting = (quoting & ESCAPE) ? quoting ^ ESCAPE: 0;
-			len++;
-		}
-	}
-	tmp = ft_strsub(line, 0, len);
-	token = ft_newtoken(tmp, WORD, NONE);
-	token->quoting = quoting;
-	ft_addtoken(lexer, token);
-	free(tmp);
-	return (len);
-}*/

@@ -53,15 +53,10 @@ void	ft_parser(t_lexer *lexer)
 
 	if (ft_syntax_error(lexer))
 		return ;
-	
-		
 	if (lexer->last->quoting)
 		ft_read_again_quoting(lexer);
-	
 	else if ((dless = ft_is_heredoc(lexer)))
 		ft_read_again_heredoc(lexer, dless);
-	
 	else if ((list_type = ft_incomplete_list(lexer)))
 		ft_read_again_list(lexer, list_type);
-
 }

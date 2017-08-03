@@ -19,8 +19,7 @@ void	ft_create_delimiter(t_token *dless, char **delimiter)
 		ft_putendl("** delim existe");
 		return ;
 	}
-
-	if  (ft_strchr(dless->next->str, '"') || ft_strchr(dless->next->str, '\'')\
+	if (ft_strchr(dless->next->str, '"') || ft_strchr(dless->next->str, '\'')\
 			|| ft_strchr(dless->next->str, '\\'))
 	{
 		ft_putendl("** quotes a a enlever");
@@ -43,9 +42,7 @@ void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 	ft_create_delimiter(dless, &delimiter);
 	ft_putstr("** delim = ");
 	ft_putstr(delimiter);
-
 	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)));
-	
 	if (ft_strequ(line, delimiter))
 	{
 		if (!hdoc_buff)
@@ -59,7 +56,7 @@ void	ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 		ft_strmerge(&hdoc_buff, line);
 		ft_putendl(hdoc_buff);
 	}
-	free (line);
+	free(line);
 	ft_parser(lexer);
 }
 
@@ -68,19 +65,16 @@ void	ft_read_again_list(t_lexer *lexer, int list_type)
 	char *line;
 
 	line = NULL;
-
 	if (list_type == PIPE)
 		ft_read_line(&line, write(1, PIPE_PROMPT, ft_strlen(PIPE_PROMPT)));
 	if (list_type == AND_IF)
 		ft_read_line(&line, write(1, AND_IF_PROMPT, ft_strlen(AND_IF_PROMPT)));
 	if (list_type == OR_IF)
 		ft_read_line(&line, write(1, OR_IF_PROMPT, ft_strlen(OR_IF_PROMPT)));
-
 	ft_del_lasttoken(lexer);
 	ft_tokenize(&lexer, line);
 	free(line);
-//	if (!ft_syntax_error(lexer))
-		ft_parser(lexer);
+	ft_parser(lexer);
 }
 
 void	ft_read_again_quoting(t_lexer *lexer)
@@ -94,17 +88,10 @@ void	ft_read_again_quoting(t_lexer *lexer)
 			write(1, DQUOTES_PROMPT, ft_strlen(DQUOTES_PROMPT))) : 0;
 	lexer->last->quoting & ESCAPE ? ft_read_line(&tmp,\
 			write(1, ESCAPE_PROMPT, ft_strlen(ESCAPE_PROMPT))) : 0;
-
 	line = ft_strjoin(lexer->last->str, tmp);
-
 	ft_del_lasttoken(lexer);
-
 	ft_tokenize(&lexer, line);
 	free(line);
 	free(tmp);
-	
-	//if (!ft_syntax_error(lexer))
-		ft_parser(lexer);
-	
+	ft_parser(lexer);
 }
-
