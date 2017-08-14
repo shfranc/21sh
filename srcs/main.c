@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 18:28:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/14 19:20:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int		main(int argc, char **argv)
 	char	*line;
 	int		len_prompt;
 	t_lexer	*lexer;
+	int		parser_ret;
 
 	(void)argc;
 //	ft_catch_signals();
@@ -39,11 +40,20 @@ int		main(int argc, char **argv)
 	while (1)
 	{
 		len_prompt = ft_display_prompt();
-		ft_read_line(&line, len_prompt);
+		ft_read_line(&line, len_prompt, 0);
 		ft_tokenize(&lexer, line);
-		ft_parser(lexer);
+		parser_ret = ft_parser(lexer);
+
 		if (ft_strequ(argv[1], "--lexer"))
+		{
 			ft_printlexer(lexer);
+			ft_putstr("\nPARSER RET: ");
+			if (parser_ret == PARSER_SUCCESS)
+				ft_putendl(BGREEN"OK"RESET);
+			else
+				ft_putendl(BRED"Error"RESET);
+		}
+
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
 	}

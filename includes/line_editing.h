@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 11:25:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/14 16:15:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,17 @@ typedef struct	s_input
 /*
 ** READLINE
 */
-void	ft_read_line(char **line, int len_prompt);
+void	ft_read_line(char **line, int len_prompt, int mode);
 
 /*
 ** TERM
+** ft_interpret mode : 0 == regular prompt, 1 == parser prompt waiting for
+** the end of input.
 */
 void	ft_init_input_struct(t_input *input, int len_prompt);
 void	ft_raw_term(void);
 void	ft_canonic_term(void);
-int		ft_interpret(char *buff, t_input *input);
+int		ft_interpret(char *buff, t_input *input, int mode);
 int		ft_intputchar(int c);
 
 /*

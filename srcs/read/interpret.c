@@ -6,11 +6,18 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 11:16:01 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/14 19:07:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
+static void	ft_put_unexpected_eof(void)
+{
+	ft_putchar('\n');
+	ft_putstr_fd(SHELL, 2);
+	ft_putendl_fd(UNEXPECTED_EOF, 2);
+}
 
 void	ft_interpret_moves(char *buff, t_input *input)
 {
@@ -48,7 +55,7 @@ void	ft_interpret_buffer(char *buff, t_input *input)
 		ft_deletechar(input);
 }
 
-int		ft_interpret(char *buff, t_input *input)
+int		ft_interpret(char *buff, t_input *input, int mode)
 {
 	ft_interpret_moves(buff, input);
 	ft_interpret_buffer(buff, input);
@@ -59,8 +66,18 @@ int		ft_interpret(char *buff, t_input *input)
 		ft_accept_line(input);
 		return (1);
 	}
-	else if (buff[0] == 4 && !*input->line)
+	else if (buff[0] == 4 && !*input->line && mode == 0)
+	{
+		ft_canonic_term();
 		ft_exit("exit", 1); // faire une fonction free du shell qui retabli les termcaps...
+	}
+	else if (buff[0] == 4 && !*input->line && mode == 1)
+	{
+		ft_put_unexpected_eof();
+		return (1);
+	}
+	else if (buff[0] == 4 && *input->line)
+		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
 	return (0);
 }
 

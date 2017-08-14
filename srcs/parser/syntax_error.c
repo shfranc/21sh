@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:31:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 15:16:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/14 19:24:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int				ft_syntax_error(t_lexer *lexer)
 	while (tmp)
 	{
 		if (ft_token_not_handled(tmp) || ft_check_operator(tmp))
-			return (1);
+			return (PARSER_ERROR);
 		tmp = tmp->next;
 	}
-	return (0);
+	return (PARSER_SUCCESS);
 }

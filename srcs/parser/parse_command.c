@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:52:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/02 19:37:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/14 19:29:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,19 @@ t_token	*ft_is_heredoc(t_lexer *lexer)
 	return (NULL);
 }
 
-void	ft_parser(t_lexer *lexer)
+int		ft_parser(t_lexer *lexer)
 {
 	int		list_type;
 	t_token	*dless;
+	int		ret;
 
-	if (ft_syntax_error(lexer))
-		return ;
+	if ((ret = ft_syntax_error(lexer)))
+		return (PARSER_ERROR);
 	if (lexer->last->quoting)
-		ft_read_again_quoting(lexer);
+		ret = ft_read_again_quoting(lexer);
 	else if ((dless = ft_is_heredoc(lexer)))
-		ft_read_again_heredoc(lexer, dless);
+		ret = ft_read_again_heredoc(lexer, dless);
 	else if ((list_type = ft_incomplete_list(lexer)))
-		ft_read_again_list(lexer, list_type);
+		ret = ft_read_again_list(lexer, list_type);
+	return (ret);
 }
