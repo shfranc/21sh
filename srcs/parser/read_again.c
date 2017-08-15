@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 19:27:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/15 10:44:42 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,15 @@
 void	ft_create_delimiter(t_token *dless, char **delimiter)
 {
 	if (*delimiter)
-	{
-		ft_putendl("** delim existe");
 		return ;
-	}
 	if (ft_strchr(dless->next->str, '"') || ft_strchr(dless->next->str, '\'')\
 			|| ft_strchr(dless->next->str, '\\'))
 	{
-		ft_putendl("** quotes a a enlever");
 		*delimiter = ft_remove_quotes(dless->next->str);
 		*delimiter = ft_charappend(*delimiter, '\n');
 	}
 	else
-	{
-		ft_putendl("** pas de quotes");
 		*delimiter = ft_strjoin(dless->next->str, "\n");
-	}
 }
 
 int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
@@ -40,8 +33,6 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 	char		*line;
 
 	ft_create_delimiter(dless, &delimiter);
-	ft_putstr("** delim = ");
-	ft_putstr(delimiter);
 	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)), 1);
 	if (!*line)
 		return (PARSER_ERROR);
