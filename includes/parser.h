@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 19:29:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/15 12:14:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@
 # define HEREDOC_PROMPT "heredoc> "
 
 int		ft_parser(t_lexer *lexer);
+void	ft_create_ast(t_lexer *lexer);
+
+/*
+** SYNTAX ERROR
+*/
+int		ft_syntax_error(t_lexer *lexer);
 
 /*
 ** INCOMPLETE INPUT
@@ -37,14 +43,8 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless);
 int		ft_read_again_list(t_lexer *lexer, int list_type);
 
 /*
-** SYNTAX ERROR
-*/
-int		ft_syntax_error(t_lexer *lexer);
-
-/*
-** QUOTES
+** QUOTES for heredoc delimiter
 */
 char	*ft_remove_quotes(char *str);
-void	ft_strmerge(char **origin, char *add);
 
 #endif

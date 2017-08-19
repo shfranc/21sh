@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 19:20:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/19 14:11:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int		main(int argc, char **argv)
 			else
 				ft_putendl(BRED"Error"RESET);
 		}
+//		if (parser_ret == PARSER_SUCCESS)
+//			ft_create_ast(lexer);
 
 		ft_dellexer(&lexer);
 		ft_strdel(&line);

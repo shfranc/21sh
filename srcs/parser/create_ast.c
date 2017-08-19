@@ -6,8 +6,17 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/15 11:38:13 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/15 11:38:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/15 19:12:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
+void	ft_create_ast(t_lexer *lexer)
+{
+	while (lexer->first)
+	{
+
+
+	}
+}
