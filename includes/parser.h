@@ -27,6 +27,14 @@
 # define OR_IF_PROMPT "or_if> "
 # define HEREDOC_PROMPT "heredoc> "
 
+typedef struct	s_ast
+{
+	struct s_ast	*parent;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	t_lexer			*token;
+}				t_ast;
+
 int		ft_parser(t_lexer *lexer);
 void	ft_create_ast(t_lexer *lexer);
 
