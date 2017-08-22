@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/02 11:36:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/22 13:10:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,16 @@ void	ft_reverseprint(t_lexer *lexer)
 	}
 }
 
-void	ft_printlexer(t_lexer *lexer)
+void	ft_printlexer(t_token *lexer, int nbr_token)
 {
 	static char	*operator[] = {"", "DSEMI", "SEMI", "AND_IF", "AND", "OR_IF", "PIPE", "DLESS_DASH", "DLESS", "LESS_AND", "LESS_GREAT", "LESS", "DGREAT", "GREAT_AND", "CLOBBER", "GREAT"};
 	static char *token[] = {"WORD", "OPERATOR", "REDIRECT", "IO_NUMBER", "NEWLINE"};
 	t_token	*temp;
 
-	temp = lexer->first;
+	temp = lexer;
 	ft_putstr("\n"BBLUE);
 	ft_putstr("--- NB TOKEN = ");
-	ft_putnbr(lexer->nbr_token);
+	ft_putnbr(nbr_token);
 	ft_putendl(RESET);
 	while (temp)
 	{

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/19 16:52:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/22 13:11:04 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_token	*ft_newtoken(char *str, int token_type, int operator_type);
 void	ft_addtoken(t_lexer *lexer, t_token *token);
 void	ft_del_lasttoken(t_lexer *lexer);
 void	ft_dellexer(t_lexer **lexer);
-void	ft_printlexer(t_lexer *lexer);
+void	ft_printlexer(t_token *token, int nbr_token);
 void	ft_reverseprint(t_lexer *lexer);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/15 12:14:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/22 18:25:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ typedef struct	s_ast
 	struct s_ast	*parent;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	t_lexer			*token;
+	int				node_type;
+	t_token			*token;
 }				t_ast;
 
 int		ft_parser(t_lexer *lexer);
-void	ft_create_ast(t_lexer *lexer);
-
+t_ast	*ft_create_ast(t_token **token);
+void	ft_print_ast(t_ast *ast);
 /*
 ** SYNTAX ERROR
 */
