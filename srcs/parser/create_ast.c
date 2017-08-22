@@ -100,10 +100,12 @@ void	ft_print_ast(t_ast *ast)
 	{
 		tmp = tmp->left;
 		lvl++;
-	}	
+	}
+	tmp = tmp->parent;	
 	while (tmp->parent)
 	{
-		ft_print_node(tmp, lvl);
+		ft_print_node(tmp->left, lvl);
+		ft_print_node(tmp->right, lvl);
 		tmp = tmp->parent;
 		lvl--;
 	}
@@ -124,15 +126,17 @@ void	ft_print_ast(t_ast *ast)
 t_ast	*ft_create_ast(t_token **token)
 {
 	t_ast	*left;
+	t_ast	*right;
 	t_ast	*ast;
 
 	left = ft_create_leaf(token, OPERATOR);
-	while ((*token)->token_type != SEMI)
-	{
-		ast = ft_create_leaf(token, WORD);
-		ft_create_node(left, ast, ft_create_leaf(token));
-	}
-	
+	ast = ft_create_leaf(token, WORD);
+	right = ft_create_leaf(token, OPERATOR);
+	ft_create_node(left, ast, right);	
+	left = ft_create_leaf(token, OPERATOR);
+	right = ft_create_leaf(token, OPERATOR);
+	ft_create_node(left, ast->left, right);
+
 
 	return (ast);
 }
