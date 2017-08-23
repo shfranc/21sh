@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/15 11:38:13 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/23 19:26:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/23 19:33:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ void	ft_print_node(t_ast *ast, char *side, int lvl)
 //	i = 0;
 //	while (++i < lvl)
 //		write (1, "\t", 1);
-
 
 	ft_padding(lvl);
 	tmp = ast->token;
