@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/22 18:25:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/23 19:26:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		main(int argc, char **argv)
 			ast = ft_create_ast(&lexer->first);
 
 		if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
-			ft_print_ast(ast);
+			ft_print_ast(ast, "root", 0);
 		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
