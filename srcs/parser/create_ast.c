@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/15 11:38:13 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 16:43:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/24 17:16:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,12 @@ t_ast	*ft_create_pipeline(t_token **token)
 
   root = ft_create_leaf(token, OPERATOR);
   if ((*token)->operator_type == PIPE)
-	  root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_pipeline(token));
+  {
+	  root = ft_create_node(root, ft_create_leaf(token, WORD),\
+			  ft_create_pipeline(token));
+  }
   return (root);
  }
-
 
 // pipe left associativity
 /*
@@ -76,15 +78,18 @@ t_ast	*ft_create_list(t_token **token)
 			while ((*token)->operator_type == AND_IF\
 					 || (*token)->operator_type == OR_IF)
 			{
-				root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_pipeline(token));
+				root = ft_create_node(root, ft_create_leaf(token, WORD),\
+						ft_create_pipeline(token));
 			}
 		}
 		else
-			root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_pipeline(token));
+		{
+			root = ft_create_node(root, ft_create_leaf(token, WORD),\
+					ft_create_pipeline(token));
+		}
 	}
 	return (root);
 }
-
 
 t_ast	*ft_create_ast(t_token **token)
 {
@@ -97,12 +102,14 @@ t_ast	*ft_create_ast(t_token **token)
 		{
 			while ((*token)->operator_type == SEMI)
 			{
-				root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_list(token));
+				root = ft_create_node(root, ft_create_leaf(token, WORD),\
+						ft_create_list(token));
 			}
 		}
 		else
 		{
-			root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_list(token));
+			root = ft_create_node(root, ft_create_leaf(token, WORD),\
+					ft_create_list(token));
 		}
 	}
 	return (root);
