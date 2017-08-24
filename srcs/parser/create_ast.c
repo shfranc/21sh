@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/15 11:38:13 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 16:39:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/24 16:43:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_ast	*ft_create_pipeline(t_token **token)
 t_ast	*ft_create_pipeline(t_token **token)
 {
 	t_ast	*root;
-//	t_ast	*node;
 
 	root = ft_create_leaf(token, OPERATOR);
 	if ((*token)->operator_type == PIPE)
@@ -58,7 +57,6 @@ t_ast	*ft_create_pipeline(t_token **token)
 			}
 		}
 		else
-//		node = ft_create_leaf(token, WORD);
 			root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_leaf(token, OPERATOR));
 	}
 
@@ -68,8 +66,6 @@ t_ast	*ft_create_pipeline(t_token **token)
 t_ast	*ft_create_list(t_token **token)
 {
 	t_ast	*root;
-//	t_ast	*node;
-//	t_ast	*right;
 
 	root = ft_create_pipeline(token);
 	if ((*token)->operator_type == AND_IF || (*token)->operator_type == OR_IF)
@@ -80,17 +76,11 @@ t_ast	*ft_create_list(t_token **token)
 			while ((*token)->operator_type == AND_IF\
 					 || (*token)->operator_type == OR_IF)
 			{
-				//node = ft_create_leaf(token, WORD);
-				//right = ft_create_pipeline(token);
-				//root = ft_create_node(root, node, right);
 				root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_pipeline(token));
 			}
 		}
 		else
-//		{
-//			node = ft_create_leaf(token, WORD);
 			root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_pipeline(token));
-//		}
 	}
 	return (root);
 }
@@ -99,8 +89,6 @@ t_ast	*ft_create_list(t_token **token)
 t_ast	*ft_create_ast(t_token **token)
 {
 	t_ast	*root;
-//	t_ast	*node;
-//	t_ast	*right;
 
 	root = ft_create_list(token);
 	if ((*token)->operator_type == SEMI)
@@ -109,15 +97,11 @@ t_ast	*ft_create_ast(t_token **token)
 		{
 			while ((*token)->operator_type == SEMI)
 			{
-				//node = ft_create_leaf(token, WORD);
-				//right = ft_create_list(token);
-				//root = ft_create_node(root, node, right);
 				root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_list(token));
 			}
 		}
 		else
 		{
-	//		node = ft_create_leaf(token, WORD);
 			root = ft_create_node(root, ft_create_leaf(token, WORD), ft_create_list(token));
 		}
 	}
