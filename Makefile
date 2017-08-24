@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/08/15 11:52:55 by sfranc           ###   ########.fr        #
+#    Updated: 2017/08/24 12:13:18 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		parser/syntax_error.c \
 		parser/read_again.c \
 		parser/remove_quotes.c \
-		parser/create_ast.c)
+		parser/create_ast.c \
+		parser/ast_elem.c \
+		parser/print_ast.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
