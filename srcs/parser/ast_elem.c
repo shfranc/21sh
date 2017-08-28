@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 12:08:48 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 15:48:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/28 18:49:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,3 +64,13 @@ t_ast	*ft_create_node(t_ast *left, t_ast *node, t_ast *right)
 	return (node);
 }
 
+void	ft_del_ast(t_ast **ast)
+{
+//	t_token	*suppr;
+//	t_token *tmp;
+
+	if (!*ast)
+		return ;
+
+
+}

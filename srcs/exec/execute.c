@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 16:13:47 by sfranc           ###   ########.fr       */
+/*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
+/*   Updated: 2017/08/28 15:51:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
+int		ft_execute(t_ast *ast)
+{
+	int ret;
 
-# include <signal.h>
-
-# include "libft.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-char	**g_env;
-
-#endif
+	if (ast->node_type == WORD)
+		ret = ft_launch_simple_cmd(ast);
+	else
+		ret = CMD_NOT_FOUND;
+	return (ret);
+}

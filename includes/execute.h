@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 16:13:47 by sfranc           ###   ########.fr       */
+/*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
+/*   Updated: 2017/08/28 18:56:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#ifndef EXECUTE_H
+# define EXECUTE_H
 
-# include <stdio.h> // debug a suppr
+# define CMD_NOT_FOUND 127
 
-# include <signal.h>
-
-# include "libft.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-char	**g_env;
+int		ft_execute(t_ast *ast);
+int		ft_launch_simple_cmd(t_ast *ast);
 
 #endif

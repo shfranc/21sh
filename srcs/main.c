@@ -6,11 +6,12 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 16:09:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/28 18:48:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
 
 /*void	ft_signals_handler(int sig)
 {
@@ -27,18 +28,20 @@ int		ft_catch_signals()
 	return (1);
 }*/
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **environ)
 {
 	char	*line;
 	int		len_prompt;
 	t_lexer	*lexer;
 	int		parser_ret;
 	t_ast	*ast;
+	int		ret_cmd;
 
 	(void)argc;
-	(void)ast;
+	g_env = ft_tabdup(environ);
+	ft_puttab(g_env);
 //	ft_catch_signals();
-	lexer = NULL;
+//	lexer = NULL;
 	while (1)
 	{
 		len_prompt = ft_display_prompt();
@@ -51,16 +54,22 @@ int		main(int argc, char **argv)
 			ft_printlexer(lexer->first, lexer->nbr_token);
 			ft_putstr("\nPARSER RET: ");
 			if (parser_ret == PARSER_SUCCESS)
-				ft_putendl(BGREEN"OK"RESET);
+				ft_putendl(BGREEN"OK\n"RESET);
 			else
-				ft_putendl(BRED"Error"RESET);
+				ft_putendl(BRED"Error\n"RESET);
 		}
 		if (parser_ret == PARSER_SUCCESS)
 		{
 			ast = ft_create_ast(&lexer->first);
 			if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
 				ft_print_ast(ast, "root", 0);
+			ft_putendl("____________________________________");
 		}
+
+		ret_cmd = ft_execute(ast);
+		ft_putstr("RET CMD: ");
+		ft_putnbr_endl(ret_cmd);
+		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
 	}

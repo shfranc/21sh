@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/08/24 12:13:18 by sfranc           ###   ########.fr        #
+#    Updated: 2017/08/28 15:52:56 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		parser/remove_quotes.c \
 		parser/create_ast.c \
 		parser/ast_elem.c \
-		parser/print_ast.c)
+		parser/print_ast.c \
+		exec/execute.c \
+		exec/simple_cmd.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
@@ -63,6 +65,7 @@ $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
 	@mkdir -p $(OBJS_PATH)/read
 	@mkdir -p $(OBJS_PATH)/lexer
 	@mkdir -p $(OBJS_PATH)/parser
+	@mkdir -p $(OBJS_PATH)/exec
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "$@ : $(YELLOW)OK$(RESET)"
 

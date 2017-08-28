@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 12:07:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 16:38:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/28 11:57:43 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_padding(int padd)
 
 void	ft_print_node(t_ast *ast, char *side, int lvl)
 {
+//	static char	*operator[] = {"", "DSEMI", "SEMI", "AND_IF", "AND", "OR_IF", "PIPE", "DLESS_DASH", "DLESS", "LESS_AND", "LESS_GREAT", "LESS", "DGREAT", "GREAT_AND", "CLOBBER", "GREAT"};
+//	static char *token[] = {"WORD", "OPERATOR", "REDIRECT", "IO_NUMBER", "NEWLINE"};
 	t_token *tmp;
 
 	ft_padding(lvl);
@@ -30,6 +32,13 @@ void	ft_print_node(t_ast *ast, char *side, int lvl)
 	ft_putstr(side);
 	ft_putnbr(lvl);
 	ft_putendl(" **");
+	
+	/*ft_padding(lvl);
+	ft_putstr(BYELLOW"node: ");
+	ft_putstr(token[ast->node_type]);
+	ft_putstr(BYELLOW" "RESET);
+	ft_putendl(operator[ast->operator_type]);
+*/
 	ft_padding(lvl);
 	tmp = ast->token;
 	ft_putstr(BMAGENTA);

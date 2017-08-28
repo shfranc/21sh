@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/22 13:10:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/28 18:48:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,25 @@ void	ft_dellexer(t_lexer **lexer)
 	}
 	free(*lexer);
 	*lexer = NULL;
+}
+
+void	ft_deltokens(t_token **token)
+{
+	t_token	*temp;
+	t_token	*prev;
+
+	if (!*token)
+		return ;
+	temp = *token;
+	while (temp)
+	{
+		free(temp->str);
+		prev = temp;
+		temp = temp->next;
+		free(prev);
+	}
+	free(*token);
+	*token = NULL;
 }
 
 /*
