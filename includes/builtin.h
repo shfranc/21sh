@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 16:31:30 by sfranc           ###   ########.fr       */
+/*   Created: 2017/08/29 16:15:50 by sfranc            #+#    #+#             */
+/*   Updated: 2017/08/29 16:17:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTE_H
-# define EXECUTE_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-# define CMD_NOT_FOUND 127
-
-int		ft_execute(t_ast *ast);
-int		ft_launch_simple_cmd(t_ast *ast);
-char	*ft_get_path(char *cmd);
+/*
+** ENV
+*/
+char	*ft_get_env_variable(char **env, char *var);
 
 #endif

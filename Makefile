@@ -6,14 +6,15 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/08/29 11:15:14 by sfranc           ###   ########.fr        #
+#    Updated: 2017/08/29 16:26:56 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 SRCS_PATH = srcs
 OBJS_PATH = objs
-SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
+SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
+		builtin/env.c \
 		read/term.c \
 		read/read_line.c \
 		read/prompt.c \
@@ -63,6 +64,7 @@ $(LIB):
 	@echo "$(GREEN)libft : compilation OK$(RESET)"
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
+	@mkdir -p $(OBJS_PATH)/builtin
 	@mkdir -p $(OBJS_PATH)/read
 	@mkdir -p $(OBJS_PATH)/lexer
 	@mkdir -p $(OBJS_PATH)/parser
