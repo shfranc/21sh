@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 12:07:39 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 11:57:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/29 13:13:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ void	ft_print_node(t_ast *ast, char *side, int lvl)
 
 void	ft_print_ast(t_ast *ast, char *side, int lvl)
 {
+	if (lvl == 0)
+		ft_putendl(BMAGENTA"________________ AST ________________"RESET);
+	if (!ast)
+		return ;
 	if (ast->left)
 		ft_print_ast(ast->left, "left", ++lvl);
 	else
@@ -64,4 +68,6 @@ void	ft_print_ast(t_ast *ast, char *side, int lvl)
 		ft_print_ast(ast->right, "right", lvl--);
 	else
 		--lvl;
+	if (lvl == 0)
+		ft_putendl(BMAGENTA"_____________________________________"RESET);
 }
