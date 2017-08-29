@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 18:48:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/29 10:33:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	ft_deltokens(t_token **token)
 		temp = temp->next;
 		free(prev);
 	}
-	free(*token);
 	*token = NULL;
 }
 

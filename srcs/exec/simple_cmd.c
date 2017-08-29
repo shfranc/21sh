@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 18:53:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/29 10:35:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ int		ft_launch_simple_cmd(t_ast *ast)
 		ft_puttab(cmd);
 		ret_cmd = ft_fork(cmd[0], cmd);
 	}
+	ft_freetab(&cmd);
 	return (ret_cmd);
 }

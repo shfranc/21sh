@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 12:12:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/29 10:23:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ t_ast	*ft_create_node(t_ast *left, t_ast *node, t_ast *right);
 t_ast	*ft_create_leaf(t_token **token, int delim);
 int		ft_check_next_operator(t_token *token, int op);
 void	ft_print_ast(t_ast *ast, char *side, int lvl);
-
+void	ft_del_ast(t_ast **ast);
 #endif
