@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 17:32:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/30 19:11:10 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ char	**ft_cmd_into_tab(t_ast *ast)
 	}
 
 	// redirection a traiter avant de mettre la commande en tab.
-/*	while (tmp && tmp->token_type != WORD)
-	{
+	/*	while (tmp && tmp->token_type != WORD)
+		{
 		tmp = tmp->next;
-	}
-	if (tmp && tmp->prev && tmp->prev->token_type == REDIRECT && tmp->token_type == WORD)
+		}
+		if (tmp && tmp->prev && tmp->prev->token_type == REDIRECT && tmp->token_type == WORD)
 		tmp = tmp->next;
-*/
 
-	while (tmp && tmp->token_type == WORD)
-	{
+
+		while (tmp && tmp->token_type == WORD)
+		{
 		ft_addtotab(&cmd, tmp->str);
 		tmp = tmp->next;
-	}
+		}*/
 	return (cmd);
 }
 
@@ -59,23 +59,7 @@ int		ft_fork(char *path, char **cmd)
 	else
 		wait(&status);
 	ret_cmd = WEXITSTATUS(status);
-	ft_putnbr_endl(ret_cmd);
 	return (ret_cmd);
-}
-
-char	*ft_get_path(char *cmd)
-{
-	char **tmp;
-	char *path;
-
-	if (ft_strchr(cmd, "/"))
-		return (ft_strdup(cmd));
-	tmp = ft_get_env_variable("PATH");
-	path = ft_strsplit(tmp, ':');
-
-	if (path)
-	{
-	}
 }
 
 int		ft_launch_simple_cmd(t_ast *ast)
@@ -84,16 +68,13 @@ int		ft_launch_simple_cmd(t_ast *ast)
 	char	**cmd;
 	int		ret_cmd;
 
-	ret_cmd = 0;
 	// redirection a sauvegarder + creer les fichiers si besoin
 	cmd = ft_cmd_into_tab(ast);
-	if (!cmd) // ne concerne pas le cas ou une redirection est seule.
-		return (CMD_NOT_FOUND);
-	else
+	if ((ret_cmd = ft_get_path(cmd[0], &path)) == PATH_OK)
 	{
-		ft_puttab(cmd);
-		path = ft_get_path(cmd[0]);
+		ft_putendl(path);
 		ret_cmd = ft_fork(path, cmd);
+		free(path);
 	}
 	ft_freetab(&cmd);
 	return (ret_cmd);

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 11:57:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/30 16:41:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int		ft_execute(t_ast *ast)
 	if (ast->node_type == WORD)
 		ret = ft_launch_simple_cmd(ast);
 	else
-		ret = CMD_NOT_FOUND;
+		ret = 99;
 	return (ret);
 }

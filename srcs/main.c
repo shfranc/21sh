@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 14:56:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/30 10:48:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int		main(int argc, char **argv, char **environ)
 
 	(void)argc;
 	g_env = ft_tabdup(environ);
-	ft_puttab(g_env);
 	//	ft_catch_signals();
 	//	lexer = NULL;
 	while (1)

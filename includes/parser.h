@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 10:23:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/30 19:11:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PARSER_H
 
 # define PARSER_SUCCESS 0
-# define PARSER_ERROR 1
+# define PARSER_ERROR 258
 # define SHELL "21sh: "
 # define SYNTAX_ERR "syntax error near unexpected token `"
 # define UNEXPECTED_EOF "syntax error: unexpected end of file"
