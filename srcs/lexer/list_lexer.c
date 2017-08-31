@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 10:33:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/31 11:21:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_printlexer(t_token *lexer, int nbr_token)
 	t_token	*temp;
 
 	temp = lexer;
-	ft_putstr("\n"BBLUE);
+	ft_putendl(BBLUE"_______________ LEXER _______________"RESET);
 	ft_putstr("--- NB TOKEN = ");
 	ft_putnbr(nbr_token);
 	ft_putendl(RESET);
@@ -157,5 +157,5 @@ void	ft_printlexer(t_token *lexer, int nbr_token)
 		ft_putchar('\n');
 		temp = temp->next;
 	}
-	ft_putstr(BBLUE"-----------------"RESET"\n");
+	ft_putendl(BBLUE"_____________________________________"RESET);
 }

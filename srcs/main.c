@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 10:48:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/31 11:13:42 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ int		main(int argc, char **argv, char **environ)
 			ret_cmd = ft_execute(ast);
 		}
 
-		ft_putstr("RET CMD: ");
-		ft_putnbr_endl(ret_cmd);
+		ft_putstr(BYELLOW"\nRET CMD: ");
+		ft_putnbr(ret_cmd);
+		ft_putendl(RESET);
 		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);

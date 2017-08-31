@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 19:11:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/08/31 11:04:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,12 @@ int		ft_launch_simple_cmd(t_ast *ast)
 	cmd = ft_cmd_into_tab(ast);
 	if ((ret_cmd = ft_get_path(cmd[0], &path)) == PATH_OK)
 	{
-		ft_putendl(path);
+		ft_putstr(GREEN);
+		ft_putstr(path);
+		ft_putendl(RESET);
+		ft_putendl("_____________________________________");
 		ret_cmd = ft_fork(path, cmd);
+		ft_putendl("_____________________________________");
 		free(path);
 	}
 	ft_freetab(&cmd);
