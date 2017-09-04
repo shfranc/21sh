@@ -6,14 +6,14 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 19:11:12 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/04 15:31:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-
+# include <fcntl.h>
 
 # define PATH_OK		0
 # define CMD_NOT_FOUND	127

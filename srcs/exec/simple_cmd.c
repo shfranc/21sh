@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/02 14:03:17 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/04 18:17:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,43 @@ int		ft_fork(char *path, char **cmd)
 	pid_t	pid;
 	int		status;
 	int 	ret_cmd;
+	int		sauv_stdout;
+	int		sauv_stderr;
+	int		redirect;
+
+	sauv_stdout = dup(STDOUT_FILENO);
+	sauv_stderr = dup(STDERR_FILENO);
+	ft_putstr("fd copie de std out: ");
+	ft_putnbr_endl(sauv_stdout);
+	ft_putstr("fd copie de std err: ");
+	ft_putnbr_endl(sauv_stderr);
+	redirect = open("coco", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	ft_putstr("fd du fichier de redir: ");
+	ft_putnbr_endl(redirect);
 
 	if ((pid = fork()) == -1)
 		ft_exit("21sh: fork: fork failed, no child created", 1); // utiliser errno ??
+	
 	if (pid == 0)
 	{
+		ft_putstr("stdout is now: ");
+		ft_putnbr_endl(dup2(redirect, STDOUT_FILENO));
+		ft_putstr("stderr is now: ");
+		ft_putnbr_endl(dup2(redirect, STDERR_FILENO));
 		if ((status = execve(path, cmd, g_env)) == -1)
 			ft_exit("21sh: execve: failed to execute the command", 1);
 	}
 	else
+	{
+		ft_putstr("stdout is now: ");
+		ft_putnbr_endl(dup2(STDOUT_FILENO, sauv_stdout));
+		ft_putstr("stderr is now: ");
+		ft_putnbr_endl(dup2(STDERR_FILENO, sauv_stderr));
+		close(redirect);
+		close(sauv_stdout);
+		close(sauv_stderr);
 		wait(&status);
+	}
 	ret_cmd = WEXITSTATUS(status);
 	return (ret_cmd);
 }
@@ -76,8 +103,11 @@ int		ft_launch_simple_cmd(t_ast *ast)
 		ft_putstr(path);
 		ft_putendl(RESET);
 		ft_putendl("_____________________________________");
+
 		ret_cmd = ft_fork(path, cmd);
+		
 		ft_putendl("_____________________________________");
+		
 		free(path);
 	}
 	ft_freetab(&cmd);
