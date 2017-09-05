@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 19:11:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/05 13:55:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 
 # include <stdio.h> // debug a suppr
 
-
-# include <errno.h>
-# include <sys/stat.h> 
 # include <signal.h>
 
 # include "libft.h"

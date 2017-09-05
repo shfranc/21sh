@@ -6,20 +6,23 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/04 15:31:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/05 18:02:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
+# include <sys/stat.h>
 # include <fcntl.h>
 
-# define PATH_OK		0
-# define CMD_NOT_FOUND	127
-# define NO_FILE 		127
-# define IS_DIR 		126
-# define PERM_DENIED 	126
+# define PATH_OK			0
+# define REDIR_OK			0
+# define REDIR_ERROR		1
+# define CMD_NOT_FOUND		127
+# define NO_FILE 			127
+# define IS_DIR 			126
+# define PERM_DENIED 		126
 
 # define STR_CMD_NOT_FOUND	"command not found"
 # define STR_NO_FILE 		"No such file or directory"
@@ -28,6 +31,8 @@
 
 int		ft_execute(t_ast *ast);
 int		ft_launch_simple_cmd(t_ast *ast);
+int		ft_init_redirection(t_ast *ast, int save[3]);
+void	ft_restore_std_fd(t_ast *ast, int save[3]);
 
 /*
 ** PATH

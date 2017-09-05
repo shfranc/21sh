@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/28 18:38:01 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/05 13:55:14 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_token
 	int				token_type;
 	int				operator_type;
 	int				quoting;
+	int				fd;
 	char			*heredoc;
 	struct s_token	*next;
 	struct s_token	*prev;
