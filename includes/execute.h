@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 12:07:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 15:33:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@
 # define STR_NO_FILE 		"No such file or directory"
 # define STR_IS_DIR 		"is a directory"
 # define STR_PERM_DENIED 	"Permission denied"
+# define STR_BAD_FD 		"Bad file descriptor"
+# define STR_OPEN_ERROR		"Open error"
+# define STR_DUP_ERROR 		"Dup error"
 
 int		ft_execute(t_ast *ast);
 int		ft_launch_simple_cmd(t_ast *ast);
