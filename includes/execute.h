@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/05 18:02:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 12:07:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 
 # define PATH_OK			0
 # define REDIR_OK			0
@@ -38,6 +39,7 @@ void	ft_restore_std_fd(t_ast *ast, int save[3]);
 ** PATH
 */
 int		ft_get_path(char *cmd, char **path);
+void	ft_put_cmd_error(char *cmd, char *error);
 //int		ft_check_given_path(char *cmd, char **cmd_path);
 //int		ft_search_through_path(char *cmd, char **cmd_path);
 

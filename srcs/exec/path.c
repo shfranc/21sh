@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 19:06:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 19:10:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 10:41:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-static void		ft_put_cmd_error(char *cmd, char *error)
+void			ft_put_cmd_error(char *cmd, char *error)
 {
 	ft_putstr_fd(SHELL, 2);
 	ft_putstr_fd(cmd, 2);
