@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 13:53:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 15:52:04 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 16:46:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,18 @@ int		ft_agreg_files(t_token *redir)
 	int	fd_dest;
 	int	fd_src;
 
-	if (redir->operator_type != LESS_AND && redir->operator_type != GREAT_AND)
-		return (REDIR_OK);
-	else if (ft_isnumber(redir->next->str))
-	{
-		fd_dest = ft_atoi(redir->next->str);
-		if (redir->prev && redir->prev->token_type == IO_NUMBER)
-			fd_src = ft_atoi(redir->prev->str);
-		else if (redir->operator_type == LESS_AND)
-			fd_src = STDIN_FILENO;
-		else
-			fd_src = STDOUT_FILENO;
+	fd_dest = ft_atoi(redir->next->str);
+	if (redir->prev && redir->prev->token_type == IO_NUMBER)
+		fd_src = ft_atoi(redir->prev->str);
+	else if (redir->operator_type == LESS_AND)
+		fd_src = STDIN_FILENO;
+	else
+		fd_src = STDOUT_FILENO;
+	if (ft_isnumber(redir->next->str))
 		return (ft_make_dup2(redir->next->str, fd_dest, fd_src));
-	}
 	else if (ft_strequ(redir->next->str, "-"))
 	{
-		if (redir->prev && redir->prev->token_type == IO_NUMBER)
-			close(ft_atoi(redir->prev->str));
-		else if (redir->operator_type == LESS_AND)
-			close(STDIN_FILENO);
-		else
-			close(STDOUT_FILENO);
+		close(fd_src);
 		return (REDIR_OK);
 	}
 	else
@@ -64,11 +55,6 @@ int		ft_agreg_files(t_token *redir)
 
 int		ft_open_file(t_token *redir)
 {
-	errno = 0;
-	if (redir->operator_type == LESS_AND || redir->operator_type == GREAT_AND\
-			|| redir->operator_type == DLESS)
-		return (REDIR_OK);
-
 	if (redir->operator_type == DGREAT)
 	{
 		if ((redir->fd = open(redir->next->str, O_WRONLY | O_CREAT | O_APPEND,\
@@ -100,49 +86,55 @@ int		ft_open_file(t_token *redir)
 
 int		ft_redirect(t_token *redir)
 {
-	if (redir->operator_type == LESS_AND || redir->operator_type == GREAT_AND\
-			|| redir->operator_type == DLESS)
-		return (REDIR_OK);
-
 	if (redir->prev && redir->prev->token_type == IO_NUMBER)
 	{
-		dup2(redir->fd, ft_atoi(redir->prev->str));
+		return (ft_make_dup2(redir->next->str, redir->fd,\
+					ft_atoi(redir->prev->str)));
 	}
 	else if (redir->operator_type == LESS)
-	{
-		dup2(redir->fd, STDIN_FILENO);
-	}
+		return (ft_make_dup2(redir->next->str, redir->fd, STDIN_FILENO));
 	else
-	{
-		dup2(redir->fd, STDOUT_FILENO);
-	}
-	return (REDIR_OK);
+		return (ft_make_dup2(redir->next->str, redir->fd, STDOUT_FILENO));
 }
 
-int		ft_init_redirection(t_ast *ast, int	save[3])
+void	ft_save_std_fd(int save[3])
 {
-	t_token	*tmp;
-
 	save[0] = dup(STDIN_FILENO);
 	save[1] = dup(STDOUT_FILENO);
 	save[2] = dup(STDERR_FILENO);
+}
+
+int		ft_init_redirection(t_ast *ast)
+{
+	t_token	*tmp;
 
 	tmp = ast->token;
 	while (tmp)
 	{
 		if (tmp->token_type == REDIRECT)
 		{
-			if (ft_agreg_files(tmp) == REDIR_ERROR)
+			if (tmp->operator_type == LESS_AND
+					|| tmp->operator_type == GREAT_AND)
+			{
+				if (ft_agreg_files(tmp) == REDIR_ERROR)
+					return (REDIR_ERROR);
+			}
+			else if (tmp->operator_type == DLESS)
+			{
+				ft_putendl("heredoc");
 				return (REDIR_ERROR);
-			if (ft_open_file(tmp) == REDIR_ERROR)
-				return (REDIR_ERROR);
-			if (ft_redirect(tmp) == REDIR_ERROR)
-				return (REDIR_ERROR);
+			}
+			else
+			{
+				if (ft_open_file(tmp) == REDIR_ERROR)
+					return (REDIR_ERROR);
+				if (ft_redirect(tmp) == REDIR_ERROR)
+					return (REDIR_ERROR);
+			}
 			tmp = tmp->next->next;
 		}
 		else
 			tmp = tmp->next;
-
 	}
 	return (REDIR_OK);
 }

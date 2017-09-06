@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/05 18:25:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 16:21:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int		ft_launch_simple_cmd(t_ast *ast)
 	int		ret_cmd;
 	int		save[3];
 
-	if (ft_init_redirection(ast, save) != REDIR_OK)
+	ft_save_std_fd(save);
+	if (ft_init_redirection(ast) != REDIR_OK)
 	{
 		ft_restore_std_fd(ast, save);
 		return (REDIR_ERROR);
