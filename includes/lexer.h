@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/05 13:55:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 12:56:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ enum			e_operatorlst
 	AND,
 	OR_IF,
 	PIPE,
-	DLESS_DASH,
-	DLESS,
-	LESS_AND,
-	LESS_GREAT,
-	LESS,
-	DGREAT,
-	GREAT_AND,
-	CLOBBER,
-	GREAT
+	DLESS_DASH, 	// ** SYNTAX ERR **
+	DLESS, 			// HEREDOC - PIPE
+	LESS_AND,		// AGREG STDIN
+	LESS_GREAT,		// ** SYNTAC ERR **
+	LESS,			// REDIR STDIN
+	DGREAT,			// REDIR STOUT APPEND
+	GREAT_AND,		// AGREG STDIN
+	CLOBBER,		// ** SYNTAX ERR **
+	GREAT			// REDIR STDOUT
 };
 
 void	ft_tokenize(t_lexer **lexer, char *line);
