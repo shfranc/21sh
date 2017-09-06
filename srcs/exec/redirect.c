@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 13:53:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 16:46:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 18:26:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ int		ft_agreg_files(t_token *redir)
 		ft_put_cmd_error(redir->next->str, "ambiguous redirection");
 		return (REDIR_ERROR);
 	}
+}
+
+int		ft_heredoc_pipe(t_token *redir)
+{
+	int fd[2];
+
+	fd[0] = STDIN_FILENO;
+	fd[1] = STDOUT_FILENO;
+	close(fd[0]);
+	pipe(fd);
+	write(fd[1], redir->heredoc, ft_strlen(redir->heredoc));
+	return (REDIR_OK);
 }
 
 int		ft_open_file(t_token *redir)
@@ -121,8 +133,8 @@ int		ft_init_redirection(t_ast *ast)
 			}
 			else if (tmp->operator_type == DLESS)
 			{
-				ft_putendl("heredoc");
-				return (REDIR_ERROR);
+				if (ft_heredoc_pipe(tmp) == REDIR_ERROR)
+					return (REDIR_ERROR);
 			}
 			else
 			{
