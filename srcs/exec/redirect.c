@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 13:53:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 11:09:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 12:45:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		ft_agreg_files(t_token *redir)
 	}
 	else
 	{
-		ft_put_cmd_error(redir->next->str, "ambiguous redirection");
+		ft_put_cmd_error(redir->next->str, STR_AMB_REDIR);
 		return (REDIR_ERROR);
 	}
 }
@@ -59,43 +59,53 @@ int		ft_heredoc_pipe(t_token *redir)
 
 	if (pipe(fd) == -1)
 	{
-		ft_put_cmd_error("heredoc", "pipe failed");
+		ft_put_cmd_error(redir->str, STR_PIPE_ERROR);
 		return (REDIR_ERROR);
 	}
 	write(fd[1], redir->heredoc, ft_strlen(redir->heredoc));
 	close(fd[1]);
-	ft_make_dup2("heredoc", fd[0], STDIN_FILENO);
+	ft_make_dup2(redir->str, fd[0], STDIN_FILENO);
 	close(fd[0]);
 	return (REDIR_OK);
 }
 
+int		ft_open_error(int fd, int err, char *file_name)
+{
+	if (fd != -1)
+		return (REDIR_OK);
+	else
+	{
+		if (err == EACCES)
+			ft_put_cmd_error(file_name, STR_PERM_DENIED);
+		else if (err == EISDIR)
+			ft_put_cmd_error(file_name, STR_IS_DIR);
+		else if (err == ENOENT)
+			ft_put_cmd_error(file_name, STR_NO_FILE);
+		else		
+			ft_put_cmd_error(file_name, STR_OPEN_ERROR);
+		return (REDIR_ERROR);
+	}
+}
+
 int		ft_open_file(t_token *redir)
 {
+	errno = 0;
 	if (redir->operator_type == DGREAT)
 	{
 		if ((redir->fd = open(redir->next->str, O_WRONLY | O_CREAT | O_APPEND,\
 						S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
-		{
-			ft_put_cmd_error(redir->next->str, "open error");
-			return (REDIR_ERROR);
-		}
+			return (ft_open_error(redir->fd, errno, redir->next->str));
 	}
 	else if (redir->operator_type == LESS)
 	{
 		if ((redir->fd = open(redir->next->str, O_RDONLY)) == -1)
-		{
-			ft_put_cmd_error(redir->next->str, "open error");
-			return (REDIR_ERROR);
-		}
+			return (ft_open_error(redir->fd, errno, redir->next->str));
 	}
 	else
 	{
 		if ((redir->fd = open(redir->next->str, O_WRONLY | O_CREAT | O_TRUNC,\
 						S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
-		{
-			ft_put_cmd_error(redir->next->str, "open error");
-			return (REDIR_ERROR);
-		}
+			return (ft_open_error(redir->fd, errno, redir->next->str));
 	}
 	return (REDIR_OK);
 }
@@ -111,13 +121,6 @@ int		ft_redirect(t_token *redir)
 		return (ft_make_dup2(redir->next->str, redir->fd, STDIN_FILENO));
 	else
 		return (ft_make_dup2(redir->next->str, redir->fd, STDOUT_FILENO));
-}
-
-void	ft_save_std_fd(int save[3])
-{
-	save[0] = dup(STDIN_FILENO);
-	save[1] = dup(STDOUT_FILENO);
-	save[2] = dup(STDERR_FILENO);
 }
 
 int		ft_init_redirection(t_ast *ast)
@@ -153,26 +156,4 @@ int		ft_init_redirection(t_ast *ast)
 			tmp = tmp->next;
 	}
 	return (REDIR_OK);
-}
-
-void	ft_restore_std_fd(t_ast *ast, int save[3])
-{
-	t_token *tmp;
-
-	dup2(save[0], STDIN_FILENO);
-	dup2(save[1], STDOUT_FILENO);
-	dup2(save[2], STDERR_FILENO);
-	close(save[0]);
-	close(save[1]);
-	close(save[2]);
-	tmp = ast->token;
-	while (tmp)
-	{
-		if (tmp->token_type == REDIRECT)
-		{
-			if (tmp->fd > 0)
-				close(tmp->fd);
-		}
-		tmp = tmp->next;
-	}
 }

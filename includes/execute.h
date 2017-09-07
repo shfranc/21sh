@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 18:31:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 12:45:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,25 @@
 # define STR_IS_DIR 		"is a directory"
 # define STR_PERM_DENIED 	"Permission denied"
 # define STR_BAD_FD 		"Bad file descriptor"
-# define STR_OPEN_ERROR		"Open error"
-# define STR_DUP_ERROR 		"Dup error"
+# define STR_AMB_REDIR		"ambiguous redirection"
+# define STR_OPEN_ERROR		"open error"
+# define STR_DUP_ERROR 		"dup error"
+# define STR_PIPE_ERROR 	"pipe failed"
 
 int		ft_execute(t_ast *ast);
 int		ft_launch_simple_cmd(t_ast *ast);
+
+/*
+** REDIRECTION
+*/
 void	ft_save_std_fd(int save[3]);
-int		ft_init_redirection(t_ast *ast);
 void	ft_restore_std_fd(t_ast *ast, int save[3]);
+
+int		ft_init_redirection(t_ast *ast);
+
+int		ft_agreg_files(t_token *redir);
+int		ft_heredoc_pipe(t_token *redir);
+int		ft_open_file(t_token *redir);
 
 /*
 ** PATH
