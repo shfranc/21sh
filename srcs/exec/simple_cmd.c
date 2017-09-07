@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 16:21:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:42:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,22 @@ int		ft_launch_simple_cmd(t_ast *ast)
 		return (REDIR_ERROR);
 	}
 	if ((cmd = ft_cmd_into_tab(ast)))
-		ret_cmd = ft_get_path(cmd[0], &path);
+	{
+		if ((ret_cmd = ft_get_path(cmd[0], &path)) == PATH_OK)
+		{
+			ret_cmd = ft_fork(path, cmd);
+			free(path);
+		}
+		ft_freetab(&cmd);
+	}
 	else
 	{
-		ft_restore_std_fd(ast, save);
-		return (EXIT_SUCCESS);
-	}
-	if (ret_cmd == PATH_OK)
-	{
-		ft_putstr(GREEN);
-		ft_putendl(path);
-		ft_puttab(cmd);
-		ft_putendl(RESET);
-
-		ft_putendl("_____________________________________");
-
-		ret_cmd = ft_fork(path, cmd);
-
-		ft_putendl("_____________________________________");
-
-		free(path);
+		ret_cmd = EXIT_SUCCESS;
+//		ft_restore_std_fd(ast, save);
+//		return (EXIT_SUCCESS);
 	}
 
 	ft_restore_std_fd(ast, save);
-	ft_freetab(&cmd);
+//	ft_freetab(&cmd);
 	return (ret_cmd);
 }

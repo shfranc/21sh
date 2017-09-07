@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 13:53:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 12:45:39 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:30:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_make_dup2(char *dest_name, int fd_dest, int fd_src)
+int				ft_make_dup2(char *dest_name, int fd_dest, int fd_src)
 {
 	errno = 0;
 	if ((dup2(fd_dest, fd_src)) != -1)
@@ -27,49 +27,7 @@ int		ft_make_dup2(char *dest_name, int fd_dest, int fd_src)
 	}
 }
 
-int		ft_agreg_files(t_token *redir)
-{
-	int	fd_dest;
-	int	fd_src;
-
-	fd_dest = ft_atoi(redir->next->str);
-	if (redir->prev && redir->prev->token_type == IO_NUMBER)
-		fd_src = ft_atoi(redir->prev->str);
-	else if (redir->operator_type == LESS_AND)
-		fd_src = STDIN_FILENO;
-	else
-		fd_src = STDOUT_FILENO;
-	if (ft_isnumber(redir->next->str))
-		return (ft_make_dup2(redir->next->str, fd_dest, fd_src));
-	else if (ft_strequ(redir->next->str, "-"))
-	{
-		close(fd_src);
-		return (REDIR_OK);
-	}
-	else
-	{
-		ft_put_cmd_error(redir->next->str, STR_AMB_REDIR);
-		return (REDIR_ERROR);
-	}
-}
-
-int		ft_heredoc_pipe(t_token *redir)
-{
-	int fd[2];
-
-	if (pipe(fd) == -1)
-	{
-		ft_put_cmd_error(redir->str, STR_PIPE_ERROR);
-		return (REDIR_ERROR);
-	}
-	write(fd[1], redir->heredoc, ft_strlen(redir->heredoc));
-	close(fd[1]);
-	ft_make_dup2(redir->str, fd[0], STDIN_FILENO);
-	close(fd[0]);
-	return (REDIR_OK);
-}
-
-int		ft_open_error(int fd, int err, char *file_name)
+static	int		ft_open_error(int fd, int err, char *file_name)
 {
 	if (fd != -1)
 		return (REDIR_OK);
@@ -87,7 +45,7 @@ int		ft_open_error(int fd, int err, char *file_name)
 	}
 }
 
-int		ft_open_file(t_token *redir)
+static int		ft_open_file(t_token *redir)
 {
 	errno = 0;
 	if (redir->operator_type == DGREAT)
@@ -110,7 +68,7 @@ int		ft_open_file(t_token *redir)
 	return (REDIR_OK);
 }
 
-int		ft_redirect(t_token *redir)
+static int		ft_redirect(t_token *redir)
 {
 	if (redir->prev && redir->prev->token_type == IO_NUMBER)
 	{

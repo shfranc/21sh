@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 12:45:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:29:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ int		ft_launch_simple_cmd(t_ast *ast);
 */
 void	ft_save_std_fd(int save[3]);
 void	ft_restore_std_fd(t_ast *ast, int save[3]);
-
 int		ft_init_redirection(t_ast *ast);
-
 int		ft_agreg_files(t_token *redir);
 int		ft_heredoc_pipe(t_token *redir);
-int		ft_open_file(t_token *redir);
+int		ft_make_dup2(char *dest_name, int fd_dest, int fd_src);
 
 /*
 ** PATH

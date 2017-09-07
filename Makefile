@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/07 12:44:37 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/07 15:52:21 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		read/copy_cut.c \
 		read/interpret.c \
 		lexer/list_lexer.c \
+		lexer/print_lexer.c \
 		lexer/tokenize.c \
 		lexer/get_word.c \
 		lexer/get_operator.c \
@@ -42,6 +43,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		exec/simple_cmd.c \
 		exec/path.c \
 		exec/std_fd.c \
+		exec/agreg_heredoc.c \
 		exec/redirect.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes

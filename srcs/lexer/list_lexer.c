@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:30:17 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/31 11:21:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 15:52:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	ft_del_lasttoken(t_lexer *lexer)
 	}
 	lexer->nbr_token--;
 	free(suppr->str);
+	if (suppr->heredoc)
+		free(suppr->heredoc);
 	free(suppr);
 }
 
@@ -77,6 +79,8 @@ void	ft_dellexer(t_lexer **lexer)
 	while (temp)
 	{
 		free(temp->str);
+		if (temp->heredoc)
+			free(temp->heredoc);
 		prev = temp;
 		temp = temp->next;
 		free(prev);
@@ -96,66 +100,11 @@ void	ft_deltokens(t_token **token)
 	while (temp)
 	{
 		free(temp->str);
+		if (temp->heredoc)
+			free(temp->heredoc);
 		prev = temp;
 		temp = temp->next;
 		free(prev);
 	}
 	*token = NULL;
-}
-
-/*
-** DEBUG
-*/
-
-void	ft_reverseprint(t_lexer *lexer)
-{
-	t_token	*temp;
-
-	temp = lexer->last;
-	while(temp)
-	{
-		ft_putendl(temp->str);
-		temp = temp->prev;
-	}
-}
-
-void	ft_printlexer(t_token *lexer, int nbr_token)
-{
-	static char	*operator[] = {"", "DSEMI", "SEMI", "AND_IF", "AND", "OR_IF", "PIPE", "DLESS_DASH", "DLESS", "LESS_AND", "LESS_GREAT", "LESS", "DGREAT", "GREAT_AND", "CLOBBER", "GREAT"};
-	static char *token[] = {"WORD", "OPERATOR", "REDIRECT", "IO_NUMBER", "NEWLINE"};
-	t_token	*temp;
-
-	temp = lexer;
-	ft_putendl(BBLUE"_______________ LEXER _______________"RESET);
-	ft_putstr("--- NB TOKEN = ");
-	ft_putnbr(nbr_token);
-	ft_putendl(RESET);
-	while (temp)
-	{
-		ft_putstr(token[temp->token_type]);
-		ft_putstr(" ");
-		ft_putstr(operator[temp->operator_type]);
-		if (ft_strlen(token[temp->token_type]) + 1 >= 8)
-			ft_putstr("\t");
-		else
-			ft_putstr("\t\t");
-		ft_putstr(temp->str);
-		
-		if (temp->heredoc)
-		{
-			ft_putstr("\theredoc: ");
-			ft_putstr(temp->heredoc);
-		}
-
-
-		if (temp->quoting & DQUOTES)
-			ft_putstr("\t// DQUOTE non fermée");
-		if (temp->quoting & SQUOTES)
-			ft_putstr("\t// SQUOTE non fermée");
-		if (temp->quoting & ESCAPE)
-			ft_putstr("\t// ESCAPE newline");
-		ft_putchar('\n');
-		temp = temp->next;
-	}
-	ft_putendl(BBLUE"_____________________________________"RESET);
 }
