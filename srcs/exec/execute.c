@@ -6,11 +6,17 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/05 17:54:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 18:05:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
+int		ft_execute_pipeline(t_ast *ast)
+{
+	(void)ast;
+	return (EXIT_SUCCESS);
+}
 
 int		ft_execute_semi_list(t_ast *ast)
 {
@@ -44,6 +50,8 @@ int		ft_execute(t_ast *ast)
 		return (ft_execute_andif_list(ast));
 	else if (ast->operator_type == OR_IF)
 		return (ft_execute_orif_list(ast));
+	else if (ast->operator_type == PIPE)
+		return (ft_execute_pipeline(ast));
 	else if (ast->node_type != OPERATOR)
 		return (ft_launch_simple_cmd(ast));
 	else

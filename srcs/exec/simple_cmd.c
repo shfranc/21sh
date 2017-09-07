@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 15:42:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 19:06:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int		ft_launch_simple_cmd(t_ast *ast)
 	int		save[3];
 
 	ft_save_std_fd(save);
+	ft_expand(ast->token);
+	ft_remove_quoting(ast->token);
 	if (ft_init_redirection(ast) != REDIR_OK)
 	{
 		ft_restore_std_fd(ast, save);
@@ -76,13 +78,7 @@ int		ft_launch_simple_cmd(t_ast *ast)
 		ft_freetab(&cmd);
 	}
 	else
-	{
 		ret_cmd = EXIT_SUCCESS;
-//		ft_restore_std_fd(ast, save);
-//		return (EXIT_SUCCESS);
-	}
-
 	ft_restore_std_fd(ast, save);
-//	ft_freetab(&cmd);
 	return (ret_cmd);
 }
