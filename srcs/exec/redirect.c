@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 13:53:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 18:26:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 11:09:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ int		ft_heredoc_pipe(t_token *redir)
 {
 	int fd[2];
 
-	fd[0] = STDIN_FILENO;
-	fd[1] = STDOUT_FILENO;
-	close(fd[0]);
-	pipe(fd);
+	if (pipe(fd) == -1)
+	{
+		ft_put_cmd_error("heredoc", "pipe failed");
+		return (REDIR_ERROR);
+	}
 	write(fd[1], redir->heredoc, ft_strlen(redir->heredoc));
+	close(fd[1]);
+	ft_make_dup2("heredoc", fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (REDIR_OK);
 }
 
