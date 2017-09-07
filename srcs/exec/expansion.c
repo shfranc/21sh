@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 19:27:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 19:50:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ static int	ft_dollar_isquoted(char *begin, char *dollar)
 	}
 	return (0);
 }
+
+// ~ expansion : ne remplace que le 1er ~ si pas de ~ a la suite. (~~ n'est pas expandu)
+// PATH:expand tout du long
 
 void	ft_expand(t_token *token)
 {
