@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/11 10:27:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/11 17:55:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 
 int		ft_execute(t_ast *ast);
 int		ft_launch_simple_cmd(t_ast *ast);
-int		ft_launch_pipeline(t_ast *ast);
+int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
 
 /*
 ** EXECUTION
