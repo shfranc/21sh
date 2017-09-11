@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/08 15:16:11 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/11 10:16:25 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		exec/std_fd.c \
 		exec/redirect.c \
 		exec/agreg_heredoc.c \
-		exec/path.c)
+		exec/path.c \
+		exec/pipeline.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a

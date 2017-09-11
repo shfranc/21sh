@@ -6,25 +6,27 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 18:05:37 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/11 09:56:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_execute_pipeline(t_ast *ast)
+static int		ft_execute_pipeline(t_ast *ast)
 {
-	(void)ast;
-	return (EXIT_SUCCESS);
+	if (!ast->left)
+		return (ft_launch_pipeline(ast->parent));
+	else
+		return (ft_execute_pipeline(ast->left));
 }
 
-int		ft_execute_semi_list(t_ast *ast)
+static int		ft_execute_semi_list(t_ast *ast)
 {
 	ft_execute(ast->left);
 	return (ft_execute(ast->right));
 }
 
-int		ft_execute_andif_list(t_ast *ast)
+static int		ft_execute_andif_list(t_ast *ast)
 {
 	if (ft_execute(ast->left) == EXIT_SUCCESS)
 		return (ft_execute(ast->right));
@@ -32,7 +34,7 @@ int		ft_execute_andif_list(t_ast *ast)
 		return (EXIT_SUCCESS);
 }
 
-int		ft_execute_orif_list(t_ast *ast)
+static int		ft_execute_orif_list(t_ast *ast)
 {
 	if (ft_execute(ast->left) == EXIT_FAILURE)
 		return (ft_execute(ast->right));
@@ -40,7 +42,7 @@ int		ft_execute_orif_list(t_ast *ast)
 		return (EXIT_SUCCESS);
 }
 
-int		ft_execute(t_ast *ast)
+int				ft_execute(t_ast *ast)
 {
 	if (!ast)
 		return (EXIT_SUCCESS);
