@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/11 12:42:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/11 15:08:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,77 +16,86 @@ int		ft_launch_pipeline(t_ast *node)
 {
 	int		save[3];
 	int		fd[2];
+	
 	pid_t	pid_right;
 	pid_t	pid_left;
 	int		status_left;
 	int		status_right;
 	char	*path_right;
-//	char	*path_left;
+	char	*path_left;
 	char	**cmd_left;
 	char	**cmd_right;
 
-
-	ft_save_std_fd(save);
 
 	if (pipe(fd) == -1)
 	{
 		ft_put_cmd_error(node->left->token->str, STR_PIPE_ERROR);
 		return (EXIT_FAILURE);
 	}
-
 	
-	if ((pid_right = fork()) == -1)
+	if ((pid_left = fork()) == -1)
 		ft_exit("21sh: fork: fork failed, no child created", 1);
-	if (pid_right == 0)
+	
+	if (pid_left == 0)
 	{
-
-		ft_putendl("ici c'est RIGHT");
-		close(fd[1]);
-		ft_make_dup2(node->left->token->str, fd[0], STDIN_FILENO);
 		close(fd[0]);
+		ft_make_dup2(node->left->token->str, fd[1], STDOUT_FILENO);
+		close(fd[1]);
 
-		if ((cmd_right = ft_cmd_into_tab(node->right)))
+		ft_save_std_fd(save);
+		if ((cmd_left = ft_cmd_into_tab(node->left)))
 		{
-			if ((status_right = ft_get_path(cmd_right[0], &path_right)) == PATH_OK)
+			if ((status_left = ft_get_path(cmd_left[0], &path_left)) == PATH_OK)
 			{
-				if ((status_right = execve(path_right, cmd_right, g_env)) == -1)
+				if ((status_left = execve(path_left, cmd_left, g_env)) == -1)
 					ft_exit("21sh: execve: failed to execute the command", 1);
 			}
+			else
+				exit(status_left);
 		}
 		else
-			status_right = EXIT_SUCCESS;
+			exit(EXIT_SUCCESS);
+		
+		ft_restore_std_fd(node->right, save);
 			
 	}
 	else
 	{
-		
-		
-		if ((pid_left = fork()) == -1)
+		if ((pid_right = fork()) == -1)
 			ft_exit("21sh: fork: fork failed, no child created", 1);
-		if (pid_left == 0)
+		if (pid_right == 0)
 		{
-			ft_putendl("ici c'est LEFT");
-			close(fd[0]);
-			ft_make_dup2(node->right->token->str, fd[1], STDOUT_FILENO);
 			close(fd[1]);
+			ft_make_dup2(node->right->token->str, fd[0], STDIN_FILENO);
+			close(fd[0]);
 
-			cmd_left = ft_cmd_into_tab(node->left);
-			if ((status_left = execve(cmd_left[0], cmd_left, g_env)) == -1)
-				ft_exit("21sh: execve: failed to execute the command", 1);
+			ft_save_std_fd(save);
+			if ((cmd_right = ft_cmd_into_tab(node->right)))
+			{
+				if ((status_right = ft_get_path(cmd_right[0], &path_right)) == PATH_OK)
+				{
+					if ((status_right = execve(path_right, cmd_right, g_env)) == -1)
+						ft_exit("21sh: execve: failed to execute the command", 1);
+				}
+				else
+					exit(status_right);
+			}
+			else
+				exit(EXIT_SUCCESS);
+			ft_restore_std_fd(node->right, save);
 		}
 		else
 		{
 			close(fd[1]);
-
-			wait(&status_left);
+			wait(&status_right);
 		}
-
-
 		close(fd[0]);
-		wait(&status_right);
+		wait(&status_left);
 	}
 
-	ft_restore_std_fd(node->right, save);
+	if (node->parent && node->parent->operator_type == PIPE)
+		ft_launch_pipeline(node->parent);
+
 
 	return (WEXITSTATUS(status_right));
 }
