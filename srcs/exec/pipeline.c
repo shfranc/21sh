@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 11:45:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 11:53:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		ft_launch_one_side(t_ast *side)
 	int	status;
 
 	ft_save_std_fd(save);
-//	ft_expand(ast->token);
+	//	ft_expand(ast->token);
 	ft_remove_quoting(side->token);
 
 	if (ft_init_redirection(side) != REDIR_OK)
@@ -50,20 +50,20 @@ static int		ft_pipe_to_right(int fd[2], t_ast *node_right)
 {
 	pid_t	pid_right;
 	int		status_right;
-	
-		if ((pid_right = fork()) == -1)
-			ft_exit(STR_FORK_ERROR, 1);
-		if (pid_right == 0)
-		{
-			close(fd[1]);
-			ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
-			exit(ft_launch_one_side(node_right));
-		}
-		else
-		{
-			close(fd[1]);
-			waitpid(pid_right, &status_right, 0);
-		}
+
+	if ((pid_right = fork()) == -1)
+		ft_exit(STR_FORK_ERROR, 1);
+	if (pid_right == 0)
+	{
+		close(fd[1]);
+		ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
+		exit(ft_launch_one_side(node_right));
+	}
+	else
+	{
+		close(fd[1]);
+		waitpid(pid_right, &status_right, 0);
+	}
 	return (WEXITSTATUS(status_right));
 }
 
@@ -72,7 +72,7 @@ int			ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 	int		fd[2];
 	pid_t	pid_left;
 	int		status_right;
-	
+
 	if (pipe(fd) == -1)
 	{
 		ft_put_cmd_error(node_left->left->token->str, STR_PIPE_ERROR);
