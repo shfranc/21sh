@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 15:26:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 17:51:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,39 @@ static int	ft_tilde_expansion(char **str, char *tilde)
 	return (1);
 }
 
-/*static void	ft_expand_env_variable(char **str, char *dollar)
+static void	ft_var_expansion(char **str, char *dollar)
 {
+	char	*key;
+	char	*value;
+	char	*exp;
+	char	*tmp;
 
-}*/
+	(void)str;
+	tmp = dollar + 1;
+	key = NULL;
+	while (*tmp && (ft_isalnum(*tmp) || *tmp == '_'))
+		key = ft_charappend(key, *tmp++);
+	value = ft_get_env_variable(g_env, key);
+	if (value)
+		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key) + ft_strlen(value));
+	else
+		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key));
+
+	ft_memmove(exp, *str, dollar - *str);
+	if (value)
+		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
+	ft_memmove(exp + ft_strlen(exp), dollar +  ft_strlen(key) + 1, ft_strlen(dollar + ft_strlen(key) + 1));
+	free(key);
+	free(value);
+	free(*str);
+	*str = exp;
+}
 
 void		ft_expand(t_token *token)
 {
 	t_token *tmp;
 	char	*tilde;
+	char	*dollar;
 
 	tmp = token;
 	while (tmp)
@@ -77,10 +101,15 @@ void		ft_expand(t_token *token)
 			while ((tilde = ft_strchr(tmp->str, '~'))\
 					&& !ft_is_quoted(tmp->str, tilde))
 			{
-				ft_putendl("1");
 				if (!(ft_tilde_expansion(&tmp->str, tilde)))
 					break ;
-				ft_putendl(tmp->str);
+			}
+			while ((dollar = ft_strchr(tmp->str, '$'))\
+					&& !ft_is_quoted(tmp->str, tilde))
+			{
+				if (ft_strequ(dollar, "$"))
+					break ;
+				ft_var_expansion(&tmp->str, dollar);
 			}
 		}
 		tmp = tmp->next;

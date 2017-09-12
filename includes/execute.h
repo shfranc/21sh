@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 10:44:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 17:11:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_cmd_into_tab(t_ast *ast);
 */
 void	ft_expand(t_token *token);
 void	ft_remove_quoting(t_token *token);
-
+void	ft_clean_empty_token(t_token *token);
 /*
 ** REDIRECTION
 */

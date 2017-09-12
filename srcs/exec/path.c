@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 19:06:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 15:24:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 17:49:35 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,13 @@ int				ft_get_path(char *cmd, char **cmd_path)
 		return (ft_check_given_path(cmd, cmd_path));
 	// TABLE DE HACHAGE
 	else
-		return (ft_search_through_path(cmd, cmd_path));
+	{
+		if (!*cmd)
+		{
+			ft_put_cmd_error(cmd, STR_CMD_NOT_FOUND);
+			return (CMD_NOT_FOUND);
+		}
+		else
+			return (ft_search_through_path(cmd, cmd_path));
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 11:48:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/02 19:37:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 17:39:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ char		*ft_remove_quotes(char *str)
 			escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
 		}
 	}
+	if (!new)
+		new = ft_strdup("");
 	return (new);
 }
