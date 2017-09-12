@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/11 17:55:25 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 10:44:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define IS_DIR 			126
 # define PERM_DENIED 		126
 
+# define STR_FORK_ERROR		"21sh: fork failed"
+# define STR_EXECVE_ERROR	"21sh: execve failed"
 # define STR_CMD_NOT_FOUND	"command not found"
 # define STR_NO_FILE 		"No such file or directory"
 # define STR_IS_DIR 		"is a directory"
