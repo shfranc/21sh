@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 12:39:40 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 12:45:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 09:48:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	ft_restore_std_fd(t_ast *ast, int save[3])
 	close(save[0]);
 	close(save[1]);
 	close(save[2]);
+	if (!ast)
+		return ;
 	tmp = ast->token;
 	while (tmp)
 	{

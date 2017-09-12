@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/11 18:24:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 10:15:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,11 @@ int		ft_launch_one_side(t_ast *side)
 int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 {
 	int		fd[2];
-//	static int i = 0;
-
 	pid_t	pid_right;
 	pid_t	pid_left;
 	int		status_left;
 	int		status_right;
 
-//	ft_putstr("pipeline start LVL= ");
-//	ft_putnbr_endl(i++);
 
 	if (pipe(fd) == -1)
 	{
@@ -72,8 +68,6 @@ int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 
 	if (pid_left == 0)
 	{
-//		ft_putstr("pipeline LEFT: ");
-//		ft_putendl(node_left->token->str);
 		close(fd[0]);
 		ft_make_dup2(node_left->token->str, fd[1], STDOUT_FILENO);
 		exit(ft_launch_one_side(node_left));
@@ -81,29 +75,19 @@ int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 	else
 	{
 
-		if (node_right->parent->parent && node_right->parent->parent->operator_type == PIPE)
-		{
-//			ft_save_std_fd(save);
-			close(fd[1]);
-			ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
-			status_right = ft_launch_pipeline(node_right, node_right->parent->parent->right);
-			close(fd[0]);
-//			ft_restore_std_fd()
-			return (WEXITSTATUS(status_right));
-			//return (ft_launch_pipeline(node_right, node_right->parent->parent->right));
-		}
-
 		// ft_pipe_to_right(int pif, t_ast *node, int pid)
 
 		if ((pid_right = fork()) == -1)
 			ft_exit("21sh: fork: fork failed, no child created", 1);
 		if (pid_right == 0)
 		{
-//			ft_putstr("pipeline RIGHT: ");
-//			ft_putendl(node_right->token->str);
 			close(fd[1]);
 			ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
-			exit(ft_launch_one_side(node_right));
+			
+			if (node_right->parent->parent && node_right->parent->parent->operator_type == PIPE)
+				exit(ft_launch_pipeline(node_right, node_right->parent->parent->right));
+			else
+				exit(ft_launch_one_side(node_right));
 		}
 		else
 		{
