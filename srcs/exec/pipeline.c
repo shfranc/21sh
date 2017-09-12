@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 11:53:29 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 12:15:17 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		ft_launch_one_side(t_ast *side)
 	int	status;
 
 	ft_save_std_fd(save);
-	//	ft_expand(ast->token);
+	ft_expand(side->token);
 	ft_remove_quoting(side->token);
 
 	if (ft_init_redirection(side) != REDIR_OK)
