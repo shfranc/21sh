@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 10:44:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 11:45:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,7 @@ static int		ft_pipe_to_right(int fd[2], t_ast *node_right)
 		{
 			close(fd[1]);
 			ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
-			
-			if (node_right->parent->parent\
-					&& node_right->parent->parent->operator_type == PIPE)
-				exit(ft_launch_pipeline(node_right,\
-							node_right->parent->parent->right));
-			else
-				exit(ft_launch_one_side(node_right));
+			exit(ft_launch_one_side(node_right));
 		}
 		else
 		{
@@ -78,7 +72,7 @@ int			ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 	int		fd[2];
 	pid_t	pid_left;
 	int		status_right;
-
+	
 	if (pipe(fd) == -1)
 	{
 		ft_put_cmd_error(node_left->left->token->str, STR_PIPE_ERROR);
@@ -90,7 +84,10 @@ int			ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 	{
 		close(fd[0]);
 		ft_make_dup2(node_left->token->str, fd[1], STDOUT_FILENO);
-		exit(ft_launch_one_side(node_left));
+		if (node_left->operator_type == PIPE)
+			exit(ft_launch_pipeline(node_left->left, node_left->right));
+		else
+			exit(ft_launch_one_side(node_left));
 	}
 	else
 	{
