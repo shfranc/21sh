@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:13:05 by sfranc           ###   ########.fr       */
+/*   Created: 2017/09/12 18:55:25 by sfranc            #+#    #+#             */
+/*   Updated: 2017/09/12 18:57:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
+void	ft_builtin_echo(char **cmd)
+{
+	int	i;
+	int n;
 
-# include <signal.h>
-
-# include "libft.h"
-# include "builtin.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-char	**g_env;
-int		g_ret_cmd;
-
-#endif
+	n = 0;
+	i = 1;
+	if (ft_strequ(*(cmd + 1), "-n"))
+	{
+		n = 1;
+		i++;
+	}
+	while (*(cmd + i))
+	{
+		ft_putstr(*(cmd + i));
+		if (*(cmd + ++i))
+			write(1, " ", 1);
+	}
+	if (n == 0)
+		write(1, "\n", 1);
+}

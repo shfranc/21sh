@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 17:51:31 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 19:36:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,35 @@ static void	ft_var_expansion(char **str, char *dollar)
 	char	*value;
 	char	*exp;
 	char	*tmp;
+	int		len;
 
-	(void)str;
 	tmp = dollar + 1;
-	key = NULL;
-	while (*tmp && (ft_isalnum(*tmp) || *tmp == '_'))
-		key = ft_charappend(key, *tmp++);
-	value = ft_get_env_variable(g_env, key);
-	if (value)
-		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key) + ft_strlen(value));
+	if (*tmp == '?')
+	{
+		key = ft_strdup("?");
+		value = ft_itoa(g_ret_cmd);
+	}
 	else
-		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key));
+	{
+		key = NULL;
+		while (*tmp && (ft_isalnum(*tmp) || *tmp == '_'))
+			key = ft_charappend(key, *tmp++);
+		value = ft_get_env_variable(g_env, key);
+	}
+
+	len = ft_strlen(*str);
+	if (value)
+		len += ft_strlen(value);
+	if (key)
+		len -= ft_strlen(key);
+	exp = ft_memalloc(len);
 
 	ft_memmove(exp, *str, dollar - *str);
 	if (value)
 		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
-	ft_memmove(exp + ft_strlen(exp), dollar +  ft_strlen(key) + 1, ft_strlen(dollar + ft_strlen(key) + 1));
+	len = (key ? ft_strlen(key) : 0);
+	ft_memmove(exp + ft_strlen(exp), dollar + len + 1, ft_strlen(dollar + len + 1));
+	
 	free(key);
 	free(value);
 	free(*str);
@@ -105,9 +118,9 @@ void		ft_expand(t_token *token)
 					break ;
 			}
 			while ((dollar = ft_strchr(tmp->str, '$'))\
-					&& !ft_is_quoted(tmp->str, tilde))
+					&& !ft_is_quoted(tmp->str, dollar))
 			{
-				if (ft_strequ(dollar, "$"))
+				if (ft_strequ(dollar, "$") || (*(dollar + 1) && *(dollar + 1) != '?' && *(dollar + 1) != '_' && !ft_isalnum(*(dollar + 1))))
 					break ;
 				ft_var_expansion(&tmp->str, dollar);
 			}

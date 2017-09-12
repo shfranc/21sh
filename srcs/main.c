@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/31 11:13:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 19:13:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		main(int argc, char **argv, char **environ)
 //		}
 //		if (ret_cmd == PARSER_SUCCESS)
 //		{
-			ret_cmd = ft_execute(ast);
+			g_ret_cmd = ft_execute(ast);
 		}
 
 		ft_putstr(BYELLOW"\nRET CMD: ");

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   launcher.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:13:05 by sfranc           ###   ########.fr       */
+/*   Created: 2017/09/12 18:59:05 by sfranc            #+#    #+#             */
+/*   Updated: 2017/09/12 19:00:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
-
-# include <signal.h>
-
-# include "libft.h"
-# include "builtin.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-char	**g_env;
-int		g_ret_cmd;
-
-#endif
+int		ft_launch_builtin(char **cmd)
+{
+	if (ft_strequ(*cmd, "echo"))
+	{
+		ft_builtin_echo(cmd);
+		return (1);
+	}
+	return (0);
+}

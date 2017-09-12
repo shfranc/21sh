@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 17:11:02 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 19:03:41 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@
 # define STR_DUP_ERROR 		"dup error"
 # define STR_PIPE_ERROR 	"pipe failed"
 
-int		ft_execute(t_ast *ast);
-int		ft_launch_simple_cmd(t_ast *ast);
-int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
-
 /*
 ** EXECUTION
 */
-int		ft_fork(char *path, char **cmd);
+int		ft_execute(t_ast *ast);
+int		ft_launch_builtin(char **cmd);
+int		ft_launch_simple_cmd(t_ast *ast);
+int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
 char	**ft_cmd_into_tab(t_ast *ast);
 
+/*
+** BUILTIN
+*/
+int		ft_launcher(char **cmd);
+void	ft_builtin_echo(char **cmd);
 
 /*
 ** EXPANSION AND QUOTES
