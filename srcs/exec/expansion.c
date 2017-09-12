@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 15:00:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 15:26:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@ static int	ft_is_quoted(char *str, char *c)
 {
 	int	escape;
 
-	if ((c - 1) && *(c - 1) == '\\')
-		return (1);
 	escape = 0;
 	while (str < c)
 	{
 		if (*str == '\\')
 			escape = 1;
+		if (*str == '\\' && (str + 1) && *(str + 1) == *c)
+			return (1);
 		if (!escape && *str == '"'\
-				&& ((str = str + ft_goto_next_quote_withescape(str, *str) + 1) > c))
+				&& ((str = str\
+						+ ft_goto_next_quote_withescape(str, *str) + 1) > c))
 			return (1);
 		else if (!escape && *str == '\''\
 				&& ((str = str + ft_goto_next_quote(str, *str)) > c))
@@ -41,13 +42,13 @@ static int	ft_is_quoted(char *str, char *c)
 	return (0);
 }
 
-static void	ft_tilde_expansion(char **str, char *tilde)
+static int	ft_tilde_expansion(char **str, char *tilde)
 {
 	char *home;
 	char *exp;
 
 	if (!(home = ft_get_env_variable(g_env, "HOME")))
-		return ;
+		return (0);	
 	exp = ft_memalloc(ft_strlen(*str) + ft_strlen(home));
 	ft_memmove(exp, *str, tilde - *str);
 	ft_memmove(exp + ft_strlen(exp), home, ft_strlen(home));
@@ -55,7 +56,13 @@ static void	ft_tilde_expansion(char **str, char *tilde)
 	free(home);
 	free(*str);
 	*str = exp;
+	return (1);
 }
+
+/*static void	ft_expand_env_variable(char **str, char *dollar)
+{
+
+}*/
 
 void		ft_expand(t_token *token)
 {
@@ -69,7 +76,12 @@ void		ft_expand(t_token *token)
 		{
 			while ((tilde = ft_strchr(tmp->str, '~'))\
 					&& !ft_is_quoted(tmp->str, tilde))
-				ft_tilde_expansion(&tmp->str, tilde);
+			{
+				ft_putendl("1");
+				if (!(ft_tilde_expansion(&tmp->str, tilde)))
+					break ;
+				ft_putendl(tmp->str);
+			}
 		}
 		tmp = tmp->next;
 	}
