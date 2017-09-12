@@ -6,102 +6,91 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/08 16:48:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 17:51:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-static int	ft_dollar_isquoted(char *begin, char *dollar)
-{
-	int		escape;
-	char	*before;
+// ~ expansion : ne remplace que le 1er ~ si pas de ~ a la suite. (~~ n'est pas expandu)
+// PATH:expand tout du long
 
-	ft_putendl("1");
-	if (dollar != begin && *(dollar - 1) == '\\')
-		return (1);
-	before = begin;
-	ft_putendl("2");
-	while (*before && before < dollar)
+static int	ft_is_quoted(char *str, char *c)
+{
+	int	escape;
+
+	escape = 0;
+	while (str < c)
 	{
-		ft_putendl("3");
-		if (*before == '\\')
-			escape = ESCAPE;
-		if (!escape && *before == '\'')
-		{
-			before = before + ft_goto_next_quote(before, *before);
-			ft_putendl(before);
-			if (before > dollar)
-				return (1);
-		}
-		else if (!escape && *before == '"')
-		{
-			ft_putendl("4");
-			before = before + ft_goto_next_quote_withescape(before, *before);
-			ft_putendl("5");
-			ft_putendl(before);
-			if (before > dollar)
-				return (1);
-		}
+		if (*str == '\\')
+			escape = 1;
+		if (*str == '\\' && (str + 1) && *(str + 1) == *c)
+			return (1);
+		if (!escape && *str == '"'\
+				&& ((str = str\
+						+ ft_goto_next_quote_withescape(str, *str) + 1) > c))
+			return (1);
+		else if (!escape && *str == '\''\
+				&& ((str = str + ft_goto_next_quote(str, *str)) > c))
+			return (1);
 		else
 		{
-			before++;
-			escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
+			str++;
+			escape = 0;
 		}
 	}
 	return (0);
 }
 
-static void	ft_replace_dollar(char **str, char *dollar)
+static int	ft_tilde_expansion(char **str, char *tilde)
 {
-	char	*begin;
-	char	*end;
-	char	*var;
-	char	*replace;
-	char	*tmp;
+	char *home;
+	char *exp;
 
-	begin = ft_strsub(*str, 0, dollar - *str);
-	ft_putstr("begin : ");
-	ft_putendl(begin);
-	var = NULL;
-	++dollar;
-	while (*dollar && ft_isalnum(*dollar))
-		var = ft_charappend(var, *dollar++);
-
-	ft_putstr("var a chercher : ");
-	ft_putendl(var);
-
-	replace = NULL;
-	if (var)
-		replace = ft_get_env_variable(g_env, var);
-
-	ft_putstr("replace : ");
-	ft_putendl(replace);
-
-	end = ft_strsub(*str, ft_strlen(begin) + ft_strlen(var) + 1, ft_strlen(dollar));
-	ft_putstr("end : ");
-	ft_putendl(end);
-
-	if (replace)
-	{
-		tmp = ft_strjoin3(begin, replace, end);
-		free(*str);
-		*str = tmp;
-	}
-	else
-	{
-		tmp = ft_strjoin(begin, end);
-		free(*str);
-		*str = tmp;
-	}
+	if (!(home = ft_get_env_variable(g_env, "HOME")))
+		return (0);	
+	exp = ft_memalloc(ft_strlen(*str) + ft_strlen(home));
+	ft_memmove(exp, *str, tilde - *str);
+	ft_memmove(exp + ft_strlen(exp), home, ft_strlen(home));
+	ft_memmove(exp + ft_strlen(exp), tilde +  1, ft_strlen(tilde + 1));
+	free(home);
+	free(*str);
+	*str = exp;
+	return (1);
 }
 
-// ~ expansion : ne remplace que le 1er ~ si pas de ~ a la suite. (~~ n'est pas expandu)
-// PATH:expand tout du long
+static void	ft_var_expansion(char **str, char *dollar)
+{
+	char	*key;
+	char	*value;
+	char	*exp;
+	char	*tmp;
+
+	(void)str;
+	tmp = dollar + 1;
+	key = NULL;
+	while (*tmp && (ft_isalnum(*tmp) || *tmp == '_'))
+		key = ft_charappend(key, *tmp++);
+	value = ft_get_env_variable(g_env, key);
+	if (value)
+		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key) + ft_strlen(value));
+	else
+		exp = ft_memalloc(ft_strlen(*str) - ft_strlen(key));
+
+	ft_memmove(exp, *str, dollar - *str);
+	if (value)
+		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
+	ft_memmove(exp + ft_strlen(exp), dollar +  ft_strlen(key) + 1, ft_strlen(dollar + ft_strlen(key) + 1));
+	free(key);
+	free(value);
+	free(*str);
+	*str = exp;
+}
 
 void		ft_expand(t_token *token)
 {
 	t_token *tmp;
+	char	*tilde;
 	char	*dollar;
 
 	tmp = token;
@@ -109,14 +98,18 @@ void		ft_expand(t_token *token)
 	{
 		if (tmp->token_type == WORD)
 		{
-			while ((dollar = ft_strchr(tmp->str, '$'))\
-					&& !ft_dollar_isquoted(tmp->str, dollar))
+			while ((tilde = ft_strchr(tmp->str, '~'))\
+					&& !ft_is_quoted(tmp->str, tilde))
 			{
-				ft_putstr("replace $ :");
-				ft_putendl(dollar);
-				ft_replace_dollar(&tmp->str, dollar);
-				ft_putstr("RESULT :");
-				ft_putendl(tmp->str);
+				if (!(ft_tilde_expansion(&tmp->str, tilde)))
+					break ;
+			}
+			while ((dollar = ft_strchr(tmp->str, '$'))\
+					&& !ft_is_quoted(tmp->str, tilde))
+			{
+				if (ft_strequ(dollar, "$"))
+					break ;
+				ft_var_expansion(&tmp->str, dollar);
 			}
 		}
 		tmp = tmp->next;
