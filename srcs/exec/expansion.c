@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 14:55:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/12 15:00:59 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ static int	ft_is_quoted(char *str, char *c)
 	return (0);
 }
 
-char	*ft_tilde_expansion(char *str, char *tilde)
+static void	ft_tilde_expansion(char **str, char *tilde)
 {
 	char *home;
 	char *exp;
 
 	if (!(home = ft_get_env_variable(g_env, "HOME")))
-		return (str);
-	exp = ft_memalloc(ft_strlen(str) + ft_strlen(home));
-	ft_memmove(exp, str, tilde - str);
+		return ;
+	exp = ft_memalloc(ft_strlen(*str) + ft_strlen(home));
+	ft_memmove(exp, *str, tilde - *str);
 	ft_memmove(exp + ft_strlen(exp), home, ft_strlen(home));
 	ft_memmove(exp + ft_strlen(exp), tilde +  1, ft_strlen(tilde + 1));
-	return (exp);
+	free(home);
+	free(*str);
+	*str = exp;
 }
-
 
 void		ft_expand(t_token *token)
 {
@@ -68,7 +69,7 @@ void		ft_expand(t_token *token)
 		{
 			while ((tilde = ft_strchr(tmp->str, '~'))\
 					&& !ft_is_quoted(tmp->str, tilde))
-				tmp->str = ft_tilde_expansion(tmp->str, tilde);
+				ft_tilde_expansion(&tmp->str, tilde);
 		}
 		tmp = tmp->next;
 	}
