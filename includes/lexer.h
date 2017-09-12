@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/23 19:26:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 12:56:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct	s_token
 	int				token_type;
 	int				operator_type;
 	int				quoting;
+	int				fd;
 	char			*heredoc;
 	struct s_token	*next;
 	struct s_token	*prev;
@@ -54,15 +55,15 @@ enum			e_operatorlst
 	AND,
 	OR_IF,
 	PIPE,
-	DLESS_DASH,
-	DLESS,
-	LESS_AND,
-	LESS_GREAT,
-	LESS,
-	DGREAT,
-	GREAT_AND,
-	CLOBBER,
-	GREAT
+	DLESS_DASH, 	// ** SYNTAX ERR **
+	DLESS, 			// HEREDOC - PIPE
+	LESS_AND,		// AGREG STDIN
+	LESS_GREAT,		// ** SYNTAC ERR **
+	LESS,			// REDIR STDIN
+	DGREAT,			// REDIR STOUT APPEND
+	GREAT_AND,		// AGREG STDIN
+	CLOBBER,		// ** SYNTAX ERR **
+	GREAT			// REDIR STDOUT
 };
 
 void	ft_tokenize(t_lexer **lexer, char *line);
@@ -90,6 +91,7 @@ t_token	*ft_newtoken(char *str, int token_type, int operator_type);
 void	ft_addtoken(t_lexer *lexer, t_token *token);
 void	ft_del_lasttoken(t_lexer *lexer);
 void	ft_dellexer(t_lexer **lexer);
+void	ft_deltokens(t_token **token);
 void	ft_printlexer(t_token *token, int nbr_token);
 void	ft_reverseprint(t_lexer *lexer);
 

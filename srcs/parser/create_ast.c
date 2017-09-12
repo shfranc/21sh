@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/15 11:38:13 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/24 17:16:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/07 17:06:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 */
 
 // pipeline avec right associativity
-
+/*
 t_ast	*ft_create_pipeline(t_token **token)
  {
   t_ast	*root;
@@ -41,9 +41,9 @@ t_ast	*ft_create_pipeline(t_token **token)
   }
   return (root);
  }
-
+*/
 // pipe left associativity
-/*
+
 t_ast	*ft_create_pipeline(t_token **token)
 {
 	t_ast	*root;
@@ -64,7 +64,7 @@ t_ast	*ft_create_pipeline(t_token **token)
 
 	return (root);
 }
-*/
+
 t_ast	*ft_create_list(t_token **token)
 {
 	t_ast	*root;

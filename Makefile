@@ -6,14 +6,15 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/08/24 12:13:18 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/11 18:26:12 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 SRCS_PATH = srcs
 OBJS_PATH = objs
-SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
+SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
+		builtin/env.c \
 		read/term.c \
 		read/read_line.c \
 		read/prompt.c \
@@ -25,6 +26,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		read/copy_cut.c \
 		read/interpret.c \
 		lexer/list_lexer.c \
+		lexer/print_lexer.c \
 		lexer/tokenize.c \
 		lexer/get_word.c \
 		lexer/get_operator.c \
@@ -36,7 +38,16 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c\
 		parser/remove_quotes.c \
 		parser/create_ast.c \
 		parser/ast_elem.c \
-		parser/print_ast.c)
+		parser/print_ast.c \
+		exec/execute.c \
+		exec/simple_cmd.c \
+		exec/expansion.c \
+		exec/quotes_removal.c \
+		exec/std_fd.c \
+		exec/redirect.c \
+		exec/agreg_heredoc.c \
+		exec/path.c \
+		exec/pipeline.c)
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
@@ -44,6 +55,7 @@ LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
@@ -60,9 +72,11 @@ $(LIB):
 	@echo "$(GREEN)libft : compilation OK$(RESET)"
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c $(INCLUDES)
+	@mkdir -p $(OBJS_PATH)/builtin
 	@mkdir -p $(OBJS_PATH)/read
 	@mkdir -p $(OBJS_PATH)/lexer
 	@mkdir -p $(OBJS_PATH)/parser
+	@mkdir -p $(OBJS_PATH)/exec
 	@$(CC) $(FLAGS) -o $@ -c $< $(addprefix -I , $(INCLUDES))
 	@echo "$@ : $(YELLOW)OK$(RESET)"
 

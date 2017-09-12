@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/15 10:44:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/06 18:23:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 	ft_create_delimiter(dless, &delimiter);
 	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)), 1);
 	if (!*line)
+	{
+		free(line);
 		return (PARSER_ERROR);
+	}
 	if (ft_strequ(line, delimiter))
 	{
 		if (!hdoc_buff)
@@ -45,10 +48,7 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 		ft_strdel(&delimiter);
 	}
 	else
-	{
 		ft_strmerge(&hdoc_buff, line);
-		ft_putendl(hdoc_buff);
-	}
 	free(line);
 	return(ft_parser(lexer));
 }
@@ -65,7 +65,10 @@ int		ft_read_again_list(t_lexer *lexer, int list_type)
 	if (list_type == OR_IF)
 		ft_read_line(&line, write(1, OR_IF_PROMPT, ft_strlen(OR_IF_PROMPT)), 1);
 	if (!*line)
+	{
+		free(line);
 		return (PARSER_ERROR);
+	}
 	ft_del_lasttoken(lexer);
 	ft_tokenize(&lexer, line);
 	free(line);
@@ -86,6 +89,7 @@ int		ft_read_again_quoting(t_lexer *lexer)
 	if (!*tmp)
 	{
 		lexer->last->quoting = 0;
+		free(tmp);
 		return (PARSER_ERROR);
 	}
 	line = ft_strjoin(lexer->last->str, tmp);

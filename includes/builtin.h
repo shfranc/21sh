@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/05 13:55:08 by sfranc           ###   ########.fr       */
+/*   Created: 2017/08/29 16:15:50 by sfranc            #+#    #+#             */
+/*   Updated: 2017/08/29 16:17:08 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
-# include <stdio.h> // debug a suppr
-
-# include <signal.h>
-
-# include "libft.h"
-# include "builtin.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-char	**g_env;
+/*
+** ENV
+*/
+char	*ft_get_env_variable(char **env, char *var);
 
 #endif
