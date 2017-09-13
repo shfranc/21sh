@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 18:59:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:00:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:38:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 int		ft_launch_builtin(char **cmd)
 {
-	if (ft_strequ(*cmd, "echo"))
-	{
-		ft_builtin_echo(cmd);
-		return (1);
-	}
+	if (ft_strequ(*cmd, CMD_ECHO))
+		return (ft_builtin_echo(cmd));
 	return (0);
 }

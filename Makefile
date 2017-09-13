@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/12 19:02:26 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/13 11:20:58 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,10 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		exec/path.c \
 		exec/pipeline.c \
 		builtin/launcher.c \
+		builtin/cd.c \
 		builtin/echo.c \
-		builtin/env.c )
+		builtin/env.c \
+		builtin/setenv.c )
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a

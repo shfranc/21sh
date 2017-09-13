@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:03:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:30:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define STR_CMD_NOT_FOUND	"command not found"
 # define STR_NO_FILE 		"No such file or directory"
 # define STR_IS_DIR 		"is a directory"
+# define STR_NOT_DIR 		"Not a directory"
 # define STR_PERM_DENIED 	"Permission denied"
 # define STR_BAD_FD 		"Bad file descriptor"
 # define STR_AMB_REDIR		"ambiguous redirection"
@@ -45,12 +46,6 @@ int		ft_launch_builtin(char **cmd);
 int		ft_launch_simple_cmd(t_ast *ast);
 int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
 char	**ft_cmd_into_tab(t_ast *ast);
-
-/*
-** BUILTIN
-*/
-int		ft_launcher(char **cmd);
-void	ft_builtin_echo(char **cmd);
 
 /*
 ** EXPANSION AND QUOTES
@@ -73,7 +68,5 @@ int		ft_make_dup2(char *dest_name, int fd_dest, int fd_src);
 */
 int		ft_get_path(char *cmd, char **path);
 void	ft_put_cmd_error(char *cmd, char *error);
-//int		ft_check_given_path(char *cmd, char **cmd_path);
-//int		ft_search_through_path(char *cmd, char **cmd_path);
 
 #endif
