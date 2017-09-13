@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 16:10:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:11:09 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_fork(char *path, char **cmd)
 		ft_exit("21sh: fork: fork failed, no child created", 1);
 	if (pid == 0)
 	{
-		if ((status = execve(path, cmd, g_env)) == -1)
+		if ((status = execve(path, cmd, g_shell->env)) == -1)
 			ft_exit("21sh: execve: failed to execute the command", 1);
 	}
 	else

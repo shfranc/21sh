@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:13:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:09:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,12 @@
 # include "parser.h"
 # include "execute.h"
 
-char	**g_env;
-int		g_ret_cmd;
+typedef struct	s_shell
+{
+	char		**env;
+	int			ret_cmd;
+}				t_shell;
+
+t_shell *g_shell;
 
 #endif

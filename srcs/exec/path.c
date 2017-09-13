@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 19:06:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 11:30:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:12:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int		ft_search_through_path(char *cmd, char **cmd_path)
 	int		i;
 
 	ret = CMD_NOT_FOUND;
-	tmp = ft_get_env_variable(g_env, "PATH");
+	tmp = ft_get_env_variable(g_shell->env, "PATH");
 	path = ft_strsplit(tmp, ':');
 	i = 0;
 	while (path && path[i])

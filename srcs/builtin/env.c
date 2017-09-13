@@ -6,11 +6,18 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 11:30:04 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:40:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
+
+int		ft_builtin_env(char **cmd)
+{
+	if (!cmd[1])
+		ft_puttab(g_shell->env);
+	return (1);
+}
 
 char	*ft_get_env_variable(char **env, char *var)
 {

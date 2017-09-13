@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 19:36:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:14:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_tilde_expansion(char **str, char *tilde)
 	char *home;
 	char *exp;
 
-	if (!(home = ft_get_env_variable(g_env, "HOME")))
+	if (!(home = ft_get_env_variable(g_shell->env, "HOME")))
 		return (0);	
 	exp = ft_memalloc(ft_strlen(*str) + ft_strlen(home));
 	ft_memmove(exp, *str, tilde - *str);
@@ -71,14 +71,14 @@ static void	ft_var_expansion(char **str, char *dollar)
 	if (*tmp == '?')
 	{
 		key = ft_strdup("?");
-		value = ft_itoa(g_ret_cmd);
+		value = ft_itoa(g_shell->ret_cmd);
 	}
 	else
 	{
 		key = NULL;
 		while (*tmp && (ft_isalnum(*tmp) || *tmp == '_'))
 			key = ft_charappend(key, *tmp++);
-		value = ft_get_env_variable(g_env, key);
+		value = ft_get_env_variable(g_shell->env, key);
 	}
 
 	len = ft_strlen(*str);

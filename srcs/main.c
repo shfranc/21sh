@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 11:39:15 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:37:40 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@
   return (1);
   }*/
 
+t_shell	*ft_init(char **environ)
+{
+	t_shell	*shell;
+
+	shell = ft_memalloc(sizeof(t_shell));
+	shell->env = ft_tabdup(environ);
+//	if (!shell->env)
+//		shell->env = ft_basic_env;
+	return (shell);
+}
+
+
 int		main(int argc, char **argv, char **environ)
 {
 	char	*line;
@@ -38,11 +50,12 @@ int		main(int argc, char **argv, char **environ)
 	int		ret_cmd;
 
 	(void)argc;
-	g_env = ft_tabdup(environ);
+	g_shell = ft_init(environ);
 	//	ft_catch_signals();
 	//	lexer = NULL;
 	while (1)
 	{
+
 		len_prompt = ft_display_prompt();
 		ft_read_line(&line, len_prompt, 0);
 		ft_tokenize(&lexer, line);
@@ -62,11 +75,10 @@ int		main(int argc, char **argv, char **environ)
 			ast = ft_create_ast(&lexer->first);
 			if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
 				ft_print_ast(ast, "root", 0);
-//		}
-//		if (ret_cmd == PARSER_SUCCESS)
-//		{
-			g_ret_cmd = ft_execute(ast);
+			g_shell->ret_cmd = ft_execute(ast);
 		}
+		else
+			g_shell->ret_cmd = ret_cmd;
 
 		ft_putstr(BYELLOW"RET CMD: ");
 		ft_putnbr(ret_cmd);

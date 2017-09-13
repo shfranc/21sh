@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:15:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 16:09:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 18:04:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define CMD_CD			"cd"
 # define CMD_ECHO		"echo"
+# define CMD_ENV		"env"
 # define CMD_EXIT		"exit"
 # define STR_NUM		"numeric argument required"
 # define STR_TOO_MANY	"too many arguments"
@@ -25,6 +26,7 @@
 
 int		ft_is_builtin(char *cmd);
 int		ft_builtin_echo(char **cmd);
+int		ft_builtin_env(char **cmd);
 void	ft_builtin_exit(char **cmd);
 
 /*

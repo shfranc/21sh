@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 16:32:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:14:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int		ft_launch_one_side(t_ast *side)
 			status = ft_launch_builtin(cmd);
 		else if ((status = ft_get_path(cmd[0], &path)) == PATH_OK)
 		{
-			if ((status = execve(path, cmd, g_env)) == -1)
+			if ((status = execve(path, cmd, g_shell->env)) == -1)
 				ft_exit(STR_EXECVE_ERROR, 1);
 			free(path);
 		}

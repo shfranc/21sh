@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 16:02:43 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 16:32:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 17:14:50 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_builtin_exit(char **cmd)
 {
 	ft_putendl_fd(CMD_EXIT, 2);
 	if (!cmd[1])
-		exit(g_ret_cmd);
+		exit(g_shell->ret_cmd);
 	else if (!ft_isnumber(cmd[1]))
 	{
 		ft_put_cmd_error(CMD_EXIT, STR_NUM);
