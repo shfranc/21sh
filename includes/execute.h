@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 11:30:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 19:09:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		ft_launch_builtin(char **cmd);
 int		ft_launch_simple_cmd(t_ast *ast);
 int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
 char	**ft_cmd_into_tab(t_ast *ast);
+int		ft_fork(char *path, char **cmd);
 
 /*
 ** EXPANSION AND QUOTES
