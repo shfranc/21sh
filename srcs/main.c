@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 17:37:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 18:32:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,6 @@
   return (1);
   }*/
 
-t_shell	*ft_init(char **environ)
-{
-	t_shell	*shell;
-
-	shell = ft_memalloc(sizeof(t_shell));
-	shell->env = ft_tabdup(environ);
-//	if (!shell->env)
-//		shell->env = ft_basic_env;
-	return (shell);
-}
-
-
 int		main(int argc, char **argv, char **environ)
 {
 	char	*line;
@@ -52,7 +40,6 @@ int		main(int argc, char **argv, char **environ)
 	(void)argc;
 	g_shell = ft_init(environ);
 	//	ft_catch_signals();
-	//	lexer = NULL;
 	while (1)
 	{
 

@@ -6,13 +6,42 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 17:20:21 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 17:38:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 18:32:39 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_increase_shlvl(char ***env)
+static int		ft_modify_variable(char ***env, char *new_var)
+{
+	char	*to_free;
+	char	*temp_env;
+	char	*temp_var;
+	int		i;
+
+	temp_var = ft_strsub(new_var, 0, ft_strchr(new_var, '=') - new_var);
+	i = 0;
+	while (*(*env + i))
+	{
+		temp_env = ft_strsub(*(*env + i), 0,\
+				ft_strchr(*(*env + i), '=') - *(*env + i));
+		if (ft_strequ(temp_env, temp_var))
+		{
+			to_free = *(*env + i);
+			*(*env + i) = ft_strdup(new_var);
+			free(to_free);
+			free(temp_var);
+			free(temp_env);
+			return (1);
+		}
+		free(temp_env);
+		i++;
+	}
+	free(temp_var);
+	return (0);
+}
+
+static void	ft_increase_shlvl(char ***env)
 {
 	char	*shlvl;
 	char	*temp;
@@ -34,7 +63,7 @@ void	ft_increase_shlvl(char ***env)
 		ft_addtotab(env, "SHLVL=1");
 }
 
-void	ft_update_pwd(char ***env)
+static void	ft_update_pwd(char ***env)
 {
 	char	*cwd;
 	char	*pwd;
@@ -60,13 +89,13 @@ void	ft_update_pwd(char ***env)
 	}
 }
 
-t_shell	*ft_init(char **environ)
+t_shell		*ft_init(char **environ)
 {
 	t_shell	*shell;
 
 	shell = ft_memalloc(sizeof(t_shell));
 	shell->env = ft_tabdup(environ);
-	ft_increase_shlvl(&shell->env);
+	ft_increase_shlvl(&(shell->env));
 	ft_update_pwd(&shell->env);
 	return (shell);
 }
