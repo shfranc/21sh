@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 16:47:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 17:24:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 	int		ret_cmd;
 
 	ret_cmd = EXIT_SUCCESS;
-	new_cmd = NULL;
+//	new_cmd = NULL;
 	while (cmd[i])
 		ft_addtotab(&new_cmd, cmd[i++]);
 	if (!new_cmd)
 	{
-		exec_env ? ft_puttab(exec_env): 0;
+		ft_puttab(exec_env);
 		ft_freetab(&exec_env);
 		return (ret_cmd);
 	}
@@ -53,9 +53,10 @@ int		ft_builtin_env(char **cmd)
 		ft_puttab(g_shell->env);
 	else
 	{
-		exec_env = NULL;
+		exec_env = 0;
 		sauv_env = g_shell->env;
 		i = 1;
+
 		if (!ft_strequ(cmd[i], "-i"))
 			exec_env = ft_tabdup(g_shell->env);
 		else

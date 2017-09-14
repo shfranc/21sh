@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 11:20:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 16:41:41 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 17:10:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int			ft_is_valid_name(char *str)
+int		ft_is_valid_name(char *str)
 {
 	while (*str)
 	{
@@ -24,7 +24,7 @@ int			ft_is_valid_name(char *str)
 	return (1);
 }
 
-int			ft_builtin_setenv(char **cmd)
+int		ft_builtin_setenv(char **cmd)
 {
 	char	*var;
 
@@ -52,17 +52,21 @@ int			ft_builtin_setenv(char **cmd)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_modify_the_var(char ***env, char *new_var, char *temp_var)
+void	ft_modify_variable(char ***env, char *new_var)
 {
-	char	*temp_env;
 	char	*to_free;
-	int	i;
+	char	*temp_env;
+	char	*temp_var;
+	int		i;
 
+	temp_var = ft_strsub(new_var, 0, ft_strchr(new_var, '=') - new_var);
 	i = 0;
 	while (*(*env + i))
 	{
+		ft_putnbr_endl(ft_strchr(*(*env + i), '=') - *(*env + i));
 		temp_env = ft_strsub(*(*env + i), 0,\
 				ft_strchr(*(*env + i), '=') - *(*env + i));
+		ft_putendl(temp_env);
 		if (ft_strequ(temp_env, temp_var))
 		{
 			to_free = *(*env + i);
@@ -70,27 +74,11 @@ static int	ft_modify_the_var(char ***env, char *new_var, char *temp_var)
 			free(to_free);
 			free(temp_var);
 			free(temp_env);
-			return (1);
+			return ;
 		}
 		free(temp_env);
 		i++;
 	}
-	return (0);
-}
-
-void		ft_modify_variable(char ***env, char *new_var)
-{
-	char	*temp_var;
-
-	if (!*env)
-	{
-		ft_addtotab(env, new_var);
-		return ;
-	}
-	temp_var = ft_strsub(new_var, 0, ft_strchr(new_var, '=') - new_var);
-	ft_addtotab(env, new_var);
-	if ((ft_modify_the_var(env, new_var, temp_var)))
-		return ;
 	free(temp_var);
 	ft_addtotab(env, new_var);
 }
