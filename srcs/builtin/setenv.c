@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 11:20:01 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 17:10:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 18:15:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,8 @@ void	ft_modify_variable(char ***env, char *new_var)
 	i = 0;
 	while (*(*env + i))
 	{
-		ft_putnbr_endl(ft_strchr(*(*env + i), '=') - *(*env + i));
 		temp_env = ft_strsub(*(*env + i), 0,\
 				ft_strchr(*(*env + i), '=') - *(*env + i));
-		ft_putendl(temp_env);
 		if (ft_strequ(temp_env, temp_var))
 		{
 			to_free = *(*env + i);

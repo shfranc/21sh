@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 17:24:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 19:42:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 		ft_addtotab(&new_cmd, cmd[i++]);
 	if (!new_cmd)
 	{
-		ft_puttab(exec_env);
+		if (exec_env)
+			ft_puttab(exec_env);
 		ft_freetab(&exec_env);
 		return (ret_cmd);
 	}
@@ -53,16 +54,20 @@ int		ft_builtin_env(char **cmd)
 		ft_puttab(g_shell->env);
 	else
 	{
-		exec_env = 0;
+	//	exec_env = NULL;
 		sauv_env = g_shell->env;
 		i = 1;
-
 		if (!ft_strequ(cmd[i], "-i"))
 			exec_env = ft_tabdup(g_shell->env);
 		else
 			++i;
 		while (cmd[i] && ft_strchr(cmd[i], '='))
-			ft_modify_variable(&exec_env, cmd[i++]);
+		{
+			if (!exec_env)
+				ft_addtotab(&exec_env, cmd[i++]);
+			else
+				ft_modify_variable(&exec_env, cmd[i++]);
+		}
 		ret_cmd = ft_launch_cmd_env(cmd, i, exec_env);		
 		g_shell->env = sauv_env;
 	}
