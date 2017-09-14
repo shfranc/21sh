@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/13 19:09:56 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/14 11:25:32 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		builtin/cd.c \
 		builtin/echo.c \
 		builtin/env.c \
+		builtin/setenv.c \
 		builtin/exit.c )
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
@@ -59,8 +60,8 @@ LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
-#FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
