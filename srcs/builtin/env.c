@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 11:29:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 15:05:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
+static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 {
 	char	**new_cmd;
 	char	*path;
