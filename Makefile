@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/14 11:25:32 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/14 16:38:44 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		builtin/echo.c \
 		builtin/env.c \
 		builtin/setenv.c \
+		builtin/unsetenv.c \
 		builtin/exit.c )
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
