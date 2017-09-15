@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 19:07:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:42:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_put_unexpected_eof(void)
 	ft_putendl_fd(UNEXPECTED_EOF, 2);
 }
 
-void	ft_interpret_moves(char *buff, t_input *input)
+void		ft_interpret_moves(char *buff, t_input *input)
 {
 	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
 		ft_move_right(input);
@@ -39,7 +39,7 @@ void	ft_interpret_moves(char *buff, t_input *input)
 		ft_jumpword_backward(input);
 }
 
-void	ft_interpret_buffer(char *buff, t_input *input)
+void		ft_interpret_buffer(char *buff, t_input *input)
 {
 	if (buff[0] == 11)
 		ft_copy(input);
@@ -55,7 +55,7 @@ void	ft_interpret_buffer(char *buff, t_input *input)
 		ft_deletechar(input);
 }
 
-int		ft_interpret(char *buff, t_input *input, int mode)
+int			ft_interpret(char *buff, t_input *input, int mode)
 {
 	ft_interpret_moves(buff, input);
 	ft_interpret_buffer(buff, input);
@@ -69,7 +69,7 @@ int		ft_interpret(char *buff, t_input *input, int mode)
 	else if (buff[0] == 4 && !*input->line && mode == 0)
 	{
 		ft_canonic_term();
-		ft_exit("exit", 1); // faire une fonction free du shell qui retabli les termcaps...
+		ft_exit("exit", 1);
 	}
 	else if (buff[0] == 4 && !*input->line && mode == 1)
 	{
@@ -80,9 +80,3 @@ int		ft_interpret(char *buff, t_input *input, int mode)
 		tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
 	return (0);
 }
-
-/*
-** impression du buf de lecture :
-** printf("\nkey: %d %d %d %d %d %d\n",
-** buff[0], buff[1], buff[2], buff[3], buff[4], buff[5]);
-*/
