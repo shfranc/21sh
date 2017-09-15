@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 17:14:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:01:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,29 @@
 
 // ~ expansion : ne remplace que le 1er ~ si pas de ~ a la suite. (~~ n'est pas expandu)
 // PATH:expand tout du long
+
+static int	ft_is_quoted_no_dquotes(char *str, char *c)
+{
+	int	escape;
+
+	escape = 0;
+	while (str < c)
+	{
+		if (*str == '\\')
+			escape = 1;
+		if (*str == '\\' && (str + 1) && *(str + 1) == *c)
+			return (1);
+		else if (!escape && *str == '\''\
+				&& ((str = str + ft_goto_next_quote(str, *str)) > c))
+			return (1);
+		else
+		{
+			str++;
+			escape = 0;
+		}
+	}
+	return (0);
+}
 
 static int	ft_is_quoted(char *str, char *c)
 {
@@ -118,7 +141,7 @@ void		ft_expand(t_token *token)
 					break ;
 			}
 			while ((dollar = ft_strchr(tmp->str, '$'))\
-					&& !ft_is_quoted(tmp->str, dollar))
+					&& !ft_is_quoted_no_dquotes(tmp->str, dollar))
 			{
 				if (ft_strequ(dollar, "$") || (*(dollar + 1) && *(dollar + 1) != '?' && *(dollar + 1) != '_' && !ft_isalnum(*(dollar + 1))))
 					break ;
