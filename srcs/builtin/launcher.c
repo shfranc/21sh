@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 18:59:05 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 15:56:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:37:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int		ft_is_builtin(char *cmd)
 {
 	if (ft_strequ(cmd, CMD_ECHO) || ft_strequ(cmd, CMD_EXIT)\
 			|| ft_strequ(cmd, CMD_ENV) || ft_strequ(cmd, CMD_SETENV)\
-			|| ft_strequ(cmd, CMD_UNSETENV))
-		return(1);
+			|| ft_strequ(cmd, CMD_UNSETENV) || ft_strequ(cmd, CMD_CD))
+		return (1);
 	return (0);
 }
 
@@ -25,6 +25,8 @@ int		ft_launch_builtin(char **cmd)
 {
 	if (ft_strequ(*cmd, CMD_ECHO))
 		return (ft_builtin_echo(cmd));
+	if (ft_strequ(*cmd, CMD_CD))
+		return (ft_builtin_cd(cmd));
 	if (ft_strequ(*cmd, CMD_ENV))
 		return (ft_builtin_env(cmd));
 	if (ft_strequ(*cmd, CMD_SETENV))

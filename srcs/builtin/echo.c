@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 18:55:25 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 12:34:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:37:05 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		ft_builtin_echo(char **cmd)
 {
 	int i;
 
-	ft_putendl("mon echo"); // a enlever
 	i = 1;
 	if (ft_strequ(cmd[i], "-n"))
 		++i;

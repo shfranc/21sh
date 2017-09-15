@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 15:31:52 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 15:54:07 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:38:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int		ft_isinenv(char *var)
 
 int		ft_builtin_unsetenv(char **cmd)
 {
-	int		suppr;
-	int 	i;
+	int suppr;
+	int i;
 
 	i = 1;
 	while (cmd[i])

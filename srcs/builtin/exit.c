@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 16:02:43 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 17:14:50 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:37:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ void	ft_builtin_exit(char **cmd)
 	else if (!ft_isnumber(cmd[1]))
 	{
 		ft_put_cmd_error(CMD_EXIT, STR_NUM);
-		exit (EXIT_ERROR);
+		exit(EXIT_ERROR);
 	}
 	else if (cmd[2])
 		ft_put_cmd_error(CMD_EXIT, STR_TOO_MANY);
 	else
 		exit(ft_atoi(cmd[1]));
 }
-

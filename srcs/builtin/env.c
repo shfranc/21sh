@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 14:26:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:39:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
+static int	ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 {
 	char	**new_cmd;
 	char	*path;
@@ -39,7 +39,7 @@ static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 	return (ret_cmd);
 }
 
-int		ft_create_exec_env(char **cmd, char ***exec_env)
+static int	ft_create_exec_env(char **cmd, char ***exec_env)
 {
 	int		i;
 
@@ -56,10 +56,9 @@ int		ft_create_exec_env(char **cmd, char ***exec_env)
 			ft_modify_variable(exec_env, cmd[i++]);
 	}
 	return (i);
-
 }
 
-int		ft_builtin_env(char **cmd)
+int			ft_builtin_env(char **cmd)
 {
 	char	**sauv_env;
 	char	**exec_env;
@@ -72,13 +71,11 @@ int		ft_builtin_env(char **cmd)
 	else
 	{
 		sauv_env = ft_tabdup(g_shell->env);
-
-	exec_env = NULL;
-		i = ft_create_exec_env(cmd, &exec_env); 
-
+		exec_env = NULL;
+		i = ft_create_exec_env(cmd, &exec_env);
 		ft_freetab(&g_shell->env);
 		g_shell->env = exec_env;
-		ret_cmd = ft_launch_cmd_env(cmd, i, exec_env);		
+		ret_cmd = ft_launch_cmd_env(cmd, i, exec_env);
 		ft_freetab(&exec_env);
 		g_shell->env = ft_tabdup(sauv_env);
 		ft_freetab(&sauv_env);
@@ -86,7 +83,7 @@ int		ft_builtin_env(char **cmd)
 	return (ret_cmd);
 }
 
-char	*ft_get_env_variable(char **env, char *var)
+char		*ft_get_env_variable(char **env, char *var)
 {
 	char	*temp;
 	char	*stop;

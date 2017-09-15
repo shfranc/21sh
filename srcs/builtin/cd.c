@@ -6,10 +6,15 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 10:29:33 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 17:00:10 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 14:58:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-
+int		ft_builtin_cd(char **cmd)
+{
+	(void)cmd;
+	ft_putendl("cd");
+	return (EXIT_SUCCESS);
+}
