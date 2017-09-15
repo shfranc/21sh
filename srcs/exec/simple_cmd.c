@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 14:28:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:15:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_cmd_into_tab(t_ast *ast)
 {
-	char 	**cmd;
+	char	**cmd;
 	t_token	*tmp;
 
 	cmd = NULL;
@@ -38,7 +38,7 @@ int		ft_fork(char *path, char **cmd)
 {
 	pid_t	pid;
 	int		status;
-	int 	ret_cmd;
+	int		ret_cmd;
 
 	if ((pid = fork()) == -1)
 		ft_exit(STR_FORK_ERROR, 1);
@@ -53,13 +53,8 @@ int		ft_fork(char *path, char **cmd)
 	return (ret_cmd);
 }
 
-int		ft_launch_simple_cmd(t_ast *ast)
+int		ft_init_launch(int save[3], t_ast *ast)
 {
-	char	*path;
-	char	**cmd;
-	int		ret_cmd;
-	int		save[3];
-
 	ft_save_std_fd(save);
 	ft_expand(ast->token);
 	ft_remove_quoting(ast->token);
@@ -68,7 +63,18 @@ int		ft_launch_simple_cmd(t_ast *ast)
 		ft_restore_std_fd(ast, save);
 		return (REDIR_ERROR);
 	}
-	ret_cmd = EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
+}
+
+int		ft_launch_simple_cmd(t_ast *ast)
+{
+	char	*path;
+	char	**cmd;
+	int		ret_cmd;
+	int		save[3];
+
+	if ((ret_cmd = ft_init_launch(save, ast)) == REDIR_ERROR)
+		return (ret_cmd);
 	if ((cmd = ft_cmd_into_tab(ast)))
 	{
 		if (ft_is_builtin(cmd[0]))

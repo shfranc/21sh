@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 19:15:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:27:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		ft_execute(t_ast *ast);
 int		ft_launch_builtin(char **cmd);
 int		ft_launch_simple_cmd(t_ast *ast);
 int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
+int		ft_init_launch(int save[3], t_ast *ast);
 char	**ft_cmd_into_tab(t_ast *ast);
 int		ft_fork(char *path, char **cmd);
 
@@ -63,6 +64,8 @@ int		ft_init_redirection(t_ast *ast);
 int		ft_agreg_files(t_token *redir);
 int		ft_heredoc_pipe(t_token *redir);
 int		ft_make_dup2(char *dest_name, int fd_dest, int fd_src);
+int		ft_open_error(int fd, int err, char *file_name);
+int		ft_open_file(t_token *file);
 
 /*
 ** PATH

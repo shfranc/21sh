@@ -6,28 +6,21 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 17:14:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:15:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-static int		ft_launch_one_side(t_ast *side)
+static int	ft_launch_one_side(t_ast *side)
 {
-	int	save[3];
-	char **cmd;
-	char *path;
-	int	status;
+	int		save[3];
+	char	**cmd;
+	char	*path;
+	int		status;
 
-	ft_save_std_fd(save);
-	ft_expand(side->token);
-	ft_remove_quoting(side->token);
-
-	if (ft_init_redirection(side) != REDIR_OK)
-	{
-		ft_restore_std_fd(side, save);
-		return (REDIR_ERROR);
-	}
+	if ((status = ft_init_launch(save, side)) == REDIR_ERROR)
+		return (status);
 	if ((cmd = ft_cmd_into_tab(side)))
 	{
 		if (ft_is_builtin(cmd[0]))
@@ -48,30 +41,29 @@ static int		ft_launch_one_side(t_ast *side)
 	return (status);
 }
 
-static int		ft_pipe_to_right(int fd[2], t_ast *node_right)
+static int	ft_pipe_to_right(int fd[2], t_ast *node_right)
 {
 	pid_t	pid_right;
 	int		status_right;
-	
-		if ((pid_right = fork()) == -1)
-			ft_exit(STR_FORK_ERROR, 1);
-		if (pid_right == 0)
-		{
-			close(fd[1]);
-			ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
-			
-			if (node_right->parent->parent\
-					&& node_right->parent->parent->operator_type == PIPE)
-				exit(ft_launch_pipeline(node_right,\
-							node_right->parent->parent->right));
-			else
-				exit(ft_launch_one_side(node_right));
-		}
+
+	if ((pid_right = fork()) == -1)
+		ft_exit(STR_FORK_ERROR, 1);
+	if (pid_right == 0)
+	{
+		close(fd[1]);
+		ft_make_dup2(node_right->token->str, fd[0], STDIN_FILENO);
+		if (node_right->parent->parent\
+				&& node_right->parent->parent->operator_type == PIPE)
+			exit(ft_launch_pipeline(node_right,\
+						node_right->parent->parent->right));
 		else
-		{
-			close(fd[1]);
-			waitpid(pid_right, &status_right, 0);
-		}
+			exit(ft_launch_one_side(node_right));
+	}
+	else
+	{
+		close(fd[1]);
+		waitpid(pid_right, &status_right, 0);
+	}
 	return (WEXITSTATUS(status_right));
 }
 

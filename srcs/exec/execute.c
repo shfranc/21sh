@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/11 17:57:06 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:03:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_execute_pipeline(t_ast *ast)
+int				ft_execute_pipeline(t_ast *ast)
 {
 	if (!ast->left)
 		return (ft_launch_pipeline(ast, ast->parent->right));

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 15:24:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:02:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ static int	ft_tilde_expansion(char **str, char *tilde)
 	char *exp;
 
 	if (!(home = ft_get_env_variable(g_shell->env, "HOME")))
-		return (0);	
+		return (0);
 	exp = ft_memalloc(ft_strlen(*str) + ft_strlen(home));
 	ft_memmove(exp, *str, tilde - *str);
 	ft_memmove(exp + ft_strlen(exp), home, ft_strlen(home));
-	ft_memmove(exp + ft_strlen(exp), tilde +  1, ft_strlen(tilde + 1));
+	ft_memmove(exp + ft_strlen(exp), tilde + 1, ft_strlen(tilde + 1));
 	free(home);
 	free(*str);
 	*str = exp;
 	return (1);
 }
 
-char	*ft_expand_new_str(char *str, char *dollar, char *key, char *value)
+static char	*ft_expand_new_str(char *str, char *dollar, char *key, char *value)
 {
 	char	*exp;
 	int		len;
@@ -44,7 +44,8 @@ char	*ft_expand_new_str(char *str, char *dollar, char *key, char *value)
 	if (value)
 		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
 	len = (key ? ft_strlen(key) : 0);
-	ft_memmove(exp + ft_strlen(exp), dollar + len + 1, ft_strlen(dollar + len + 1));
+	ft_memmove(exp + ft_strlen(exp), dollar + len + 1,\
+			ft_strlen(dollar + len + 1));
 	return (exp);
 }
 
@@ -75,6 +76,15 @@ static void	ft_var_expansion(char **str, char *dollar)
 	*str = exp;
 }
 
+static int	ft_is_valid_name(char *dollar)
+{
+	if (ft_strequ(dollar, "$") || (*(dollar + 1) && *(dollar + 1) != '?' \
+				&& *(dollar + 1) != '_' && !ft_isalnum(*(dollar + 1))))
+		return (0);
+	else
+		return (1);
+}
+
 void		ft_expand(t_token *token)
 {
 	t_token *tmp;
@@ -95,7 +105,7 @@ void		ft_expand(t_token *token)
 			while ((dollar = ft_strchr(tmp->str, '$'))\
 					&& !ft_is_quoted_no_dquotes(tmp->str, dollar))
 			{
-				if (ft_strequ(dollar, "$") || (*(dollar + 1) && *(dollar + 1) != '?' && *(dollar + 1) != '_' && !ft_isalnum(*(dollar + 1))))
+				if (!ft_is_valid_name(dollar))
 					break ;
 				ft_var_expansion(&tmp->str, dollar);
 			}
