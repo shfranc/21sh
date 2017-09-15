@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 17:50:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 12:02:37 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:58:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,50 @@ int			ft_part_operator(char c)
 	return (c == ';' || c == '|' || c == '&' || c == '<' || c == '>' ? 1 : 0);
 }
 
-static void	ft_init_operator(char operator[15][5])
+int			ft_create_operator_token(t_lexer *lexer, char *line, char *operator, int i)
 {
-	if (operator[14][0] == '>')
-		return ;
-	ft_memmove(operator[0], ";;", 3);
-	ft_memmove(operator[1], ";", 2);
-	ft_memmove(operator[2], "&&", 3);
-	ft_memmove(operator[3], "&", 2);
-	ft_memmove(operator[4], "||", 3);
-	ft_memmove(operator[5], "|", 2);
-	ft_memmove(operator[6], "<<-", 4);
-	ft_memmove(operator[7], "<<", 3);
-	ft_memmove(operator[8], "<&", 3);
-	ft_memmove(operator[9], "<>", 3);
-	ft_memmove(operator[10], "<", 2);
-	ft_memmove(operator[11], ">>", 3);
-	ft_memmove(operator[12], ">&", 3);
-	ft_memmove(operator[13], ">|", 3);
-	ft_memmove(operator[14], ">", 2);
+	int			len;
+	t_token		*token;
+		if (i < 6)
+		{
+			token = ft_newtoken(operator, OPERATOR, i + 1);
+			ft_addtoken(lexer, token);
+		}
+		else
+		{
+			ft_get_io_number(lexer, line);
+			token = ft_newtoken(operator, REDIRECT, i + 1);
+			ft_addtoken(lexer, token);
+			if (ft_strequ(operator, ">&") || ft_strequ(operator, "<&"))
+			{
+				if ((len = ft_aggreg_fetch_dash(lexer, line + ft_strlen(operator))))
+					return(len + ft_strlen(operator));
+			}
+		}
+		return (ft_strlen(operator));
 }
 
 int			ft_get_operator(t_lexer *lexer, char *line)
 {
-	static char	operator[15][5];
-	t_token		*token;
-	int			len;
+	static char	operator[15][5] = {";;", ";", "&&", "&", "||", "|", "<<-",\
+		"<<", "<&", "<>", "<", ">>", ">&", ">|", ">"};
 	int			i;
 
-	ft_init_operator(operator);
 	i = 0;
 	while (operator[i])
 	{
 		if (ft_strncmp(line, operator[i], ft_strlen(operator[i])) == 0)
 		{
-			if (i < 6)
+			return (ft_create_operator_token(lexer, line, operator[i], i));
+	/*		if (i < 6)
 			{
 				token = ft_newtoken(operator[i], OPERATOR, i + 1);
-				//token->operator_type = i + 1;
 				ft_addtoken(lexer, token);
 			}
 			else
 			{
 				ft_get_io_number(lexer, line);
 				token = ft_newtoken(operator[i], REDIRECT, i + 1);
-				//token->operator_type = i + 1;
 				ft_addtoken(lexer, token);
 				if (ft_strequ(operator[i], ">&") || ft_strequ(operator[i], "<&"))
 				{
@@ -70,7 +69,7 @@ int			ft_get_operator(t_lexer *lexer, char *line)
 				}
 			}
 			return (ft_strlen(operator[i]));
-		}
+	*/	}
 		++i;
 	}
 	return (0);

@@ -6,23 +6,11 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:51:29 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/07 16:03:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:44:06 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-
-void			ft_reverseprint(t_lexer *lexer)
-{
-	t_token	*temp;
-
-	temp = lexer->last;
-	while(temp)
-	{
-		ft_putendl(temp->str);
-		temp = temp->prev;
-	}
-}
 
 static void		ft_putstr3(char *s1, char *s2, char *s3)
 {
@@ -36,9 +24,9 @@ void			ft_printlexer(t_token *lexer, int nbr_token)
 	static char	*operator[] = {"", "DSEMI", "SEMI", "AND_IF", "AND", "OR_IF",\
 		"PIPE", "DLESS_DASH", "DLESS", "LESS_AND", "LESS_GREAT", "LESS",\
 			"DGREAT", "GREAT_AND", "CLOBBER", "GREAT"};
-	static char *token[] = {"WORD", "OPERATOR", "REDIRECT", "IO_NUMBER",\
+	static char	*token[] = {"WORD", "OPERATOR", "REDIRECT", "IO_NUMBER",\
 		"NEWLINE"};
-	t_token	*temp;
+	t_token		*temp;
 
 	temp = lexer;
 	ft_putendl(BBLUE"_______________ LEXER _______________"RESET);
