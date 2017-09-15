@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 19:42:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 14:26:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@ static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 	int		ret_cmd;
 
 	ret_cmd = EXIT_SUCCESS;
-//	new_cmd = NULL;
+	new_cmd = NULL;
 	while (cmd[i])
 		ft_addtotab(&new_cmd, cmd[i++]);
 	if (!new_cmd)
 	{
 		if (exec_env)
 			ft_puttab(exec_env);
-		ft_freetab(&exec_env);
 		return (ret_cmd);
 	}
-	g_shell->env = exec_env;
 	if (ft_is_builtin(new_cmd[0]))
 		ret_cmd = ft_launch_builtin(new_cmd);
 	else if ((ret_cmd = ft_get_path(new_cmd[0], &path)) == PATH_OK)
@@ -38,8 +36,27 @@ static int		ft_launch_cmd_env(char **cmd, int i, char **exec_env)
 		free(path);
 	}
 	ft_freetab(&new_cmd);
-	ft_freetab(&exec_env);
 	return (ret_cmd);
+}
+
+int		ft_create_exec_env(char **cmd, char ***exec_env)
+{
+	int		i;
+
+	i = 1;
+	if (!ft_strequ(cmd[i], "-i"))
+		*exec_env = ft_tabdup(g_shell->env);
+	else
+		++i;
+	while (cmd[i] && ft_strchr(cmd[i], '='))
+	{
+		if (!*exec_env)
+			ft_addtotab(exec_env, cmd[i++]);
+		else
+			ft_modify_variable(exec_env, cmd[i++]);
+	}
+	return (i);
+
 }
 
 int		ft_builtin_env(char **cmd)
@@ -54,22 +71,17 @@ int		ft_builtin_env(char **cmd)
 		ft_puttab(g_shell->env);
 	else
 	{
-	//	exec_env = NULL;
-		sauv_env = g_shell->env;
-		i = 1;
-		if (!ft_strequ(cmd[i], "-i"))
-			exec_env = ft_tabdup(g_shell->env);
-		else
-			++i;
-		while (cmd[i] && ft_strchr(cmd[i], '='))
-		{
-			if (!exec_env)
-				ft_addtotab(&exec_env, cmd[i++]);
-			else
-				ft_modify_variable(&exec_env, cmd[i++]);
-		}
+		sauv_env = ft_tabdup(g_shell->env);
+
+	exec_env = NULL;
+		i = ft_create_exec_env(cmd, &exec_env); 
+
+		ft_freetab(&g_shell->env);
+		g_shell->env = exec_env;
 		ret_cmd = ft_launch_cmd_env(cmd, i, exec_env);		
-		g_shell->env = sauv_env;
+		ft_freetab(&exec_env);
+		g_shell->env = ft_tabdup(sauv_env);
+		ft_freetab(&sauv_env);
 	}
 	return (ret_cmd);
 }
