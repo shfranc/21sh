@@ -6,64 +6,11 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 15:01:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:24:54 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-
-// ~ expansion : ne remplace que le 1er ~ si pas de ~ a la suite. (~~ n'est pas expandu)
-// PATH:expand tout du long
-
-static int	ft_is_quoted_no_dquotes(char *str, char *c)
-{
-	int	escape;
-
-	escape = 0;
-	while (str < c)
-	{
-		if (*str == '\\')
-			escape = 1;
-		if (*str == '\\' && (str + 1) && *(str + 1) == *c)
-			return (1);
-		else if (!escape && *str == '\''\
-				&& ((str = str + ft_goto_next_quote(str, *str)) > c))
-			return (1);
-		else
-		{
-			str++;
-			escape = 0;
-		}
-	}
-	return (0);
-}
-
-static int	ft_is_quoted(char *str, char *c)
-{
-	int	escape;
-
-	escape = 0;
-	while (str < c)
-	{
-		if (*str == '\\')
-			escape = 1;
-		if (*str == '\\' && (str + 1) && *(str + 1) == *c)
-			return (1);
-		if (!escape && *str == '"'\
-				&& ((str = str\
-						+ ft_goto_next_quote_withescape(str, *str) + 1) > c))
-			return (1);
-		else if (!escape && *str == '\''\
-				&& ((str = str + ft_goto_next_quote(str, *str)) > c))
-			return (1);
-		else
-		{
-			str++;
-			escape = 0;
-		}
-	}
-	return (0);
-}
 
 static int	ft_tilde_expansion(char **str, char *tilde)
 {
@@ -82,13 +29,31 @@ static int	ft_tilde_expansion(char **str, char *tilde)
 	return (1);
 }
 
+char	*ft_expand_new_str(char *str, char *dollar, char *key, char *value)
+{
+	char	*exp;
+	int		len;
+
+	len = ft_strlen(str);
+	if (value)
+		len += ft_strlen(value);
+	if (key)
+		len -= ft_strlen(key);
+	exp = ft_memalloc(len);
+	ft_memmove(exp, str, dollar - str);
+	if (value)
+		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
+	len = (key ? ft_strlen(key) : 0);
+	ft_memmove(exp + ft_strlen(exp), dollar + len + 1, ft_strlen(dollar + len + 1));
+	return (exp);
+}
+
 static void	ft_var_expansion(char **str, char *dollar)
 {
 	char	*key;
 	char	*value;
 	char	*exp;
 	char	*tmp;
-	int		len;
 
 	tmp = dollar + 1;
 	if (*tmp == '?')
@@ -103,20 +68,7 @@ static void	ft_var_expansion(char **str, char *dollar)
 			key = ft_charappend(key, *tmp++);
 		value = ft_get_env_variable(g_shell->env, key);
 	}
-
-	len = ft_strlen(*str);
-	if (value)
-		len += ft_strlen(value);
-	if (key)
-		len -= ft_strlen(key);
-	exp = ft_memalloc(len);
-
-	ft_memmove(exp, *str, dollar - *str);
-	if (value)
-		ft_memmove(exp + ft_strlen(exp), value, ft_strlen(value));
-	len = (key ? ft_strlen(key) : 0);
-	ft_memmove(exp + ft_strlen(exp), dollar + len + 1, ft_strlen(dollar + len + 1));
-	
+	exp = ft_expand_new_str(*str, dollar, key, value);
 	free(key);
 	free(value);
 	free(*str);
