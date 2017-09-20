@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:31:20 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 14:40:37 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/19 15:16:07 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int				ft_syntax_error(t_lexer *lexer)
 	t_token *tmp;
 
 	tmp = lexer->first;
-//	if (lexer->nbr_token == 1 && lexer->first->token_type == NEWLINE)
-//		return (PARSER_ERROR);
 	while (tmp)
 	{
 		if (ft_token_not_handled(tmp) || ft_check_operator(tmp))

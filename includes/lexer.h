@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:21:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 17:42:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:10:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int		ft_part_word(char c);
 int		ft_get_word(t_lexer *lexer, char *line);
 int		ft_goto_next_quote_withescape(char *line, char quote);
 int		ft_goto_next_quote(char *line, char quote);
+int		ft_is_quoted_no_dquotes(char *str, char *c);
+int		ft_is_quoted(char *str, char *c);
 
 /*
 ** GET OPERATOR

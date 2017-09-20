@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/30 19:06:47 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 17:49:35 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:04:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void			ft_put_cmd_error(char *cmd, char *error)
 {
 	ft_putstr_fd(SHELL, 2);
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": ", 2);	
+	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(error, 2);
 }
 
@@ -73,7 +73,7 @@ static int		ft_search_through_path(char *cmd, char **cmd_path)
 	int		i;
 
 	ret = CMD_NOT_FOUND;
-	tmp = ft_get_env_variable(g_env, "PATH");
+	tmp = ft_get_env_variable(g_shell->env, "PATH");
 	path = ft_strsplit(tmp, ':');
 	i = 0;
 	while (path && path[i])
@@ -89,16 +89,14 @@ static int		ft_search_through_path(char *cmd, char **cmd_path)
 	}
 	free(tmp);
 	ft_freetab(&path);
-	ret == CMD_NOT_FOUND ? ft_put_cmd_error(cmd, STR_CMD_NOT_FOUND): 0;
+	ret == CMD_NOT_FOUND ? ft_put_cmd_error(cmd, STR_CMD_NOT_FOUND) : 0;
 	return (ret);
 }
 
 int				ft_get_path(char *cmd, char **cmd_path)
 {
-
 	if (ft_strchr(cmd, '/'))
 		return (ft_check_given_path(cmd, cmd_path));
-	// TABLE DE HACHAGE
 	else
 	{
 		if (!*cmd)

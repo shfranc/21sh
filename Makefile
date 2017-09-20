@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/12 15:17:47 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/15 16:28:13 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = 21sh
 SRCS_PATH = srcs
 OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
-		builtin/env.c \
+		init.c \
 		read/term.c \
 		read/read_line.c \
 		read/prompt.c \
@@ -45,17 +45,25 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		exec/quotes_removal.c \
 		exec/std_fd.c \
 		exec/redirect.c \
+		exec/open_dup.c \
 		exec/agreg_heredoc.c \
 		exec/path.c \
-		exec/pipeline.c)
+		exec/pipeline.c \
+		builtin/launcher.c \
+		builtin/cd.c \
+		builtin/echo.c \
+		builtin/env.c \
+		builtin/setenv.c \
+		builtin/unsetenv.c \
+		builtin/exit.c )
 OBJS =  $(SRCS:$(SRCS_PATH)/%.c=$(OBJS_PATH)/%.o)
 INCLUDES = includes libft/includes
 LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
-#FLAGS = -Wall -Wextra -Werror
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m

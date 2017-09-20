@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 11:23:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 11:14:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ void	ft_raw_term(void)
 	int				ret;
 	struct termios	term;
 
-	term_type = getenv("TERM");
-	if (term_type == NULL)
-		ft_exit("getenv: No TERM in the environement.", 1);
-	ret = tgetent(NULL, term_type);
+	if ((term_type = ft_get_env_variable(g_shell->env, "TERM")))
+		ret = tgetent(NULL, term_type);
+	else
+		ret = tgetent(NULL, DEFAULT_TERM);
+	free((void*)term_type);
 	if (ret < 0)
 		ft_exit("tgetent: No access to the termcap database.", 1);
 	if (ret == 0)

@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 19:15:39 by sfranc           ###   ########.fr       */
+/*   Created: 2017/09/13 16:02:43 by sfranc            #+#    #+#             */
+/*   Updated: 2017/09/15 16:37:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
-
-# include <signal.h>
-
-# include "libft.h"
-# include "builtin.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-typedef struct	s_shell
+void	ft_builtin_exit(char **cmd)
 {
-	char		**env;
-	int			ret_cmd;
-}				t_shell;
-
-t_shell *g_shell;
-
-t_shell	*ft_init(char **env);
-
-#endif
+	ft_putendl_fd(CMD_EXIT, 2);
+	if (!cmd[1])
+		exit(g_shell->ret_cmd);
+	else if (!ft_isnumber(cmd[1]))
+	{
+		ft_put_cmd_error(CMD_EXIT, STR_NUM);
+		exit(EXIT_ERROR);
+	}
+	else if (cmd[2])
+		ft_put_cmd_error(CMD_EXIT, STR_TOO_MANY);
+	else
+		exit(ft_atoi(cmd[1]));
+}

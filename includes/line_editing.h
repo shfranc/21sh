@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 20:05:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/13 18:14:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <uuid/uuid.h>
 
 # define	INPUTSIZE 4096
+# define	DEFAULT_TERM "xterm-256color"
 
 typedef struct	s_input
 {

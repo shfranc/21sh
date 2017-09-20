@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 17:10:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 11:21:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:41:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ static char	*ft_get_user(void)
 	return (ft_strdup(ret_pwd->pw_name));
 }
 
-/*
-** Initialisation cwd et user a NULL inutile ?
-*/
+static void	ft_prompt_ret_cmd(void)
+{
+	if (g_shell->ret_cmd == EXIT_SUCCESS)
+		ft_putstr(BGREEN" $> "RESET);
+	else
+		ft_putstr(BRED" $> "RESET);
+}
 
 int			ft_display_prompt(void)
 {
@@ -50,6 +54,6 @@ int			ft_display_prompt(void)
 		ft_putstr(cwd);
 	len += ft_strlen(cwd);
 	free(cwd);
-	ft_putstr(RESET" $> ");
+	ft_prompt_ret_cmd();
 	return (len);
 }

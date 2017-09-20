@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/06 18:23:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/19 15:16:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 	else
 		ft_strmerge(&hdoc_buff, line);
 	free(line);
-	return(ft_parser(lexer));
+	return (ft_parser(lexer));
 }
 
 int		ft_read_again_list(t_lexer *lexer, int list_type)
@@ -61,7 +61,10 @@ int		ft_read_again_list(t_lexer *lexer, int list_type)
 	if (list_type == PIPE)
 		ft_read_line(&line, write(1, PIPE_PROMPT, ft_strlen(PIPE_PROMPT)), 1);
 	if (list_type == AND_IF)
-		ft_read_line(&line, write(1, AND_IF_PROMPT, ft_strlen(AND_IF_PROMPT)), 1);
+	{
+		ft_read_line(&line, write(1, AND_IF_PROMPT,\
+					ft_strlen(AND_IF_PROMPT)), 1);
+	}
 	if (list_type == OR_IF)
 		ft_read_line(&line, write(1, OR_IF_PROMPT, ft_strlen(OR_IF_PROMPT)), 1);
 	if (!*line)

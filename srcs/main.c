@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/31 11:13:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/14 12:20:20 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ int		main(int argc, char **argv, char **environ)
 	int		ret_cmd;
 
 	(void)argc;
-	g_env = ft_tabdup(environ);
+	g_shell = ft_init(environ);
 	//	ft_catch_signals();
-	//	lexer = NULL;
 	while (1)
 	{
+
 		len_prompt = ft_display_prompt();
 		ft_read_line(&line, len_prompt, 0);
 		ft_tokenize(&lexer, line);
@@ -62,15 +62,14 @@ int		main(int argc, char **argv, char **environ)
 			ast = ft_create_ast(&lexer->first);
 			if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
 				ft_print_ast(ast, "root", 0);
-//		}
-//		if (ret_cmd == PARSER_SUCCESS)
-//		{
-			ret_cmd = ft_execute(ast);
+			g_shell->ret_cmd = ft_execute(ast);
 		}
+		else
+			g_shell->ret_cmd = ret_cmd;
 
-		ft_putstr(BYELLOW"\nRET CMD: ");
-		ft_putnbr(ret_cmd);
-		ft_putendl(RESET);
+//		ft_putstr(BYELLOW"RET CMD: ");
+//		ft_putnbr(g_shell->ret_cmd);
+//		ft_putendl(RESET);
 		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);

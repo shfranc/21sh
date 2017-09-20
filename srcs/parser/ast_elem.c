@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/24 12:08:48 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/29 10:36:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/19 15:13:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,13 @@ t_ast	*ft_create_leaf(t_token **token, int delim)
 	new->right = NULL;
 	new->node_type = (*token)->token_type;
 	new->operator_type = (*token)->operator_type;
-
 	new->token = *token;
 	tmp = (*token)->next;
-
 	while (tmp->next && tmp->token_type != delim)
 		tmp = tmp->next;
-
 	tmp->prev->next = NULL;
 	tmp->prev = NULL;
 	*token = tmp;
-
 	return (new);
 }
 
@@ -68,7 +64,7 @@ void	ft_del_ast(t_ast **ast)
 {
 	if (!*ast)
 		return ;
-	ft_del_ast(&(*ast)->left);	
+	ft_del_ast(&(*ast)->left);
 	ft_del_ast(&(*ast)->right);
 	ft_deltokens(&(*ast)->token);
 	free(*ast);

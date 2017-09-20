@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/12 17:49:42 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:15:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_cmd_into_tab(t_ast *ast)
 {
-	char 	**cmd;
+	char	**cmd;
 	t_token	*tmp;
 
 	cmd = NULL;
@@ -38,19 +38,32 @@ int		ft_fork(char *path, char **cmd)
 {
 	pid_t	pid;
 	int		status;
-	int 	ret_cmd;
+	int		ret_cmd;
 
 	if ((pid = fork()) == -1)
-		ft_exit("21sh: fork: fork failed, no child created", 1);
+		ft_exit(STR_FORK_ERROR, 1);
 	if (pid == 0)
 	{
-		if ((status = execve(path, cmd, g_env)) == -1)
-			ft_exit("21sh: execve: failed to execute the command", 1);
+		if ((status = execve(path, cmd, g_shell->env)) == -1)
+			ft_exit(STR_EXECVE_ERROR, 1);
 	}
 	else
 		wait(&status);
 	ret_cmd = WEXITSTATUS(status);
 	return (ret_cmd);
+}
+
+int		ft_init_launch(int save[3], t_ast *ast)
+{
+	ft_save_std_fd(save);
+	ft_expand(ast->token);
+	ft_remove_quoting(ast->token);
+	if (ft_init_redirection(ast) != REDIR_OK)
+	{
+		ft_restore_std_fd(ast, save);
+		return (REDIR_ERROR);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int		ft_launch_simple_cmd(t_ast *ast)
@@ -60,25 +73,19 @@ int		ft_launch_simple_cmd(t_ast *ast)
 	int		ret_cmd;
 	int		save[3];
 
-	ft_save_std_fd(save);
-	ft_expand(ast->token);
-	ft_remove_quoting(ast->token);
-	if (ft_init_redirection(ast) != REDIR_OK)
-	{
-		ft_restore_std_fd(ast, save);
-		return (REDIR_ERROR);
-	}
+	if ((ret_cmd = ft_init_launch(save, ast)) == REDIR_ERROR)
+		return (ret_cmd);
 	if ((cmd = ft_cmd_into_tab(ast)))
 	{
-		if ((ret_cmd = ft_get_path(cmd[0], &path)) == PATH_OK)
+		if (ft_is_builtin(cmd[0]))
+			ret_cmd = ft_launch_builtin(cmd);
+		else if ((ret_cmd = ft_get_path(cmd[0], &path)) == PATH_OK)
 		{
 			ret_cmd = ft_fork(path, cmd);
 			free(path);
 		}
 		ft_freetab(&cmd);
 	}
-	else
-		ret_cmd = EXIT_SUCCESS;
 	ft_restore_std_fd(ast, save);
 	return (ret_cmd);
 }
