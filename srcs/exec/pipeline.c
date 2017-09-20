@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 15:31:14 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:15:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 15:03:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	ft_pipe_to_right(int fd[2], t_ast *node_right)
 		close(fd[1]);
 		waitpid(pid_right, &status_right, 0);
 	}
-	return (WEXITSTATUS(status_right));
+	return (ft_exit_status(status_right));
 }
 
 int			ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
@@ -92,5 +92,5 @@ int			ft_launch_pipeline(t_ast *node_left, t_ast *node_right)
 		close(fd[0]);
 		waitpid(pid_left, NULL, 0);
 	}
-	return (WEXITSTATUS(status_right));
+	return (status_right);
 }
