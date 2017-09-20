@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 12:03:10 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 14:38:30 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 15:03:28 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		ft_fork(char *path, char **cmd)
 {
 	pid_t	pid;
 	int		status;
-//	int		ret_cmd;
 
 	if ((pid = fork()) == -1)
 		ft_exit(STR_FORK_ERROR, 1);
@@ -49,7 +48,6 @@ int		ft_fork(char *path, char **cmd)
 	}
 	else
 		wait(&status);
-//	ret_cmd = WEXITSTATUS(status);
 	return (ft_exit_status(status));
 }
 
