@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:27:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 14:58:00 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@
 # define STR_OPEN_ERROR		"open error"
 # define STR_DUP_ERROR 		"dup error"
 # define STR_PIPE_ERROR 	"pipe failed"
-
+# define STR_SEGFAULT		"Segmentation Fault"
+# define STR_BUS_ERROR		"Bus error"
+# define STR_SIGABORT		"Abort"
 /*
 ** EXECUTION
 */
@@ -48,6 +50,7 @@ int		ft_launch_pipeline(t_ast *node_left, t_ast *node_right);
 int		ft_init_launch(int save[3], t_ast *ast);
 char	**ft_cmd_into_tab(t_ast *ast);
 int		ft_fork(char *path, char **cmd);
+int		ft_exit_status(int ret);
 
 /*
 ** EXPANSION AND QUOTES
