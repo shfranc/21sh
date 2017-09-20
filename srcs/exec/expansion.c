@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 18:03:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:02:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 16:25:49 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*ft_expand_new_str(char *str, char *dollar, char *key, char *value)
 	return (exp);
 }
 
-static void	ft_var_expansion(char **str, char *dollar)
+void		ft_var_expansion(char **str, char *dollar)
 {
 	char	*key;
 	char	*value;
@@ -76,7 +76,7 @@ static void	ft_var_expansion(char **str, char *dollar)
 	*str = exp;
 }
 
-static int	ft_is_valid_name(char *dollar)
+int			ft_is_valid_expand(char *dollar)
 {
 	if (ft_strequ(dollar, "$") || (*(dollar + 1) && *(dollar + 1) != '?' \
 				&& *(dollar + 1) != '_' && !ft_isalnum(*(dollar + 1))))
@@ -105,7 +105,7 @@ void		ft_expand(t_token *token)
 			while ((dollar = ft_strchr(tmp->str, '$'))\
 					&& !ft_is_quoted_no_dquotes(tmp->str, dollar))
 			{
-				if (!ft_is_valid_name(dollar))
+				if (!ft_is_valid_expand(dollar))
 					break ;
 				ft_var_expansion(&tmp->str, dollar);
 			}

@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/20 13:01:42 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/20 17:07:42 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		exec/simple_cmd.c \
 		exec/expansion.c \
 		exec/quotes_removal.c \
+		exec/heredoc_expand_escape.c \
 		exec/std_fd.c \
 		exec/redirect.c \
 		exec/open_dup.c \
