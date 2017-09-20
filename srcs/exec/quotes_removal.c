@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 17:11:04 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 12:27:27 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 17:07:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void	ft_remove_quoting(t_token *token)
 			free(tmp->str);
 			tmp->str = new;
 		}
-		if (tmp->token_type == DLESS)
-			ft_putendl("enlever les quotes dans le heredoc");
+		if (tmp->operator_type == DLESS)
+		{
+			ft_heredoc_expand_remove_quoting(tmp);
+		}
 		tmp = tmp->next;
 	}
 }

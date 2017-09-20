@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 14:58:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 17:04:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int		ft_exit_status(int ret);
 */
 void	ft_expand(t_token *token);
 void	ft_remove_quoting(t_token *token);
-void	ft_clean_empty_token(t_token *token);
+void	ft_heredoc_expand_remove_quoting(t_token *token);
+int		ft_is_valid_expand(char *str);
+void	ft_var_expansion(char **str, char *dollar);
 /*
 ** REDIRECTION
 */

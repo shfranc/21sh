@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 11:48:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 12:32:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/20 18:33:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,15 @@ static char	*ft_remove_escape_withindquotes(char *str)
 	if (*str == '\\')
 	{
 		if (*(str + 1) && (*(str + 1) == '"' || *(str + 1) == '$'\
-					|| *(str + 1) == '\\'))
+					|| *(str + 1) == '\\' || *(str + 1) == '\n'))
 			str++;
 		if (*str == '\n')
-			str++;
+		{
+			if (*(str + 1) == '"')
+				str += 2;
+			else
+				str++;
+		}
 	}
 	return (str);
 }
