@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 18:27:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 19:01:02 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int			ft_interpret(char *buff, t_input *input, int mode)
 		if (mode == 1)
 			ft_put_unexpected_eof();
 		else
-			ft_putendl("");
+			input->line = ft_strdup("EOF\n");
 		return (1);
 	}
 	else if (buff[0] == 4 && *input->line)
