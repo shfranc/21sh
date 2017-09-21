@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 14:21:40 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 16:32:25 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:47:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,16 @@ void		ft_history_forth(t_input *input)
 
 static char	*ft_search_in_history(char *line)
 {
-	char	*tmp;
 	int		len;
 
-	tmp = ft_strsub(line, 0, ft_strlen(line) - 1);
-	if (!*tmp)
+	if (!line || !*line)
 		return (NULL);
 	if (!g_shell->history)
 		return (NULL);
 	len = ft_tablen(g_shell->history);
 	while (len--)
 	{
-		if (ft_strstr(g_shell->history[len], tmp))
+		if (ft_strstr(g_shell->history[len], line))
 			return (ft_strdup(g_shell->history[len]));
 	}
 	return (NULL);
@@ -68,18 +66,22 @@ static char	*ft_search_in_history(char *line)
 void		ft_history_search(t_input *input)
 {
 	char	*line;
+	char	*little;
 	char	*tmp;
 
 	ft_clear_screen(input);
 	g_shell->ret_cmd = EXIT_SUCCESS;
 	write(1, "\n", 1);
-	ft_read_line(&line, write(1, HISTO_PROMPT, ft_strlen(HISTO_PROMPT)), 3);	
-	if (!(tmp = ft_search_in_history(line)))
+	ft_read_line(&line, write(1, HISTO_PROMPT, ft_strlen(HISTO_PROMPT)), 3);
+	little = ft_strsub(line, 0, ft_strlen(line) - 1);
+	if (!(tmp = ft_search_in_history(little)))
 	{
 		ft_putendl("No match found...");
-		tmp = ft_strsub(line, 0, ft_strlen(line) - 1);
+		tmp = ft_strdup(little);
 	}
 	ft_display_prompt();
 	ft_insertchar(tmp, input);
 	free(tmp);
+	free(little);
+	free(line);
 }
