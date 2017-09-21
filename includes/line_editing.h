@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 14:50:57 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 15:33:26 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 
-# define	INPUTSIZE 4096
-# define	DEFAULT_TERM "xterm-256color"
-
+# define	INPUTSIZE		4096
+# define	DEFAULT_TERM	"xterm-256color"
+# define	HISTO_PROMPT	"search_history> "
 typedef struct	s_input
 {
 	char	*line;
@@ -108,5 +108,5 @@ int		ft_display_prompt(void);
 */
 void	ft_history_back(t_input *input);
 void	ft_history_forth(t_input *input);
-
+void	ft_history_search(t_input *input);
 #endif
