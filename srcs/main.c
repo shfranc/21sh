@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 12:20:20 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 12:03:45 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		main(int argc, char **argv, char **environ)
 	char	*line;
 	int		len_prompt;
 	t_lexer	*lexer;
-//	int		parser_ret;
 	t_ast	*ast;
 	int		ret_cmd;
 
@@ -57,6 +56,7 @@ int		main(int argc, char **argv, char **environ)
 			else
 				ft_putendl(BRED"Error\n"RESET);
 		}
+		
 		if (ret_cmd == PARSER_SUCCESS)
 		{
 			ast = ft_create_ast(&lexer->first);
@@ -64,12 +64,11 @@ int		main(int argc, char **argv, char **environ)
 				ft_print_ast(ast, "root", 0);
 			g_shell->ret_cmd = ft_execute(ast);
 		}
+		else if (ret_cmd == HEREDOC_EOF)
+			g_shell->ret_cmd = EXIT_SUCCESS;
 		else
 			g_shell->ret_cmd = ret_cmd;
 
-//		ft_putstr(BYELLOW"RET CMD: ");
-//		ft_putnbr(g_shell->ret_cmd);
-//		ft_putendl(RESET);
 		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
