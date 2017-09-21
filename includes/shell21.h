@@ -6,14 +6,12 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 14:36:23 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:59:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL21_H
 # define SHELL21_H
-
-# include <stdio.h> // debug a suppr
 
 # include <signal.h>
 
@@ -32,8 +30,8 @@ typedef struct	s_shell
 	int			histo_index;
 }				t_shell;
 
-t_shell *g_shell;
+t_shell			*g_shell;
 
-t_shell	*ft_init(char **env);
+t_shell			*ft_init(char **env);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:01:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:58:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,33 @@ typedef struct	s_ast
 	t_token			*token;
 }				t_ast;
 
-int		ft_parser(t_lexer *lexer);
+int				ft_parser(t_lexer *lexer);
 
 /*
 ** SYNTAX ERROR
 */
-int		ft_syntax_error(t_lexer *lexer);
+int				ft_syntax_error(t_lexer *lexer);
 
 /*
 ** INCOMPLETE INPUT
 */
-int		ft_read_again_quoting(t_lexer *lexer);
-int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless);
-int		ft_read_again_list(t_lexer *lexer, int list_type);
+int				ft_read_again_quoting(t_lexer *lexer);
+int				ft_read_again_heredoc(t_lexer *lexer, t_token *dless);
+int				ft_read_again_list(t_lexer *lexer, int list_type);
 
 /*
 ** QUOTES for heredoc delimiter
 */
-char	*ft_remove_quotes(char *str);
+char			*ft_remove_quotes(char *str);
 
 /*
 ** AST
 */
-t_ast	*ft_create_ast(t_token **token);
-t_ast	*ft_create_node(t_ast *left, t_ast *node, t_ast *right);
-t_ast	*ft_create_leaf(t_token **token, int delim);
-int		ft_check_next_operator(t_token *token, int op);
-void	ft_print_ast(t_ast *ast, char *side, int lvl);
-void	ft_del_ast(t_ast **ast);
+t_ast			*ft_create_ast(t_token **token);
+t_ast			*ft_create_node(t_ast *left, t_ast *node, t_ast *right);
+t_ast			*ft_create_leaf(t_token **token, int delim);
+int				ft_check_next_operator(t_token *token, int op);
+void			ft_print_ast(t_ast *ast, char *side, int lvl);
+void			ft_del_ast(t_ast **ast);
+
 #endif

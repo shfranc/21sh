@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:15:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:37:33 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:57:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define CMD_CD			"cd"
 # define CMD_ECHO		"echo"
 # define CMD_ENV		"env"
-# define CMD_HIST		"history"	
+# define CMD_HIST		"history"
 # define CMD_SETENV		"setenv"
 # define CMD_UNSETENV	"unsetenv"
 # define CMD_EXIT		"exit"
