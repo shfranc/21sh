@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 17:04:19 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 18:01:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define STR_SEGFAULT		"Segmentation Fault"
 # define STR_BUS_ERROR		"Bus error"
 # define STR_SIGABORT		"Abort"
+
 /*
 ** EXECUTION
 */

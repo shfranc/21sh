@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/09/20 17:07:42 by sfranc           ###   ########.fr        #
+#    Updated: 2017/09/21 14:28:01 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		read/goto.c \
 		read/buffer.c \
 		read/copy_cut.c \
+		read/manage_history.c \
 		read/interpret.c \
 		lexer/list_lexer.c \
 		lexer/print_lexer.c \
@@ -55,6 +56,7 @@ SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		builtin/cd.c \
 		builtin/echo.c \
 		builtin/env.c \
+		builtin/history.c \
 		builtin/setenv.c \
 		builtin/unsetenv.c \
 		builtin/exit.c )

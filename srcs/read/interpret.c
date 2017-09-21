@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 11:54:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 16:31:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	ft_put_unexpected_eof(void)
 	ft_putendl_fd(UNEXPECTED_EOF, 2);
 }
 
-void		ft_interpret_moves(char *buff, t_input *input)
+static void	ft_interpret_moves(char *buff, t_input *input)
 {
 	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
 		ft_move_right(input);
@@ -39,9 +39,15 @@ void		ft_interpret_moves(char *buff, t_input *input)
 		ft_jumpword_backward(input);
 }
 
-void		ft_interpret_buffer(char *buff, t_input *input)
+static void	ft_interpret_buffer(char *buff, t_input *input, int mode)
 {
-	if (buff[0] == 11)
+	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 65)
+		ft_history_back(input);
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 66)
+		ft_history_forth(input);
+	else if (buff[0] == 18 && !mode)
+		ft_history_search(input);
+	else if (buff[0] == 11)
 		ft_copy(input);
 	else if (buff[0] == 24)
 		ft_cut(input);
@@ -58,7 +64,7 @@ void		ft_interpret_buffer(char *buff, t_input *input)
 int			ft_interpret(char *buff, t_input *input, int mode)
 {
 	ft_interpret_moves(buff, input);
-	ft_interpret_buffer(buff, input);
+	ft_interpret_buffer(buff, input, mode);
 	if (buff[0] == 12)
 		ft_clear_screen(input);
 	else if (buff[0] == '\n')
@@ -66,7 +72,7 @@ int			ft_interpret(char *buff, t_input *input, int mode)
 		ft_accept_line(input);
 		return (1);
 	}
-	else if (buff[0] == 4 && !*input->line && mode == 0)
+	else if (buff[0] == 4 && !*input->line && (mode == 0 || mode == 3))
 	{
 		ft_canonic_term();
 		ft_exit("exit", 1);

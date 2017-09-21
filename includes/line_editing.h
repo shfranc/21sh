@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 18:14:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 17:57:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 # include <pwd.h>
 # include <uuid/uuid.h>
 
-# define	INPUTSIZE 4096
-# define	DEFAULT_TERM "xterm-256color"
+# define INPUTSIZE		4096
+# define DEFAULT_TERM	"xterm-256color"
+# define HISTO_PROMPT	"search_history> "
 
 typedef struct	s_input
 {
@@ -41,66 +42,73 @@ typedef struct	s_input
 /*
 ** READLINE
 */
-void	ft_read_line(char **line, int len_prompt, int mode);
+void			ft_read_line(char **line, int len_prompt, int mode);
 
 /*
 ** TERM
 ** ft_interpret mode : 0 == regular prompt, 1 == parser prompt waiting for
 ** the end of input.
 */
-void	ft_init_input_struct(t_input *input, int len_prompt);
-void	ft_raw_term(void);
-void	ft_canonic_term(void);
-int		ft_interpret(char *buff, t_input *input, int mode);
-int		ft_intputchar(int c);
+void			ft_init_input_struct(t_input *input, int len_prompt);
+void			ft_raw_term(void);
+void			ft_canonic_term(void);
+int				ft_interpret(char *buff, t_input *input, int mode);
+int				ft_intputchar(int c);
 
 /*
 ** CURSOR MOVES
 */
-void	ft_move_left(t_input *input);
-void	ft_move_right(t_input *input);
-void	ft_move_up(t_input *input);
-void	ft_move_down(t_input *input);
+void			ft_move_left(t_input *input);
+void			ft_move_right(t_input *input);
+void			ft_move_up(t_input *input);
+void			ft_move_down(t_input *input);
 
 /*
 ** MOVE COMMANDS
 */
-void	ft_beginning_of_line(t_input *input);
-void	ft_end_of_line(t_input *input);
-void	ft_jumpword_forward(t_input *input);
-void	ft_jumpword_backward(t_input *input);
+void			ft_beginning_of_line(t_input *input);
+void			ft_end_of_line(t_input *input);
+void			ft_jumpword_forward(t_input *input);
+void			ft_jumpword_backward(t_input *input);
 
 /*
 ** MOVES NOT LINKED TO USER COMMANDS
 */
-void	ft_goto_begin(t_input *input);
-void	ft_goto_prompt(t_input *input);
-void	ft_goto_newpos(t_input *input, int cur_y);
-void	ft_goto_lastpos(t_input *input);
+void			ft_goto_begin(t_input *input);
+void			ft_goto_prompt(t_input *input);
+void			ft_goto_newpos(t_input *input, int cur_y);
+void			ft_goto_lastpos(t_input *input);
 
 /*
-** BUFFER 
+** BUFFER
 */
-void	ft_insertchar(char *buff, t_input *input);
-void	ft_back_deletechar(t_input *input);
-void	ft_deletechar(t_input *input);
-void	ft_accept_line(t_input *input);
+void			ft_insertchar(char *buff, t_input *input);
+void			ft_back_deletechar(t_input *input);
+void			ft_deletechar(t_input *input);
+void			ft_accept_line(t_input *input);
 
 /*
 ** COPY N CUT
 */
-void	ft_copy(t_input *input);
-void	ft_cut(t_input *input);
+void			ft_copy(t_input *input);
+void			ft_cut(t_input *input);
 
 /*
 ** SCREEN
 */
-void	ft_clear(t_input *input);
-void	ft_clear_screen(t_input *input);
+void			ft_clear(t_input *input);
+void			ft_clear_screen(t_input *input);
 
 /*
 ** PROMPT
 */
-int		ft_display_prompt(void);
+int				ft_display_prompt(void);
+
+/*
+** HISTORY
+*/
+void			ft_history_back(t_input *input);
+void			ft_history_forth(t_input *input);
+void			ft_history_search(t_input *input);
 
 #endif
