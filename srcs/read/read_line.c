@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 18:15:28 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:11:51 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_read_line(char **line, int len_prompt, int mode)
 			break ;
 		}
 	}
+	if (!ft_strequ(*line, "\n"))
+		ft_addtotab(&g_shell->history, *line);
 	ft_canonic_term();
 	free(input.line);
 	free(input.tmp);

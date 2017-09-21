@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 11:54:54 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:25:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static void	ft_put_unexpected_eof(void)
 
 void		ft_interpret_moves(char *buff, t_input *input)
 {
-	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
+	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 69)
+		ft_history_back(input);
+	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 67)
 		ft_move_right(input);
 	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 68)
 		ft_move_left(input);

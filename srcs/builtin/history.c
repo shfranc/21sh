@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shell21.h                                          :+:      :+:    :+:   */
+/*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:15:08 by sfranc           ###   ########.fr       */
+/*   Created: 2017/09/21 12:08:12 by sfranc            #+#    #+#             */
+/*   Updated: 2017/09/21 12:39:11 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELL21_H
-# define SHELL21_H
+#include "shell21.h"
 
-# include <stdio.h> // debug a suppr
-
-# include <signal.h>
-
-# include "libft.h"
-# include "builtin.h"
-# include "line_editing.h"
-# include "lexer.h"
-# include "parser.h"
-# include "execute.h"
-
-typedef struct	s_shell
+int		ft_builtin_history(char **cmd)
 {
-	char		**env;
-	int			ret_cmd;
-	char		**history;
-}				t_shell;
+	int len;
+	int	i;
 
-t_shell *g_shell;
-
-t_shell	*ft_init(char **env);
-
-#endif
+	(void)cmd;
+	if (!g_shell->history)
+		ft_putendl(STR_HIST_EMPTY);
+	else
+	{
+		len = ft_tablen(g_shell->history);
+		i = 0;
+		while (i < len)
+		{
+			ft_putnbr(i + 1);
+			ft_putstr("\t");
+			ft_putstr(g_shell->history[i]);
+			i++;
+		}
+	}
+	return (EXIT_SUCCESS);
+}

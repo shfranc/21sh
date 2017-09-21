@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:15:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 15:53:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 12:37:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define CMD_CD			"cd"
 # define CMD_ECHO		"echo"
 # define CMD_ENV		"env"
+# define CMD_HIST		"history"	
 # define CMD_SETENV		"setenv"
 # define CMD_UNSETENV	"unsetenv"
 # define CMD_EXIT		"exit"
@@ -26,6 +27,7 @@
 # define STR_TOO_MANY	"too many arguments"
 # define STR_HOME		"HOME not set"
 # define STR_OLDPWD		"OLDPWD not set"
+# define STR_HIST_EMPTY	"21sh: history is empty"
 
 int		ft_is_builtin(char *cmd);
 int		ft_builtin_echo(char **cmd);
@@ -34,6 +36,7 @@ int		ft_builtin_setenv(char **cmd);
 int		ft_builtin_unsetenv(char **cmd);
 int		ft_builtin_cd(char **cmd);
 void	ft_builtin_exit(char **cmd);
+int		ft_builtin_history(char **cmd);
 
 /*
 ** ENV

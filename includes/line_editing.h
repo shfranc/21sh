@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/13 18:14:45 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:29:19 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,10 @@ void	ft_clear_screen(t_input *input);
 ** PROMPT
 */
 int		ft_display_prompt(void);
+
+/*
+** HISTORY
+*/
+void	ft_history_back(t_input *input);
 
 #endif
