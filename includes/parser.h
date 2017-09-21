@@ -6,26 +6,27 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:58:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/30 19:11:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 12:01:13 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# define PARSER_SUCCESS 0
-# define PARSER_ERROR 258
-# define SHELL "21sh: "
-# define SYNTAX_ERR "syntax error near unexpected token `"
-# define UNEXPECTED_EOF "syntax error: unexpected end of file"
-# define END_ERR "'"
-# define SQUOTES_PROMPT "squote> "
-# define DQUOTES_PROMPT "dquote> "
-# define ESCAPE_PROMPT "escape> "
-# define PIPE_PROMPT "pipe> "
-# define AND_IF_PROMPT "and_if> "
-# define OR_IF_PROMPT "or_if> "
-# define HEREDOC_PROMPT "heredoc> "
+# define PARSER_SUCCESS 	0
+# define PARSER_ERROR 		258
+# define HEREDOC_EOF 		2
+# define SHELL 				"21sh: "
+# define SYNTAX_ERR 		"syntax error near unexpected token `"
+# define UNEXPECTED_EOF 	"syntax error: unexpected end of file"
+# define END_ERR 			"'"
+# define SQUOTES_PROMPT 	"squote> "
+# define DQUOTES_PROMPT 	"dquote> "
+# define ESCAPE_PROMPT 		"escape> "
+# define PIPE_PROMPT 		"pipe> "
+# define AND_IF_PROMPT 		"and_if> "
+# define OR_IF_PROMPT 		"or_if> "
+# define HEREDOC_PROMPT 	"heredoc> "
 
 typedef struct	s_ast
 {
