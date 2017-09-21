@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/28 12:35:19 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:15:08 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:36:23 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_shell
 	char		**env;
 	int			ret_cmd;
 	char		**history;
+	int			histo_index;
 }				t_shell;
 
 t_shell *g_shell;

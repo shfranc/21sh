@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 14:11:51 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:56:30 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_accept_line(t_input *input)
 void	ft_read_line(char **line, int len_prompt, int mode)
 {
 	char	buff[6];
+	char	*tmp;
 	t_input	input;
 
 	ft_init_input_struct(&input, len_prompt);
@@ -37,7 +38,12 @@ void	ft_read_line(char **line, int len_prompt, int mode)
 		}
 	}
 	if (!ft_strequ(*line, "\n"))
-		ft_addtotab(&g_shell->history, *line);
+	{
+		tmp = ft_strsub(*line, 0, ft_strlen(*line) - 1);
+		ft_addtotab(&g_shell->history, tmp);
+		free(tmp);
+		g_shell->histo_index = ft_tablen(g_shell->history);
+	}
 	ft_canonic_term();
 	free(input.line);
 	free(input.tmp);

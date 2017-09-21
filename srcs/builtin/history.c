@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/21 12:08:12 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:39:11 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/21 14:44:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		ft_builtin_history(char **cmd)
 		{
 			ft_putnbr(i + 1);
 			ft_putstr("\t");
-			ft_putstr(g_shell->history[i]);
+			ft_putendl(g_shell->history[i]);
 			i++;
 		}
 	}
