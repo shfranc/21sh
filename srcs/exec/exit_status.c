@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/20 13:00:37 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 15:03:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/25 15:12:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int		ft_exit_status(int ret)
 			ft_putendl_fd(STR_BUS_ERROR, 2);
 		if ((WTERMSIG(ret)) == 11)
 			ft_putendl_fd(STR_SEGFAULT, 2);
-		return (WTERMSIG(ret));
+		if ((WTERMSIG(ret)) == 8)
+			ft_putendl_fd(STR_FLOATING, 2);
+		return (WTERMSIG(ret) + 128);
 	}
 	else
 		return (EXIT_FAILURE);

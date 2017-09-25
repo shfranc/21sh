@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:28:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 18:01:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/25 15:12:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@
 # define STR_OPEN_ERROR		"open error"
 # define STR_DUP_ERROR 		"dup error"
 # define STR_PIPE_ERROR 	"pipe failed"
-# define STR_SEGFAULT		"Segmentation Fault"
-# define STR_BUS_ERROR		"Bus error"
-# define STR_SIGABORT		"Abort"
+# define STR_SEGFAULT		"Segmentation Fault: 11"
+# define STR_FLOATING		"Floating point exception: 8"
+# define STR_BUS_ERROR		"Bus error: 10"
+# define STR_SIGABORT		"Abort: 6"
 
 /*
 ** EXECUTION
