@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 12:01:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/25 14:23:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_create_delimiter(t_token *dless, char **delimiter)
+static void	ft_create_delimiter(t_token *dless, char **delimiter)
 {
 	if (*delimiter)
 		return ;
@@ -26,7 +26,16 @@ void	ft_create_delimiter(t_token *dless, char **delimiter)
 		*delimiter = ft_strjoin(dless->next->str, "\n");
 }
 
-int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
+static void	ft_wrap_heredoc(t_token *dless, char **hdoc_buff, char **delimiter)
+{
+	if (!*hdoc_buff)
+		*hdoc_buff = ft_strdup("");
+	dless->heredoc = ft_strdup(*hdoc_buff);
+	ft_strdel(hdoc_buff);
+	ft_strdel(delimiter);
+}
+
+int			ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 {
 	static char	*hdoc_buff;
 	static char	*delimiter;
@@ -36,24 +45,19 @@ int		ft_read_again_heredoc(t_lexer *lexer, t_token *dless)
 	ft_read_line(&line, write(1, HEREDOC_PROMPT, ft_strlen(HEREDOC_PROMPT)), 2);
 	if (!*line)
 	{
+		ft_wrap_heredoc(dless, &hdoc_buff, &delimiter);
 		free(line);
-		return (HEREDOC_EOF);
+		return (PARSER_SUCCESS);
 	}
 	if (ft_strequ(line, delimiter))
-	{
-		if (!hdoc_buff)
-			hdoc_buff = ft_strdup("");
-		dless->heredoc = ft_strdup(hdoc_buff);
-		ft_strdel(&hdoc_buff);
-		ft_strdel(&delimiter);
-	}
+		ft_wrap_heredoc(dless, &hdoc_buff, &delimiter);
 	else
 		ft_strmerge(&hdoc_buff, line);
 	free(line);
 	return (ft_parser(lexer));
 }
 
-int		ft_read_again_list(t_lexer *lexer, int list_type)
+int			ft_read_again_list(t_lexer *lexer, int list_type)
 {
 	char *line;
 
@@ -78,7 +82,7 @@ int		ft_read_again_list(t_lexer *lexer, int list_type)
 	return (ft_parser(lexer));
 }
 
-int		ft_read_again_quoting(t_lexer *lexer)
+int			ft_read_again_quoting(t_lexer *lexer)
 {
 	char *line;
 	char *tmp;
