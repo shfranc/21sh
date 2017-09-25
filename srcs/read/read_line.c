@@ -46,10 +46,9 @@ void		ft_read_line(char **line, int len_prompt, int mode)
 			break ;
 		}
 	}
-	if (mode != 3 && mode != 2 && !ft_strequ(*line, "\n"))
-	{
+	if ((mode == 0 || mode == 1)\
+			&& !ft_strequ(*line, "\n") && !ft_strequ(*line, ""))
 		ft_save_in_history(*line);
-	}
 	ft_canonic_term();
 	free(input.line);
 	free(input.tmp);
