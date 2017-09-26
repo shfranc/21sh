@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 12:57:21 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 19:44:47 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,34 @@ void	ft_signals_handler(int sig)
 
 void	ft_sigint_handler(int sig)
 {
+	write(1, "\n", 1);
 	(void)sig;
 	g_shell->ret_cmd = EXIT_FAILURE;
-	write(1, "\n", 1);
 	g_shell->sigint = 1;
-	g_shell->input.len = ft_display_prompt();
-	ft_clear_screen(&g_shell->input);
 }
 
-int		ft_catch_signals()
+void		ft_catch_signals(void)
 {
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-
-
-	
 	signal(SIGINT, ft_sigint_handler);
-	
-	return (1);
 }
 
 static void	ft_run_cmd(char **argv, t_lexer *lexer)
 {
 	t_ast	*ast;
 
-	ast = ft_create_ast(&lexer->first);
-	if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
-		ft_print_ast(ast, "root", 0);
-	g_shell->ret_cmd = ft_execute(ast);
-	ft_del_ast(&ast);
+	if (lexer->last->token_type == NEWLINE) // suffisant ??
+	{
+		ast = ft_create_ast(&lexer->first);
+		if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
+			ft_print_ast(ast, "root", 0);
+		g_shell->ret_cmd = ft_execute(ast);
+		ft_del_ast(&ast);
+	}
 }
 
 int			main(int argc, char **argv, char **environ)
@@ -69,9 +65,9 @@ int			main(int argc, char **argv, char **environ)
 		g_shell->sigint = 0;
 		ft_read_line(&line, ft_display_prompt(), DEFAULT);
 		ft_tokenize(&lexer, line);
-		ret_cmd = ft_parser(lexer);	
 		if (ft_strequ(argv[1], "--lexer"))
 			ft_printlexer(lexer->first, lexer->nbr_token);
+		ret_cmd = ft_parser(lexer);	
 		if (ret_cmd == PARSER_SUCCESS)
 			ft_run_cmd(argv, lexer);
 		else

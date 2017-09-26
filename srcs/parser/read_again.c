@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 12:58:17 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 19:27:48 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int			ft_read_again_list(t_lexer *lexer, int list_type)
 	if (!*line)
 	{
 		free(line);
+		if (g_shell->sigint)
+			return (EXIT_FAILURE);
 		return (PARSER_ERROR);
 	}
 	ft_del_lasttoken(lexer);
@@ -96,14 +98,12 @@ int			ft_read_again_quoting(t_lexer *lexer)
 			write(1, DQUOTES_PROMPT, ft_strlen(DQUOTES_PROMPT)), QUOTES) : 0;
 	lexer->last->quoting & ESCAPE ? ft_read_line(&tmp,\
 			write(1, ESCAPE_PROMPT, ft_strlen(ESCAPE_PROMPT)), QUOTES) : 0;
-	
-	if (g_shell->sigint)
-		return (EXIT_FAILURE);
-	
 	if (!*tmp)
 	{
 		lexer->last->quoting = 0;
 		free(tmp);
+		if (g_shell->sigint)
+			return (EXIT_FAILURE);
 		return (PARSER_ERROR);
 	}
 	line = ft_strjoin(lexer->last->str, tmp);

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 12:11:43 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 19:44:44 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ void		ft_read_line(char **line, int len_prompt, int mode)
 	{
 		ft_raw_term();
 		ft_bzero(buff, 6);
-		read(0, buff, 5);
-		if (ft_interpret(buff, &g_shell->input, mode))
+		if ((read(0, buff, 5)) == -1)
+			break ;
+		if (g_shell->sigint || ft_interpret(buff, &g_shell->input, mode))
 		{
 			*line = ft_strdup(g_shell->input.line);
 			break ;
 		}
 	}
-	if ((mode == DEFAULT || mode == QUOTES || mode == LIST)\
+	if (!g_shell->sigint && (mode == DEFAULT || mode == QUOTES || mode == LIST)\
 			&& !ft_strequ(*line, "\n") && !ft_strequ(*line, ""))
 		ft_save_in_history(*line);
 	ft_canonic_term();
