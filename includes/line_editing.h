@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 17:57:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 12:16:22 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ typedef struct	s_input
 	int		x;
 	int		y;
 	int		prompt;
-	char	*right;
-	char	*left;
-	char	*up;
-	char	*down;
-	char	*cr;
 }				t_input;
+
+enum			e_mode
+{
+	DEFAULT,
+	QUOTES,
+	LIST = 1,
+	HEREDOC,
+	HISTORY
+};
 
 /*
 ** READLINE

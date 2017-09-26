@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/25 14:23:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 12:11:43 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,23 @@ static void	ft_save_in_history(char *line)
 void		ft_read_line(char **line, int len_prompt, int mode)
 {
 	char	buff[6];
-	t_input	input;
 
-	ft_init_input_struct(&input, len_prompt);
+	ft_init_input_struct(&g_shell->input, len_prompt);
 	while (1)
 	{
 		ft_raw_term();
 		ft_bzero(buff, 6);
 		read(0, buff, 5);
-		if (ft_interpret(buff, &input, mode))
+		if (ft_interpret(buff, &g_shell->input, mode))
 		{
-			*line = ft_strdup(input.line);
+			*line = ft_strdup(g_shell->input.line);
 			break ;
 		}
 	}
-	if ((mode == 0 || mode == 1)\
+	if ((mode == DEFAULT || mode == QUOTES || mode == LIST)\
 			&& !ft_strequ(*line, "\n") && !ft_strequ(*line, ""))
 		ft_save_in_history(*line);
 	ft_canonic_term();
-	free(input.line);
-	free(input.tmp);
+	free(g_shell->input.line);
+	free(g_shell->input.tmp);
 }

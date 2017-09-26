@@ -6,35 +6,51 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 10:12:56 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 12:57:21 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
+#include <stdio.h>
 
-/*void	ft_signals_handler(int sig)
-  {
-  printf("signal:n*%d\n", sig);
-  }
+void	ft_signals_handler(int sig)
+{
+	printf("signal:n*%d\n", sig);
+}
 
-  int		ft_catch_signals()
-  {
-  int i;
+void	ft_sigint_handler(int sig)
+{
+	(void)sig;
+	g_shell->ret_cmd = EXIT_FAILURE;
+	write(1, "\n", 1);
+	g_shell->sigint = 1;
+	g_shell->input.len = ft_display_prompt();
+	ft_clear_screen(&g_shell->input);
+}
 
-  i = 0;
-  while (i++ <= 31)
-  signal(i, SIG_IGN);
-  return (1);
-  }*/
+int		ft_catch_signals()
+{
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+
+
+	
+	signal(SIGINT, ft_sigint_handler);
+	
+	return (1);
+}
 
 static void	ft_run_cmd(char **argv, t_lexer *lexer)
 {
 	t_ast	*ast;
-			
+
 	ast = ft_create_ast(&lexer->first);
 	if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
-			ft_print_ast(ast, "root", 0);
+		ft_print_ast(ast, "root", 0);
 	g_shell->ret_cmd = ft_execute(ast);
 	ft_del_ast(&ast);
 }
@@ -46,11 +62,12 @@ int			main(int argc, char **argv, char **environ)
 	int		ret_cmd;
 
 	(void)argc;
-//	ft_catch_signals();
+	ft_catch_signals();
 	g_shell = ft_init(environ);
 	while (1)
 	{
-		ft_read_line(&line, ft_display_prompt(), 0);
+		g_shell->sigint = 0;
+		ft_read_line(&line, ft_display_prompt(), DEFAULT);
 		ft_tokenize(&lexer, line);
 		ret_cmd = ft_parser(lexer);	
 		if (ft_strequ(argv[1], "--lexer"))
