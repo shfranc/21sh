@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/25 15:06:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/26 10:12:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,49 +28,39 @@
   return (1);
   }*/
 
-int		main(int argc, char **argv, char **environ)
+static void	ft_run_cmd(char **argv, t_lexer *lexer)
+{
+	t_ast	*ast;
+			
+	ast = ft_create_ast(&lexer->first);
+	if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
+			ft_print_ast(ast, "root", 0);
+	g_shell->ret_cmd = ft_execute(ast);
+	ft_del_ast(&ast);
+}
+
+int			main(int argc, char **argv, char **environ)
 {
 	char	*line;
-	int		len_prompt;
 	t_lexer	*lexer;
-	t_ast	*ast;
 	int		ret_cmd;
 
 	(void)argc;
+//	ft_catch_signals();
 	g_shell = ft_init(environ);
-	//	ft_catch_signals();
 	while (1)
 	{
-
-		len_prompt = ft_display_prompt();
-		ft_read_line(&line, len_prompt, 0);
+		ft_read_line(&line, ft_display_prompt(), 0);
 		ft_tokenize(&lexer, line);
-		ret_cmd = ft_parser(lexer);
-
+		ret_cmd = ft_parser(lexer);	
 		if (ft_strequ(argv[1], "--lexer"))
-		{
 			ft_printlexer(lexer->first, lexer->nbr_token);
-			ft_putstr("\nPARSER RET: ");
-			if (ret_cmd == PARSER_SUCCESS)
-				ft_putendl(BGREEN"OK\n"RESET);
-			else
-				ft_putendl(BRED"Error\n"RESET);
-		}
-		
 		if (ret_cmd == PARSER_SUCCESS)
-		{
-			ast = ft_create_ast(&lexer->first);
-			if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
-				ft_print_ast(ast, "root", 0);
-			g_shell->ret_cmd = ft_execute(ast);
-		}
+			ft_run_cmd(argv, lexer);
 		else
 			g_shell->ret_cmd = ret_cmd;
-
-		
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
-		ft_del_ast(&ast);
 	}
 	return (0);
 }
