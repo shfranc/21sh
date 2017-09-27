@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 13:11:16 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:06:25 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,4 +122,3 @@ int			main(int argc, char **argv, char **environ)
  ** 30 -- user-defined signal 1 == exit
  ** 31 -- user-defined signal 2 == exit
  */
-

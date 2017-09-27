@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 17:15:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 17:41:14 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 16:00:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ int		ft_get_newline(t_lexer *lexer)
 
 void	ft_tokenize(t_lexer **lexer, char *line)
 {
-	char		*tmp;
-
+	if (!line || !*line)
+		return ;
 	if (!*lexer)
 		*lexer = ft_memalloc(sizeof(t_lexer));
-	tmp = NULL;
 	while (*line)
 	{
 		if (ft_part_operator(*line))
