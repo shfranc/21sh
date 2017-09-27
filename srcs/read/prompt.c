@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 17:10:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 13:10:32 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 17:43:34 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	ft_prompt_ret_cmd(void)
 		ft_putstr(BRED" $> "RESET);
 }
 
-int			ft_put_prompt_sigint()
+int			ft_put_prompt_sigint(void)
 {
 	int len;
 
