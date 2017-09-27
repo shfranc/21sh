@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/21 17:57:03 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 17:41:58 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define INPUTSIZE		4096
 # define DEFAULT_TERM	"xterm-256color"
 # define HISTO_PROMPT	"search_history> "
+# define STR_READ_ERROR	"read: impossible to read from STDIN"
 
 typedef struct	s_input
 {
@@ -32,12 +33,16 @@ typedef struct	s_input
 	int		x;
 	int		y;
 	int		prompt;
-	char	*right;
-	char	*left;
-	char	*up;
-	char	*down;
-	char	*cr;
 }				t_input;
+
+enum			e_mode
+{
+	DEFAULT,
+	QUOTES,
+	LIST = 1,
+	HEREDOC,
+	HISTORY
+};
 
 /*
 ** READLINE
@@ -46,8 +51,11 @@ void			ft_read_line(char **line, int len_prompt, int mode);
 
 /*
 ** TERM
-** ft_interpret mode : 0 == regular prompt, 1 == parser prompt waiting for
-** the end of input.
+** ft_interpret mode :
+** 0 == regular prompt
+** 1 == parser prompt waiting for the end of input list or quote.
+** 2 == heredoc
+** 3 == historic search
 */
 void			ft_init_input_struct(t_input *input, int len_prompt);
 void			ft_raw_term(void);
@@ -102,6 +110,7 @@ void			ft_clear_screen(t_input *input);
 /*
 ** PROMPT
 */
+int				ft_put_prompt_sigint(void);
 int				ft_display_prompt(void);
 
 /*

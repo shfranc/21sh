@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_status.c                                      :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/20 13:00:37 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/25 15:12:48 by sfranc           ###   ########.fr       */
+/*   Created: 2017/09/27 17:36:22 by sfranc            #+#    #+#             */
+/*   Updated: 2017/09/27 17:44:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_exit_status(int ret)
+static void	ft_sigint_handler(int sig)
 {
-	if (WIFEXITED(ret))
-		return (WEXITSTATUS(ret));
-	else if (WIFSIGNALED(ret))
-	{
-		if ((WTERMSIG(ret)) == 6)
-			ft_putendl_fd(STR_SIGABORT, 2);
-		if ((WTERMSIG(ret)) == 10)
-			ft_putendl_fd(STR_BUS_ERROR, 2);
-		if ((WTERMSIG(ret)) == 11)
-			ft_putendl_fd(STR_SEGFAULT, 2);
-		if ((WTERMSIG(ret)) == 8)
-			ft_putendl_fd(STR_FLOATING, 2);
-		return (WTERMSIG(ret) + 128);
-	}
+	write(1, "\n", 1);
+	(void)sig;
+	g_shell->ret_cmd = EXIT_FAILURE;
+	g_shell->sigint = 1;
+}
+
+static void	ft_void_handler(int sig)
+{
+	(void)sig;
+}
+
+void		ft_catch_signals(int exec)
+{
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	if (!exec)
+		signal(SIGINT, ft_sigint_handler);
 	else
-		return (EXIT_FAILURE);
+		signal(SIGINT, ft_void_handler);
 }

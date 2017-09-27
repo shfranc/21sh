@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:52:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/08/14 19:29:09 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 17:43:18 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int		ft_parser(t_lexer *lexer)
 	t_token	*dless;
 	int		ret;
 
+	if (!lexer || !lexer->nbr_token || g_shell->sigint)
+		return (EXIT_FAILURE);
 	if ((ret = ft_syntax_error(lexer)))
 		return (PARSER_ERROR);
 	if (lexer->last->quoting)

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/14 11:14:13 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 17:30:46 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_raw_term(void)
 		ft_exit("tcgetattr: Unable to fetch termios struct", 1);
 	term.c_lflag &= ~(ICANON);
 	term.c_lflag &= ~(ECHO);
-	term.c_cc[VMIN] = 1;
+	term.c_cc[VMIN] = 0;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSANOW, &term) == -1)
 		ft_exit("tcsetattr: Unable to set raw mode", 1);
