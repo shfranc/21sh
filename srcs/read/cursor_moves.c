@@ -6,12 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/03 15:53:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/21 11:06:59 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 18:43:03 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-#include <stdio.h>
 
 /*
 ** Basic cursor moves :

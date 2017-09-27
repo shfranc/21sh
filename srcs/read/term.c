@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 18:47:15 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 17:30:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 18:42:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ void	ft_init_input_struct(t_input *input, int len_prompt)
 	if ((ioctl(0, TIOCGWINSZ, &win)) == -1)
 		ft_exit("ioctl: Unable to get winsize struct", 1);
 	input->width = win.ws_col - 1;
-	input->prompt = len_prompt;
+	if (len_prompt >= (input->width + 1))
+	{
+		input->prompt = len_prompt % (input->width + 1);
+		if (input->prompt == 0)
+			tputs(tgetstr("sf", NULL), 1, &ft_intputchar);
+	}
+	else
+		input->prompt = len_prompt;
 	input->x = input->prompt;
 }
 
