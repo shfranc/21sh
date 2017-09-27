@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 15:01:31 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 19:44:44 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:07:38 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void		ft_read_line(char **line, int len_prompt, int mode)
 {
 	char	buff[6];
 
+	ft_raw_term();
 	ft_init_input_struct(&g_shell->input, len_prompt);
 	while (1)
 	{
-		ft_raw_term();
 		ft_bzero(buff, 6);
 		if ((read(0, buff, 5)) == -1)
 			break ;

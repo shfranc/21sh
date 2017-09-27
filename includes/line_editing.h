@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 12:16:22 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:07:53 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void			ft_clear_screen(t_input *input);
 /*
 ** PROMPT
 */
+int				ft_put_prompt_sigint(void);
 int				ft_display_prompt(void);
 
 /*

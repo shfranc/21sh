@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 19:44:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:11:16 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,37 @@ void	ft_sigint_handler(int sig)
 	g_shell->sigint = 1;
 }
 
-void		ft_catch_signals(void)
+void	ft_void_handler(int sig)
+{
+	(void)sig;
+}
+
+void		ft_catch_signals(int exec)
 {
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-	signal(SIGINT, ft_sigint_handler);
+	if (!exec)
+		signal(SIGINT, ft_sigint_handler);
+	else
+		signal(SIGINT, ft_void_handler);
 }
 
 static void	ft_run_cmd(char **argv, t_lexer *lexer)
 {
 	t_ast	*ast;
 
-	if (lexer->last->token_type == NEWLINE) // suffisant ??
+	if (lexer->last->token_type == NEWLINE)
 	{
+		ft_catch_signals(1);
 		ast = ft_create_ast(&lexer->first);
 		if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
 			ft_print_ast(ast, "root", 0);
 		g_shell->ret_cmd = ft_execute(ast);
 		ft_del_ast(&ast);
+		ft_catch_signals(0);
 	}
 }
 
@@ -58,12 +68,12 @@ int			main(int argc, char **argv, char **environ)
 	int		ret_cmd;
 
 	(void)argc;
-	ft_catch_signals();
+	ft_catch_signals(0);
 	g_shell = ft_init(environ);
 	while (1)
 	{
 		g_shell->sigint = 0;
-		ft_read_line(&line, ft_display_prompt(), DEFAULT);
+		ft_read_line(&line, ft_put_prompt_sigint(), DEFAULT);
 		ft_tokenize(&lexer, line);
 		if (ft_strequ(argv[1], "--lexer"))
 			ft_printlexer(lexer->first, lexer->nbr_token);

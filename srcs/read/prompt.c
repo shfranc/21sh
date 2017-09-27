@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 17:10:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:41:34 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/09/27 13:10:32 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ static void	ft_prompt_ret_cmd(void)
 		ft_putstr(BGREEN" $> "RESET);
 	else
 		ft_putstr(BRED" $> "RESET);
+}
+
+int			ft_put_prompt_sigint()
+{
+	int len;
+
+	ft_raw_term();
+	tputs(tgetstr("cr", NULL), 1, &ft_intputchar);
+	tputs(tgetstr("ce", NULL), 1, &ft_intputchar);
+	len = ft_display_prompt();
+	ft_canonic_term();
+	return (len);
 }
 
 int			ft_display_prompt(void)
