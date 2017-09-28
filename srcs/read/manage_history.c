@@ -71,8 +71,10 @@ void		ft_history_search(t_input *input)
 
 	ft_clear_screen(input);
 	g_shell->ret_cmd = EXIT_SUCCESS;
-	write(1, "\n", 1);
+	free(g_shell->input.line);
+	free(g_shell->input.tmp);
 	ft_canonic_term();
+	write(1, "\n", 1);
 	ft_read_line(&line, write(1, HISTO_PROMPT, ft_strlen(HISTO_PROMPT)), 3);
 	ft_raw_term();
 	little = ft_strsub(line, 0, ft_strlen(line) - 1);
