@@ -63,6 +63,15 @@ static char	*ft_search_in_history(char *line)
 	return (NULL);
 }
 
+static void	ft_close_termcaps(void)
+{
+	g_shell->ret_cmd = EXIT_SUCCESS;
+	free(g_shell->input.line);
+	free(g_shell->input.tmp);
+	ft_canonic_term();
+	write(1, "\n", 1);
+}
+
 void		ft_history_search(t_input *input)
 {
 	char	*line;
@@ -70,22 +79,23 @@ void		ft_history_search(t_input *input)
 	char	*tmp;
 
 	ft_clear_screen(input);
-	g_shell->ret_cmd = EXIT_SUCCESS;
-	free(g_shell->input.line);
-	free(g_shell->input.tmp);
-	ft_canonic_term();
-	write(1, "\n", 1);
+	ft_close_termcaps();
 	ft_read_line(&line, write(1, HISTO_PROMPT, ft_strlen(HISTO_PROMPT)), 3);
 	ft_raw_term();
-	little = ft_strsub(line, 0, ft_strlen(line) - 1);
-	if (!(tmp = ft_search_in_history(little)))
+	tmp = NULL;
+	if (!g_shell->sigint)
 	{
-		ft_putendl("No match found...");
-		tmp = ft_strdup(little);
+		little = ft_strsub(line, 0, ft_strlen(line) - 1);
+		if (!(tmp = ft_search_in_history(little)))
+		{
+			ft_putendl("No match found...");
+			tmp = ft_strdup(little);
+		}
+		free(little);
 	}
 	ft_init_input_struct(&g_shell->input, ft_display_prompt());
-	ft_insertchar(tmp, input);
+	if (tmp)
+		ft_insertchar(tmp, input);
 	free(tmp);
-	free(little);
 	free(line);
 }

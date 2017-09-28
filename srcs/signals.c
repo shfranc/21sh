@@ -32,6 +32,7 @@ void		ft_catch_signals(int exec)
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
+//	signal(SIGWINCH, ft_sigwinch_handler);
 	if (!exec)
 		signal(SIGINT, ft_sigint_handler);
 	else

@@ -36,5 +36,5 @@ t_shell			*g_shell;
 
 t_shell			*ft_init(char **env);
 void			ft_catch_signals(int exec);
-
+void			ft_exit_shell(char *str, int ret);
 #endif
