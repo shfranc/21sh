@@ -72,14 +72,16 @@ void		ft_history_search(t_input *input)
 	ft_clear_screen(input);
 	g_shell->ret_cmd = EXIT_SUCCESS;
 	write(1, "\n", 1);
+	ft_canonic_term();
 	ft_read_line(&line, write(1, HISTO_PROMPT, ft_strlen(HISTO_PROMPT)), 3);
+	ft_raw_term();
 	little = ft_strsub(line, 0, ft_strlen(line) - 1);
 	if (!(tmp = ft_search_in_history(little)))
 	{
 		ft_putendl("No match found...");
 		tmp = ft_strdup(little);
 	}
-	ft_display_prompt();
+	ft_init_input_struct(&g_shell->input, ft_display_prompt());
 	ft_insertchar(tmp, input);
 	free(tmp);
 	free(little);
