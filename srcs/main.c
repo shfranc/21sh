@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/03 18:50:24 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 18:53:55 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_run_cmd(char **argv, t_lexer *lexer)
 	{
 		ft_catch_signals(1);
 		ast = ft_create_ast(&lexer->first);
-		if (ast && ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
+		if (ast && (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast")))
 			ft_print_ast(ast, "root", 0);
 		g_shell->ret_cmd = ft_execute(ast);
 		ft_del_ast(&ast);
