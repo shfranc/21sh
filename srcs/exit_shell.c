@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/28 12:50:36 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/28 12:52:05 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 11:19:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	ft_exit_shell(char *str, int ret)
 	if (str)
 		ft_putendl_fd(str, 2);
 	g_shell->env ? ft_freetab(&g_shell->env) : 0;
-	g_shell->input.line ? free(g_shell->input.line) : 0;
-	g_shell->input.tmp ? free(g_shell->input.tmp) : 0;
 	g_shell->history ? ft_freetab(&g_shell->history) : 0;
 	free(g_shell);
 	i = 0;

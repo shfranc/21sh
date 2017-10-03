@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 17:41:58 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 11:18:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define INPUTSIZE		4096
 # define DEFAULT_TERM	"xterm-256color"
 # define HISTO_PROMPT	"search_history> "
-# define STR_READ_ERROR	"read: impossible to read from STDIN"
 
 typedef struct	s_input
 {
