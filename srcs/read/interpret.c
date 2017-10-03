@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/17 18:54:44 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 17:41:30 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 15:46:56 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	ft_interpret_moves(char *buff, t_input *input)
 		ft_jumpword_backward(input);
 }
 
-static void	ft_interpret_buffer(char *buff, t_input *input, int mode)
+static int	ft_interpret_buffer(char *buff, t_input *input, int mode)
 {
 	if (buff[0] == 27 && buff[1] == 91 && buff[2] == 65)
 		ft_history_back(input);
@@ -52,19 +52,30 @@ static void	ft_interpret_buffer(char *buff, t_input *input, int mode)
 	else if (buff[0] == 24)
 		ft_cut(input);
 	else if (buff[0] == 9)
-		ft_insertchar(input->tmp, input);
+	{
+		if (ft_insertchar(input->tmp, input))
+			return (1);
+	}
 	else if (ft_isprint(buff[0]))
-		ft_insertchar(buff, input);
+	{
+		if (ft_insertchar(buff, input))
+			return (1);
+	}
 	else if (buff[0] == 127)
 		ft_back_deletechar(input);
 	else if (buff[0] == 27 && buff[1] == 91 && buff[2] == 51 && buff[3] == 126)
 		ft_deletechar(input);
+	return (0);
 }
 
 int			ft_interpret(char *buff, t_input *input, int mode)
 {
 	ft_interpret_moves(buff, input);
-	ft_interpret_buffer(buff, input, mode);
+	if (ft_interpret_buffer(buff, input, mode))
+	{
+		ft_accept_line(input);
+		return (1);
+	}
 	if (buff[0] == 12)
 		ft_clear_screen(input);
 	else if (buff[0] == '\n')

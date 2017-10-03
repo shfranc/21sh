@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/30 14:55:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/03 11:18:52 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 16:16:57 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <uuid/uuid.h>
 
 # define INPUTSIZE		4096
+# define BUFFSIZE		6
 # define DEFAULT_TERM	"xterm-256color"
 # define HISTO_PROMPT	"search_history> "
 
@@ -90,7 +91,7 @@ void			ft_goto_lastpos(t_input *input);
 /*
 ** BUFFER
 */
-void			ft_insertchar(char *buff, t_input *input);
+int				ft_insertchar(char *buff, t_input *input);
 void			ft_back_deletechar(t_input *input);
 void			ft_deletechar(t_input *input);
 void			ft_accept_line(t_input *input);
