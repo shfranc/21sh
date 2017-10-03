@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/03 18:53:55 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 19:01:28 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int			main(int argc, char **argv, char **environ)
 		g_shell->sigint = 0;
 		ft_read_line(&line, ft_put_prompt_sigint(), DEFAULT);
 		ft_tokenize(&lexer, line);
-		if (lexer && ft_strequ(argv[1], "--lexer"))
-			ft_printlexer(lexer->first, lexer->nbr_token);
 		ret_cmd = ft_parser(lexer);
+		if (lexer && lexer->nbr_token && ft_strequ(argv[1], "--lexer"))
+			ft_printlexer(lexer->first, lexer->nbr_token);
 		if (ret_cmd == PARSER_SUCCESS)
 			ft_run_cmd(argv, lexer);
 		else
