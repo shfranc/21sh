@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 18:02:56 by sfranc            #+#    #+#             */
-/*   Updated: 2017/07/31 12:13:47 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 18:45:52 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-void	ft_get_io_number(t_lexer *lexer, char *line)
+void		ft_get_io_number(t_lexer *lexer, char *line)
 {
 	if (lexer->last && ft_isnumber(lexer->last->str) &&\
 			ft_strncmp(line - ft_strlen(lexer->last->str),\
@@ -22,12 +22,21 @@ void	ft_get_io_number(t_lexer *lexer, char *line)
 	}
 }
 
-int		ft_aggreg_fetch_dash(t_lexer *lexer, char *line)
+static char	*ft_goto_dash(char *line)
+{
+	while (*line && ft_isspace(*line))
+		line++;
+	if (*line == '-')
+		return (line);
+	return (NULL);
+}
+
+int			ft_aggreg_fetch_dash(t_lexer *lexer, char *line)
 {
 	t_token	*token;
 	char	*dash;
 
-	if (!(dash = ft_strchr(line, '-')))
+	if (!(dash = ft_goto_dash(line)))
 		return (0);
 	if (!ft_isspace(*(dash + 1)))
 	{

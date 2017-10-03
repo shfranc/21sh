@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 17:42:49 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 18:50:24 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	ft_run_cmd(char **argv, t_lexer *lexer)
 	{
 		ft_catch_signals(1);
 		ast = ft_create_ast(&lexer->first);
-		if (ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
+		if (ast && ft_strequ(argv[1], "--ast") || ft_strequ(argv[2], "--ast"))
 			ft_print_ast(ast, "root", 0);
 		g_shell->ret_cmd = ft_execute(ast);
 		ft_del_ast(&ast);
@@ -42,7 +42,7 @@ int			main(int argc, char **argv, char **environ)
 		g_shell->sigint = 0;
 		ft_read_line(&line, ft_put_prompt_sigint(), DEFAULT);
 		ft_tokenize(&lexer, line);
-		if (ft_strequ(argv[1], "--lexer"))
+		if (lexer && ft_strequ(argv[1], "--lexer"))
 			ft_printlexer(lexer->first, lexer->nbr_token);
 		ret_cmd = ft_parser(lexer);
 		if (ret_cmd == PARSER_SUCCESS)
