@@ -16,6 +16,7 @@ OBJS_PATH = objs
 SRCS = 	$(addprefix $(SRCS_PATH)/, main.c \
 		init.c \
 		signals.c \
+		exit_shell.c \
 		read/term.c \
 		read/read_line.c \
 		read/prompt.c \

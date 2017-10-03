@@ -31,6 +31,7 @@ void	ft_init_input_struct(t_input *input, int len_prompt)
 	else
 		input->prompt = len_prompt;
 	input->x = input->prompt;
+	input->origin_prompt = len_prompt;
 }
 
 void	ft_raw_term(void)

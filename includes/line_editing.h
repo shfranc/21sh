@@ -33,6 +33,7 @@ typedef struct	s_input
 	int		x;
 	int		y;
 	int		prompt;
+	int		origin_prompt;
 }				t_input;
 
 enum			e_mode
