@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/10/03 11:11:48 by sfranc           ###   ########.fr        #
+#    Updated: 2017/10/03 17:44:22 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,6 @@ LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
-#FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m

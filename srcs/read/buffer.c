@@ -6,16 +6,11 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 16:56:23 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/03 15:50:00 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/03 17:12:01 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
-#include <stdio.h>
-
-/*
- ** Insert an char or a string into the current line.
- */
 
 int		ft_is_eol(char *buff)
 {
@@ -33,6 +28,10 @@ int		ft_is_eol(char *buff)
 	}
 	return (0);
 }
+
+/*
+** Insert an char or a string into the current line.
+*/
 
 int		ft_insertchar(char *buff, t_input *input)
 {
@@ -63,35 +62,9 @@ int		ft_insertchar(char *buff, t_input *input)
 	return (ret);
 }
 
-/*void	ft_insertchar(char *buff, t_input *input)
-  {
-  char	*end;
-  int		start;
-  int		buff_size;
-
-  buff_size = ft_strlen(buff);
-  if (input->len < INPUTSIZE - buff_size - 2)
-  {
-  ft_clear(input);
-  start = input->y * (input->width + 1) + input->x - input->prompt;
-  end = ft_strsub(input->line, start, input->len - start);
-  ft_bzero(input->line + start, INPUTSIZE - start);
-  input->line = ft_strcat(input->line, buff);
-  input->line = ft_strcat(input->line, end);
-  ft_putstr(input->line);
-  input->len += buff_size;
-  ft_goto_lastpos(input);
-  while (buff_size-- > 0)
-  ft_move_right(input);
-  free(end);
-  }
-  else
-  tputs(tgetstr("bl", NULL), 1, &ft_intputchar);
-  }*/
-
 /*
- ** Delete the char right on the left, with "delete" key.
- */
+** Delete the char right on the left, with "delete" key.
+*/
 
 void	ft_back_deletechar(t_input *input)
 {
@@ -120,8 +93,8 @@ void	ft_back_deletechar(t_input *input)
 }
 
 /*
- ** Delete the char right below the cursor with "delete >" key or fn + "delete".
- */
+** Delete the char right below the cursor with "delete >" key or fn + "delete".
+*/
 
 void	ft_deletechar(t_input *input)
 {
