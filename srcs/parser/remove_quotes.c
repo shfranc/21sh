@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 11:48:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 18:33:46 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/04 15:02:37 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,20 @@ static int	ft_remove_escape(char **str)
 		if (**str == '\n')
 			(*str)++;
 		else
-			escape |= ESCAPE;
+			escape = ESCAPE;
 	}
 	return (escape);
 }
 
 static char	*ft_remove_squotes(char *new, char **str)
 {
-	char	*tmp;
-	int		len;
-
-	len = ft_goto_next_quote(*str, **str);
-	tmp = ft_strsub(*str, 1, len - 1);
-	ft_strmerge(&new, tmp);
-	free(tmp);
-	*str += len;
+	(*str)++;
+	while (**str && **str != '\'')
+	{
+		new = ft_charappend(new, **str);
+		(*str)++;
+	}
+	(*str)++;
 	return (new);
 }
 
@@ -87,9 +86,12 @@ char		*ft_remove_quotes(char *str)
 			new = ft_remove_squotes(new, &str);
 		else
 		{
-			new = ft_charappend(new, *str);
-			str++;
-			escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
+			if (*str != '\\')
+			{
+				new = ft_charappend(new, *str);
+				str++;
+				escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
+			}
 		}
 	}
 	if (!new)
