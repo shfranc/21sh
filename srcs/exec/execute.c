@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/28 11:01:55 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:03:38 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/04 11:48:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		ft_execute_andif_list(t_ast *ast)
 
 static int		ft_execute_orif_list(t_ast *ast)
 {
-	if (ft_execute(ast->left) == EXIT_FAILURE)
+	if (ft_execute(ast->left) != EXIT_SUCCESS)
 		return (ft_execute(ast->right));
 	else
 		return (EXIT_SUCCESS);
