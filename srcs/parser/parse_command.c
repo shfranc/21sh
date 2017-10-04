@@ -6,13 +6,13 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/30 17:52:50 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/27 17:43:18 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/04 15:52:36 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-int		ft_incomplete_list(t_lexer *lexer)
+static int		ft_incomplete_list(t_lexer *lexer)
 {
 	if (lexer->last->token_type == NEWLINE && lexer->nbr_token > 1\
 			&& lexer->last->prev->operator_type == PIPE)
@@ -32,7 +32,7 @@ int		ft_incomplete_list(t_lexer *lexer)
 	return (0);
 }
 
-t_token	*ft_is_heredoc(t_lexer *lexer)
+static t_token	*ft_is_heredoc(t_lexer *lexer)
 {
 	t_token	*tmp;
 
@@ -46,7 +46,7 @@ t_token	*ft_is_heredoc(t_lexer *lexer)
 	return (NULL);
 }
 
-int		ft_parser(t_lexer *lexer)
+int				ft_parser(t_lexer *lexer)
 {
 	int		list_type;
 	t_token	*dless;

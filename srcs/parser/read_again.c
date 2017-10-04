@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 14:43:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/26 19:27:48 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/04 15:52:33 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int			ft_read_again_quoting(t_lexer *lexer)
 			return (EXIT_FAILURE);
 		return (PARSER_ERROR);
 	}
-	line = ft_strjoin(lexer->last->str, tmp);
+	line = !ft_strequ(lexer->last->str, "\\\n") ?\
+		   ft_strjoin(lexer->last->str, tmp) : ft_strdup(tmp);
 	ft_del_lasttoken(lexer);
 	ft_tokenize(&lexer, line);
 	free(line);
