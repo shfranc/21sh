@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/10/03 19:05:17 by sfranc           ###   ########.fr        #
+#    Updated: 2017/10/04 18:26:06 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ LIB = $(LIB_PATH)/libft.a
 LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
