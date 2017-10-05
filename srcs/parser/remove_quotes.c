@@ -6,28 +6,28 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 11:48:41 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/04 19:15:36 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/05 11:55:31 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell21.h"
 
-static char	*ft_remove_escape_withindquotes(char *str)
+static int	ft_remove_escape_withindquotes(char **str)
 {
-	if (*str == '\\')
+	int escape;
+
+	escape = 0;
+	if (**str == '\\')
 	{
-		if (*(str + 1) && (*(str + 1) == '"' || *(str + 1) == '$'\
-					|| *(str + 1) == '\\' || *(str + 1) == '\n'))
-			str++;
-		if (*str == '\n')
-		{
-			if (*(str + 1) == '"')
-				str += 2;
-			else
-				str++;
-		}
+		if (*(*str + 1) && (*(*str + 1) == '"' || *(*str + 1) == '$'\
+					|| *(*str + 1) == '\\' || *(*str + 1) == '\n'))
+			(*str)++;
+		if (**str == '\n')
+			(*str)++;
+		else
+			escape = ESCAPE;
 	}
-	return (str);
+	return (escape);
 }
 
 static int	ft_remove_escape(char **str)
@@ -60,12 +60,14 @@ static char	*ft_remove_squotes(char *new, char **str)
 
 static char	*ft_remove_dquotes(char *new, char **str)
 {
+	int	escape;
+
 	(*str)++;
 	while (**str && **str != '"')
 	{
-		if (**str == '\\')
-			*str = ft_remove_escape_withindquotes(*str);
-		else
+		escape = ft_remove_escape_withindquotes(str);
+		if (((escape && **str == '\\') || **str != '\\')\
+			&& ((escape && **str == '"') || **str != '"'))
 		{
 			new = ft_charappend(new, **str);
 			(*str)++;
@@ -94,9 +96,7 @@ char		*ft_remove_quotes(char *str)
 			{
 				new = ft_charappend(new, *str);
 				str++;
-//				escape = (escape & ESCAPE) ? escape ^ ESCAPE : 0;
 			}
-//			escape = 0;
 		}
 	}
 	if (!new)
