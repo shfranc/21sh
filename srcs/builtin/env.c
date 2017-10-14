@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/29 16:29:24 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/15 16:39:53 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/14 19:09:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int			ft_builtin_env(char **cmd)
 
 	ret_cmd = EXIT_SUCCESS;
 	if (!cmd[1] || ft_strequ(cmd[1], CMD_ENV))
-		ft_puttab(g_shell->env);
+		g_shell->env ? ft_puttab(g_shell->env): 0;
 	else
 	{
 		sauv_env = ft_tabdup(g_shell->env);

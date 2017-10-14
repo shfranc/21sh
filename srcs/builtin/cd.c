@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/13 10:29:33 by sfranc            #+#    #+#             */
-/*   Updated: 2017/09/20 12:44:26 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/06 14:42:12 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static int	ft_move_to_dest(char *dest)
 	if ((chdir(dest)) != -1)
 	{
 		pwd = getcwd(NULL, 0);
-		ft_modify_env("PWD=", pwd);
-		ft_modify_env("OLDPWD=", old_pwd);
+		pwd ? ft_modify_env("PWD=", pwd) : 0;
+		old_pwd ? ft_modify_env("OLDPWD=", old_pwd) : 0;
 		free(old_pwd);
 		free(pwd);
 		free(dest);

@@ -6,7 +6,7 @@
 /*   By: sfranc <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/27 12:49:58 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/04 14:42:40 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/06 14:33:27 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			main(int argc, char **argv, char **environ)
 			g_shell->ret_cmd = ret_cmd;
 		ft_dellexer(&lexer);
 		ft_strdel(&line);
+		write(1, "\n", 1);
 	}
 	return (0);
 }

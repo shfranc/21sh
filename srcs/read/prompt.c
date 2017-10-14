@@ -6,7 +6,7 @@
 /*   By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/06 17:10:16 by sfranc            #+#    #+#             */
-/*   Updated: 2017/10/04 14:42:37 by sfranc           ###   ########.fr       */
+/*   Updated: 2017/10/06 14:37:29 by sfranc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,20 @@ int			ft_display_prompt(void)
 	if ((user = ft_get_user()))
 	{
 		ft_putstr(user);
-		ft_putstr(": "RESET);
+		ft_putstr(": "BLUE);
 		len += ft_strlen(user);
 	}
 	else
 	{
-		ft_putstr("21sh: "RESET);
+		ft_putstr("21sh: "BLUE);
 		len += 4;
 	}
 	free(user);
-	ft_putstr(BLUE);
 	if ((cwd = getcwd(NULL, 0)))
+	{
 		ft_putstr(cwd);
-	len += ft_strlen(cwd);
+		len += ft_strlen(cwd);
+	}
 	free(cwd);
 	ft_prompt_ret_cmd();
 	return (len);
