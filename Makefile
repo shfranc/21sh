@@ -6,7 +6,7 @@
 #    By: sfranc <sfranc@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/13 13:03:38 by sfranc            #+#    #+#              #
-#    Updated: 2017/10/05 11:58:55 by sfranc           ###   ########.fr        #
+#    Updated: 2017/10/14 19:32:55 by sfranc           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,9 @@ $(NAME): $(LIB) $(OBJS)
 	@echo "$(GREEN)$@ : compilation OK$(RESET)"
 
 $(LIB):
+	@if [ ! -d $(LIB_PATH) ] ; then \
+		git clone https://github.com/shfranc/libft libft; \
+	fi
 	@make -C $(LIB_PATH)
 	@echo "$(GREEN)libft : compilation OK$(RESET)"
 
