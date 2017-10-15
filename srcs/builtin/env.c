@@ -76,7 +76,7 @@ int			ft_builtin_env(char **cmd)
 		ft_freetab(&g_shell->env);
 		g_shell->env = exec_env;
 		ret_cmd = ft_launch_cmd_env(cmd, i, exec_env);
-		ft_freetab(&exec_env);
+		exec_env ? ft_freetab(&exec_env) : 0;
 		g_shell->env = ft_tabdup(sauv_env);
 		ft_freetab(&sauv_env);
 	}

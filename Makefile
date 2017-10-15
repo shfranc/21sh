@@ -69,6 +69,7 @@ LIB_PATH = libft
 LIB_TERMCAP = -ltermcap
 CC = gcc
 FLAGS = -Wall -Wextra -Werror
+#FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 GREEN = \033[01;32m
 YELLOW = \033[01;33m
 CYAN = \033[01;36m
